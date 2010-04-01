@@ -1,0 +1,28 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+刘洋是神
+
+
+= Details =
+
+为什么_刘洋_是*神*:
+  * 因为刘洋是*神*；
+  * 因为刘洋是*大神*；
+  * 因为刘洋是*超神*。
+
+= What to do =
+
+{{{
+if (刘洋是神)
+{
+     orz(刘洋);
+}
+else
+{
+     consider(刘洋，神);
+     orz(刘洋);
+}
+}}}
+
