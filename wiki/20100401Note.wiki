@@ -1,4 +1,5 @@
 #summary 2010/4/1会议记录
+#labels Type-MeetingNotes
 
 <wiki:toc max_depth="3" />
 
