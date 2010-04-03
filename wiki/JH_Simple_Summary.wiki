@@ -1,0 +1,38 @@
+#summary JH算法的算法描述总结.
+
+= 李宇骞 =
+JH算法首先将Message用课上的加一个1，若干个0，再加上一个表示长度的二进制数得到一个512n位的初始信息，然后分成n个512位的段，进行HASH。HASH过程非常简单，主要就用到了一个F8函数，将512位的信息段和一个1024位的HASH值计算得到一个1024位的新HASH值。算法开始时首先通过长度生成一个初始值H0，然后对n个512位的信息段M1, M2等分别用F8函数获得H1，H2...最后得到的Hn就是结果。如果最终需要得到的HASH值应该是m位，那么就将Hn的最后m位提取出来即可。
+
+文章主要就是对F8做了具体的解释：F8是简单的通过E8得来的，E8是通过很多轮的R8和一次R8*得来了，R8是通过S，L，P等简单的模块计算得到了。中间的具体过程文章中写的非常清晰易懂。唯一让我琢磨不透的是L函数，虽然文中有具体的L计算公式，但是我不是很能理解L到底是干什么的。像SBox，Permutation这种模块由于在DES中已经出现过，所以比较清楚。
+
+= 刘之方 =
+ 1 Summary of the Algorithm
+
+ The algorithm`[1]` makes use of many ideas from existed algorithm, which makes
+ the algorithm easy to understand.
+
+  1.1 The main hash algorithm
+
+  The main hash ﬁrst pad the message to be a multiple of 512 bits, in which the
+  length of the message is padded to the message. After padding, the message is
+  split into blocks of 512 bits.
+  Then, starting from an initial hash value H (0) (1024-bit), the algorithm itera-
+  tively uses a compression function F8 to compress each block, resulting in a ﬁnal
+  hash value H (N ) . Finally H (N ) is truncated into message digest of designated
+  length.
+
+  1.2 The compression function
+
+  The construction of the compression function uses a block cipher, and also
+  borrows some ideas from AES methodology.
+  Like AES, JH uses S-Boxes and P-Boxes as building blocks. Besides, a
+  MDS (Maximum Distance Separable) code is used, which further contributes to
+  diﬀusion by making the hash value more evenly distributed.
+
+== References ==
+`[1]` Hongjun Wu. The hash function jh. Submission to NIST (updated), 2009.
+
+
+= 刘洋 =
+JH算法中所使用的函数都是一些常见的用于Hash的处理过程。JH通过两个S-boxes、若干Permutation及线性变换来完成对定长数据的压缩（F_d）。给定一个输入后，JH先进行 一般的Padding和分块处理，然后根据数据摘要的长度计算出一个初始的H^(0)，然后用F_d函数进行若干轮计算后得到最终的Hash值。
+总的来说，JH的算法比较简单和常见。我认为，JH在数据处理方面并没有什么创新，它的安全性主要是通过合理地设计各个子过程的执行步骤以及增加块长度和增加加密轮数来实现的。但是，正因为JH所使用的算法非常“大众化“，所以恰好方便了我们对其安全性和运行效率进行分析。
