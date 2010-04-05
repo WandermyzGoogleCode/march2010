@@ -62,3 +62,5 @@ JH算法中所使用的函数都是一些常见的用于Hash的处理过程。JH
 
 = MIT学生作业——对几个候选hash函数的分析（包括JH）=
 http://courses.csail.mit.edu/6.857/2009/sha3/group7.pdf
+
+= JH中Differential Cryptanalysis的分析报告 =
