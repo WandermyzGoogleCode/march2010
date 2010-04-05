@@ -1,5 +1,7 @@
 #summary JH算法的算法描述总结.
 
+<wiki:toc max_depth="1" />
+
 = NIST官方评价 =
 (以下文档包含对所有进入ROUND2的算法的评价，主要是为什么能够进入ROUND2的评价）
 [http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/sha3_NISTIR7620.pdf]
