@@ -1,5 +1,6 @@
 #summary 4月8日议程
-
+#labels Type-MeetingAgenda
+<wiki:toc max_depth="3" />
 = Live'S Cube =
 == 上周事件 ==
  * 史元春
