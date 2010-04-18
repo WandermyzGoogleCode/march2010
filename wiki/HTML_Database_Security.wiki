@@ -1,86 +1,86 @@
-#summary ������У���ҳ��ȫ�����ݿⰲȫ��δ�������
+#summary 开题调研：网页安全和数据库安全（未完待续）
 
-=��ҳ��ȫ=
+=网页安全=
 
-==javascript== ���������Ƕ�뵽js�ű�������ã�Ҳ����ͼ�������ҳ�����ֶΡ�����js���������ʱ�Ѿ����˺ܶలȫ����ı����������js������ɵ�Σ��������*��������AJAXh��HTTPRequest������Ȼ�������𣿴���֤*���������Ͻ���JS�޷��Կͻ��˻�������˵��ļ�����ֱ�ӵĶ�д������
+==javascript== 将恶意代码嵌入到js脚本中是最常用（也是最低级）的网页攻击手段。由于js本身在设计时已经有了很多安全方面的保护，因此用js可以造成的危害并不大（*现在有了AJAXh和HTTPRequest，还仍然是这样吗？待考证*）。理论上讲，JS无法对客户端或服务器端的文件进行直接的读写操作。
 
-��ҳ�е�js�ű������ڿͻ��˵���������Ϣ�򣬻�����ͨ��ִ��ĳЩ��ѭ����������û����������Ŀǰ�����뵽��jsֱ����в���˶��ѡ�
+网页中的js脚本可以在客户端弹出各种消息框，还可以通过执行某些死循环操作搞垮用户的浏览器。目前我能想到的js直接威胁仅此而已。
 
-��վ������ͨ����ֹ�û�������վ�Ϸ�������js�ű��������Է�ֹ�������û������鷳���򵥵�ʵ�ַ����ǽ�html�ַ�ת�塣�����û��ύ���ַ�����<javascript>���ᱻת��ɡ�&lt;javascript&rt;��������������ͻ�ѡ�<javascript>��ֱ����ʾ����������ȥִ���������js���롣PHP�����ֳɵ�ת�庯��htmlspecialchars��
+网站开发者通常禁止用户在其网站上发布带有js脚本的内容以防止其给别的用户带来麻烦。简单的实现方法是将html字符转义。例如用户提交的字符串“<javascript>”会被转义成“&lt;javascript&rt;”，这样浏览器就会把“<javascript>”直接显示出来而不是去执行它后面的js代码。PHP中有现成的转义函数htmlspecialchars。
 
-==�ⲿ����==
-ͨ������£�һ����վӦ�ñ�֤����յ��ı��������������Լ���ҳ�档
+==外部表格==
+通常情况下，一个网站应该保证其接收到的表单都仅来自其自己的页面。
 
-===�龰===
-��������һ�����ӣ�������ӿ������Ƚ��ԲУ����ǵ��ж������ǳ����ʱ����ʵ�Ǻ����׷����ִ���ģ���
+===情景===
+考虑这样一个例子（这个例子看起来比较脑残，但是当判断条件非常多的时候，其实是很容易犯这种错误的）：
 
-ҳ��http://example.com/deliver.phpʵ���˷������ԵĹ��ܡ�����û��Ѿ�ͨ������վ��loginҳ���¼�����û��Ϳ��Է������ԣ����������ʾ˵���¼����ҳ����߼�����ǣ�
+页面http://example.com/deliver.php实现了发布留言的功能。如果用户已经通过该网站的login页面登录，则用户就可以发表留言，否则给出提示说请登录。此页面的逻辑大概是：
 {{{
 if(!$_POST['submit'])
 {
-	if(�ѵ�¼)
+	if(已登录)
 	{
 		echo '<form target="deliver.php?submit=1" method="POST">';
 		echo '<input type="text" name="content/>';
-		echo '<input type="submit">�ύ</input>';
+		echo '<input type="submit">提交</input>';
 		echo '</form>';
 	}
 	else
 	{
-		echo '���ȵ�¼��';
+		echo '请先登录！';
 	}
 }
 else
 {
-	���û��ύ�����Դ������ݿ�;
+	将用户提交的留言存入数据库;
 }
 }}}
 
-�������û���˵��������԰�û���κ����⡣ʵ���ϣ������߼�����һ�����裺��������û���ʾ�������û��Ͳ������ύ���ݡ�Ȼ�������ǿ��Լ򵥵����Լ��ļ������дһ��HTML�ļ����ⲿ���񣩣�
+对正常用户来说，这个留言板没有任何问题。实际上，上述逻辑基于一个假设：如果不给用户显示表单，用户就不可能提交数据。然而，我们可以简单地在自己的计算机上写一个HTML文件（外部表格）：
 {{{
 <form target="http://example.com/deliver.php?submit=1" method="POST">
 <input type="text" name="content/>
-<input type="submit">�ύ</input>
+<input type="submit">提交</input>
 </form>
 }}}
-�������������ļ�������������ݣ����ύ�����Ծͷ�����example.com���ˣ���ȫ�ò��ŵ�¼��
+用浏览器打开这个文件，填好留言内容，点提交，留言就发布在example.com上了，完全用不着登录。
 
-===������ʩ1��˫����֤===
-Ҫ�������������ǳ��򵥣�����������ġ����û��ύ�����Դ������ݿ�;��ǰ�����һ���жϼ��ɡ�
+===防范措施1：双重验证===
+要想避免这种情况非常简单：在上述代码的“将用户提交的留言存入数据库;”前面加上一个判断即可。
 {{{
-if(δ��¼)
+if(未登录)
 {
-	echo '���ȵ�¼��';
+	echo '请先登录！';
 	return;
 }
 }}}
-�Ӷ�����������������Ȩ����֤����һ��ȷ�����Ѻõ��û����飬���ڶ��β�����ʵ����Ȩ�޻��ơ�
+从而服务器进行了两次权限验证。第一次确保了友好的用户体验，而第二次才真正实现了权限机制。
 
-===������ʩ2��Form Hash===
-��һ�ַ�����ʩ��ʹ��һ�ֽ���Form Hash��Discuz����ô�еģ��ļ�������ʵ��������ǰ�߸��ӣ������������ڣ�
- # ��ģ���ԡ�������վֻ��ʵ��һ��Form Hash���ơ���ʹ����Ա��˫����֤��������©��Form HashҲ��ȷ��Ȩ�޻��ƵĽ�ȫ��
- # ��ĳЩ�����£���һ�ڣ��в�������ԡ�
-Form Hash�Ļ���ԭ���ǣ���վ���ݵ�ǰ��¼�û����û���������Hashֵ����ǰʱ���������ĳЩ��Ϣ����һ��Hashֵ����ΪForm Hash�����������Ϊformhash()��������formhash()��ʹ�õ���Ϣ�ܹ���֤��һ����ʱ����ڣ�ÿ���Ϸ���¼�û����ʸ���վ���κ�ҳ�涼����Ψһ�ҹ̶���Form Hash������վ��ʾ���û��ı����У�����һ�������ֶΣ�
+===防范措施2：Form Hash===
+另一种防范措施是使用一种叫做Form Hash（Discuz是这么叫的）的技术。它实现起来比前者复杂，而其意义在于：
+ # 有模块性。整个网站只需实现一套Form Hash机制。即使程序员在双重验证方面有疏漏，Form Hash也会确保权限机制的健全。
+ # 在某些情形下（下一节）有不可替代性。
+Form Hash的基本原理是：网站根据当前登录用户的用户名、密码Hash值、当前时间戳及其它某些信息生成一个Hash值，称为Form Hash（记这个计算为formhash()函数）。formhash()所使用的信息能够保证在一定的时间段内，每个合法登录用户访问该网站的任何页面都会获得唯一且固定的Form Hash。在网站显示给用户的表单中，加入一个隐藏字段：
 {{{
 <input type="hidden" name="formhash" value="{FORMHASH}"/>
 }}}
-���У�{FORMHASH}����վ�ڽ��ñ������ָ��û�ʱ����formhash()���õ���ֵ��
+其中，{FORMHASH}是网站在将该表单呈现给用户时调用formhash()所得到的值。
 
-���û��ύ�ñ����󣬷��������ٴε���formhash()������֤�䷵��ֵ���û��ύ�ı����е�formhash�ֶε������Ƿ���ȡ������������Ϊ�ǷǷ�����
+当用户提交该表单后，服务器会再次调用formhash()，并验证其返回值与用户提交的表单中的formhash字段的数据是否相等。若不相等则认为是非法请求。
 
-���������������������һ����Ч���ⲿ���񣬾ͱ����ڱ�����д����ȷ��formhash����ʹ�������շ��������������Դ�루����formhash()�ľ����㷨����ֻҪ���޷��Ա������û������ݵ�¼��վ�����Ͳ�����ʹ���ⲿ�����formhash�������������formhash()��ȣ���ʹ��֪���������û����û���������Hash����
+这样，如果恶意者想制作一个有效的外部表格，就必须在表单中写出正确的formhash。即使此人掌握服务器程序的所有源码（包括formhash()的具体算法），只要他无法以被攻击用户的身份登录网站，他就不可能使得外部表格的formhash与服务器产生的formhash()相等（即使他知道被攻击用户的用户名和密码Hash）。
 
-ͨ�������ļܹ���ƣ�Form Hash���ƾͿ��Է����Ӧ����������վ��������Ҫ����Ա��ʵ�־��幦��ʱ�����ⲿ�������⡣
+通过合理的架构设计，Form Hash机制就可以方便地应用于整个网站，而不需要程序员在实现具体功能时考虑外部表格问题。
 
-����Form Hash��˼������DiscuzԴ�루��˭ԭ���ľͲ�֪���ˣ���
+以上Form Hash的思想来自Discuz源码（是谁原创的就不知道了）。
 
-==�Զ�ִ�е�����==
+==自动执行的链接==
 
-==α��HTTPͷ==
+==伪造HTTP头==
 
 ==ActiveX==
-΢�����Բм����û����ԲоͿ���������������κο�ִ�г����ˣ�����ActiveX����ɵ�Σ���Ի�����unlimited������˵�ˡ�
+微软的脑残加上用户的脑残就可以让浏览器运行任何可执行程序了，所以ActiveX能造成的危害性基本上unlimited，不多说了。
 
-=���ݿⰲȫ=
+=数据库安全=
 
-==SQLע��ʽ����==
+==SQL注入式攻击==
