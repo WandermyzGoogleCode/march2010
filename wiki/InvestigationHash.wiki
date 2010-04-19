@@ -29,12 +29,12 @@ We have two choices on how to implement the chosen hash algorithm:
 = Solution to the problem of direct hashing (Indexing scheme) =
 This seems to be the most important and also the most difficult part of our design and implementation.
 
-== Proposal from SpaceFlyer ==
+== Proposal from Yuqian Li ==
 In addition to the phone number phone, add k different signatures s1,s2,...,sk as inputs. The k signatures are signed by different persons with great reputation. Then the k signatures are padded to the original phone number as the input to the hashing system, which are simply noted as n|s1|s2|...|sk. However because the signatures should be kept in memory to ensure security, the signature should be provided each time the server is restarted, which is not realistic at all. 
 
 == Other solutions? ==
- * Not allowing anyone including designers and developers is not an easy task. In fact, SpaceFlyer's proposal also suffers from the pitfall that anyone who has root access to the server still has some way to retrieve the signatures from main memory.
+ * Not allowing anyone including designers and developers is not an easy task. In fact, Li's proposal also suffers from the pitfall that anyone who has root access to the server still has some way to retrieve the signatures from main memory.
  * I've consulted Mr Zhen Chen, who said that *he hasn't seen any research or application which achieved or tried to achieve our goal*. He thought at least some important administrators must have access to the phone numbers.
- * Mr Chen advised that *key sharing* is still the most commonly used effective way to achieve this kind of security. This is almost same to SpaceFlyer's proposal, except that the signatures are signed and holded by several different administrators.
+ * Mr Chen advised that *key sharing* is still the most commonly used effective way to achieve this kind of security. This is almost same to Li's proposal, except that the signatures are signed and holded by several different administrators.
  * This kind of security is often ensured based on the company's reputation instead of techniques. 
  * Any other solutions? This is left as a further research if possible.
