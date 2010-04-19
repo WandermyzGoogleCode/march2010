@@ -26,7 +26,7 @@ We have two choices on how to implement the chosen hash algorithm:
  * *Our choice*?
 
 
-= Solution to the problem of direct hashing (Indexing scheme) =
+= How to solve the problem of direct hashing (Indexing scheme)? =
 This seems to be the most important and also the most difficult part of our design and implementation.
 
 == Proposal from Yuqian Li ==
