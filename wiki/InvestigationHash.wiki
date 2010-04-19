@@ -23,7 +23,7 @@ Considering difficulty and realistic issues, choosing an existed hash algorithm 
 We have two choices on how to implement the chosen hash algorithm:
  * Code from scratch by ourselves
  * Using existed library
- * *Our choice*?
+ * *Our choice? The latter preferred?*
 
 
 = How to solve the problem of direct hashing (Indexing scheme)? =
