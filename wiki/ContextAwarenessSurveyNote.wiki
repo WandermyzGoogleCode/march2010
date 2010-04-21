@@ -1,4 +1,5 @@
-#summary 有关Context Awareness的调研（可无视）
+#summary Survey on Context Awareness (You can ignore this page)
+#labels Phase-Lab,Phase-Survey
  
  * Live'S Cube is a solution to make context-aware device more available to everyday users.
  * Auto-detected Status (using format of `[CK00]`)
