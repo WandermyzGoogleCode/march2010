@@ -1,4 +1,5 @@
 #summary 关于大家完成任务的速度记录.
+#labels Featured
 
 = 介绍 =
 
