@@ -1,5 +1,5 @@
 #summary 短信平台客户端和服务器端功能细化
-#labels Type-Assignment
+#labels Type-Assignment,Phase-Requirements
 
 <wiki:toc max_depth="3" />
 
