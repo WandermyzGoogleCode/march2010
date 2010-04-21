@@ -1,6 +1,8 @@
 #summary 功能细化：基于Web的单向用户信息查询
 #labels Type-Assignment
 
+<wiki:toc max_depth="3" />
+
 =概述=
  * 所有单向用户的信息都可以由用户通过Web来查询。
  * 单向用户与双向用户相比，拥有更多的信息字段（如所属分类、地址等）
@@ -59,7 +61,7 @@
  * 客户端下载
  * 论坛（主要用于接受用户反馈）
  * 在首页设置信息查询的文本框及高级搜索链接，以及指向查询系统首页`http://info.lives3.com/index.php`的链接
- * 建议分别为http://www.lives.com和http://info.lives.com做一个首页
+ * 建议分别为`http://www.lives.com`和`http://info.lives.com`做一个首页
 
 =吐槽=
  * 好吧，我发现WEB这一块不需要任何网络传输方面的安全保护。之前说过的外部表格和自动执行的链接什么的也基本上没啥用……
