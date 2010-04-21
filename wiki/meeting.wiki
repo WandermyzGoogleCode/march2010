@@ -1,4 +1,5 @@
 #summary 会议记录首页，链接向各个会议记录
+#labels Deprecated
 
 = 会议记录 =
  * [20100401Note 4月1日记录]
