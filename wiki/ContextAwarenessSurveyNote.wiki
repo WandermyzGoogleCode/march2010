@@ -10,7 +10,7 @@
  * Problems of GPS
   # Slow initialization
   # High battery comsuming
-  # Not available a everywhery (according to my experience, GPS failure is very often on my Nokia N97, which make most of location-based application unavailable)
+  # Not available everywhere (according to my experience, GPS failure is very often on my Nokia N97, which make most of location-based application unavailable)
  * *IDEA* Inner-room Locating System via Ultrasound
   * Similar principle as the bat uses
   * Ultrasonic device in rooms 
