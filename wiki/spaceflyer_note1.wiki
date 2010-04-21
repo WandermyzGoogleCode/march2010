@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary 记录了一些关于硬件和用户安全的小讨论.
 #labels Type-Note
 
 = 硬件 =
