@@ -1,0 +1,34 @@
+#summary 有关Context Awareness的调研（可无视）
+ 
+ * Live'S Cube is a solution to make context-aware device more available to everyday users.
+ * Auto-detected Status (using format of `[CK00]`)
+  * Status Auto-Detection
+   * Passive context: None
+   * Active context: Noise level, current time and (maybe)location.
+   * Description: (omitted)
+ * Problems of GPS
+  # Slow initialization
+  # High battery comsuming
+  # Not available a everywhery (according to my experience, GPS failure is very often on my Nokia N97, which make most of location-based application unavailable)
+ * *IDEA* Inner-room Locating System via Ultrasound
+  * Similar principle as the bat uses
+  * Ultrasonic device in rooms 
+  * Speaker & MIC of mobile phone (ultrasound supported?)
+  * *I AM OUT* `[WJH97]`(but TOO many ultrasound arrays)
+ * Many applications is nearly imagination since there's few daily devices supporting sensors those applications require. For example:
+  * Inner-room / high-accuracy locating
+  * pressure sensing
+ * Use integrated calendar as a reference. (Only reference, since "The user, however, is not always willing or able to put her activities in the calendar and she may not always follow the calendar.". `[CK00]`
+ * In hand, on a table or in the pocket. Easy and feasible. Pattern recognition or even simple criteria (light or not; no / regular / noisy acceleration)
+  * Can be used as a feature for status auto-detection.
+ * Hardware requirements limit applications
+  * It seems that most researchers tend to focus on locating system, which usually requires using new device, developing new protocol or at least providing new application interface. Many other context-aware applications are also based on extra sensors. That is to say, these technology or application cannot be directly applied on current mobile device in a software approach. 
+  * Nevertheless, Live'S Cube is an attempt to implement context awareness via current daily device such as fashionable smart phones. 
+  * (Based on TOC of LoCA 2009, 2007, 2006 & 2005)
+ * No microphone-based context awareness??? How about noise level?
+
+
+
+=Reference=
+ * `[CK00]` Guanling Chen and David Kotz. A Survey of Context-Aware Mobile Computing Research. 2000 - Citeseer
+ * `[WJH97]` [WJH97] Andy Ward, Alan Jones, and Andy Hopper.A new location technique for the active office. IEEE Personal Communications, 4(5):42-47, October 1997.
