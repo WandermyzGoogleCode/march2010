@@ -1,4 +1,5 @@
-#summary  功能细化：基于Web的单向用户信息查询
+#summary 功能细化：基于Web的单向用户信息查询
+#labels Type-Assignment
 
 =概述=
  * 所有单向用户的信息都可以由用户通过Web来查询。
@@ -11,14 +12,14 @@
  * 首页`http://info.lives3.com/`
   # 文本框：简单搜索 -> `search.php?q=(str)`
   # 链接：高级搜索 -> `search.php`
-  # 链接：Live'S Cube官网 -> http://www.lives3.com
+  # 链接：Live'S Cube官网 -> `http://www.lives3.com`
   # 热门搜索词、最新用户之类的杂项（具体待定）
  * 高级搜索`search.php`	-> `search.php?(get_query)`
-  可以详细制定搜索条件，目前设置为：
+ 可以详细制定搜索条件，目前设置为：
    # 姓名（商户名称）（模糊搜索）
    # 状态文本（模糊搜索）
    # 分类（下拉列表框，精确搜索）
-  以后可以加上：
+ 以后可以加上：
    # 地址（按地理位置模糊搜索）
  * 搜索结果`search.php?(get_query)`
   * 显示结果列表。列表项包含姓名、状态文本（截短）和分类，链接到用户信息`profile.php?uid=(int)`
