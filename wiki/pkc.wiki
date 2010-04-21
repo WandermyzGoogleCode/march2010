@@ -1,4 +1,5 @@
 #summary PKC调查（本来上传在DOWNLOAD里面，应WANDER要求放到WIKI中）.
+#labels Type-Assignment
 
 =公钥算法=
  最近又跳出一个ECC，椭圆曲线算法。从资料中可以看出，ECC的资源消耗率很低，可以用很少的密钥长度和计算时间换来很高的安全性。因此这个是不是比RSA更有前景，更适合移动设备呢？
