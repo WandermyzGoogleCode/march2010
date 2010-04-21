@@ -1,5 +1,5 @@
 #summary 功能细化：基于Web的单向用户信息查询
-#labels Type-Assignment
+#labels Type-Assignment,Phase-Requirements
 
 <wiki:toc max_depth="3" />
 
