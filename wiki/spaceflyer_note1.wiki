@@ -1,4 +1,4 @@
-#summary 记录了一些关于硬件和用户安全的小讨论.
+#summary SpaceFlyer的小note
 #labels Type-Note
 
 = NOKIA PROPOSAL =
@@ -7,6 +7,7 @@
  * 需要的支持
 ----------
  * 创意，没有特定格式，看看官网
+ * 按文档“此次大赛将设立创业奖金、金奖、优胜奖、入围奖等数十余项奖项。”
 
 = 硬件 =
 
