@@ -1,6 +1,11 @@
 #summary 记录了一些关于硬件和用户安全的小讨论.
 #labels Type-Note
 
+= NOKIA PROPOSAL =
+ * PROPOSAL
+ * 计划
+ * 需要的支持
+
 = 硬件 =
 
 4个条件(还有一个？)
