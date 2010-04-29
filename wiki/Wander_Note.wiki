@@ -1,4 +1,5 @@
 #summary Wander's Notes
+#labels Type-Note
 
 <wiki:toc max_depth="3" />
 
@@ -7,5 +8,3 @@
  * Predicate ...
  * 主要内容：对加密过的数据（管理员不能解密）进行索引和搜索
  * 史老师提供
-
-
