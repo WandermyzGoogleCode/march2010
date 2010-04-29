@@ -1,5 +1,5 @@
 #summary Nokia创新大赛分工
-#labels Type-Note
+#labels Type-Note,Phase-NokiaInnov
 
 =李宇骞=
  * *分工、计划、需要*
