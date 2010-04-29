@@ -7,7 +7,7 @@
  * 计划
  * 需要的支持
 == 注意 ==
- * 创意，没有特定格式，看看官网
+ * 创意，没有特定格式，看看官网（http://www.nokia.com.cn/find-products/happenings/innovationjourney）
  * 按文档“此次大赛将设立创业奖金、金奖、优胜奖、入围奖等数十余项奖项。”
 == 现有的资料 ==
  * 刘洋的PROPOSAL，包含整个PhoneMe的4步走计划和产品简介，技术实现和推广计划。
