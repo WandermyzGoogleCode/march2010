@@ -1,6 +1,9 @@
 #summary SpaceFlyer的小note
 #labels Type-Note
 
+= Design =
+ 我们可能需要让用户通讯录里面不同联系人不能拥有相同的号码。考虑做一个原来合并功能的小工具，用户应该也会比较喜欢。
+
 = NOKIA PROPOSAL =
 == 内容 ==
  * PROPOSAL
