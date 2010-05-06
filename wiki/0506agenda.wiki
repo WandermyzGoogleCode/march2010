@@ -1,4 +1,5 @@
 #summary 5月6日会议议程
+#labels Type-Agenda
 
 = 设计及需求检查 =
 = 实现部分说明 =
