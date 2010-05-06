@@ -1,3 +1,4 @@
 #summary 总体框架设计
+#labels Phase-Design
 
 [http://march2010.googlecode.com/files/architecture.png]
