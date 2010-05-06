@@ -1,0 +1,4 @@
+#summary 总体框架
+
+[http://march2010.googlecode.com/files/architecture.eps]
+[http://march2010.googlecode.com/files/architecture.png]
