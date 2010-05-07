@@ -7,6 +7,8 @@
 
 #ifndef DATA_H_
 
+#include "crypto.h"
+
 typedef long long 			int64;
 typedef unsigned long long 	uint64;
 typedef uint64				PhoneNumber;
@@ -32,10 +34,6 @@ struct Index
 	unsigned char d[INDEX_LENGTH];
 };
 
-struct PrivateKey{};//TODO Undefined
-
-struct PublicKey{};//TODO Undefined
-
 //Size about 3KB-4KB
 struct UserEntry
 {
@@ -46,6 +44,11 @@ struct UserEntry
 	PhoneNumber connection[MAX_CONNECTION];
 	char name[MAX_NAME_LENGTH];
 	char status[MAX_STATUS_LENGTH];
+
+	//We may add some invalid users into the database
+	//to make sure no one can tell which real phone numbers
+	//are using our system
+	bool valid;
 
 	uint64 randPadding;
 };
