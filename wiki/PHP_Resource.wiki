@@ -1,0 +1,18 @@
+#summary PHP相关资源、C#的HTTP相关资源
+#labels Type-Resource,Phase-Server,Phase-Client
+
+=PHP=
+ * [http://www.php.net/manual/en/ PHP Mannual]
+  * 语法和函数库等。提示：正文后面的User Contributed Notes有时会很有用！
+ * [http://devzone.zend.com/node/view/id/1021 Extension Writing Part I]
+  * 如何为PHP写扩展，这是第一部分。此页面有到其它部分的链接。
+ * [http://www.amazon.com/dp/067232704X/?tag=stackoverfl08-20 Extending and Embedding PHP]
+  * 介绍PHP扩展的书。貌似和上面的链接是同一个作者。 
+ * [http://us2.php.net/manual/en/function.base64-encode.php base64_encode]
+  * 将二进制数据转换为GET和POST可以直接接受的形式（字符串），转换后大小约增大33%。
+
+=C#中的HTTP客户端API=
+ * [http://en.csharp-online.net/HTTP_Post HTTP Post at C#]
+  * 如何用C#以POST方式提交HTTP数据
+ * [http://developer.nirvanix.com/forums/p/56/126.aspx C# Http Post Example]
+  * 如何用C#通过HTTP上传二进制附件
