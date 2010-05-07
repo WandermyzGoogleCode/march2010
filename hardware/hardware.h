@@ -15,16 +15,19 @@
  * Of course, that's the requirement for the
  * real hardware, not simulation.
  */
-class SafeCore
-{
+class SafeCore {
 private:
 	/*
 	 * initKey: 	the initial private key
+	 */
+	PrivateKey initKey;
+
+	/*
 	 * currentKey: 	the private key used now for symmetric encryption.
 	 * 				note that asymmetric encryption always uses initKey as private key
 	 * nextKey: 	the private key used in next generation
 	 */
-	PrivateKey initKey, currentKey, nextKey;
+	SymmetricKey currentKey, nextKey;
 
 	/*
 	 * currentCounter:
@@ -54,7 +57,9 @@ public:
 	 */
 	static const int MAX_COUNT = 1000000;
 
-	int getCurrentCounter(){ return currentCounter; }
+	int getCurrentCounter() {
+		return currentCounter;
+	}
 
 	//factory method
 	static SafeCore* makeSafeCore(const PrivateKey& initKey);
@@ -92,20 +97,19 @@ public:
 	 * @param updated
 	 * 		See the description of threshold.
 	 */
-	bool getUpdateEntry(
-			const UserEntry& operateUser,
-			const UserEntry& targetUser,
-			UpdateEntry& res,
-			TimeType threshold,
-			bool& updated
-	);
+	bool getUpdateEntry(const UserEntry& operateUser,
+			const UserEntry& targetUser, UpdateEntry& res, TimeType threshold,
+			bool& updated);
 
 	/*
 	 * a leak operation
 	 *
 	 * @return
-	 * 		false when operations failed, true otherwise. The failure is
-	 * 		caused by: 1. currentCounter too large
+	 * 		0 when operations failed, the hardware time when this
+	 * 		operation is successfully done otherwise. The time
+	 * 		is identical to the updateTime inside the outputEntry
+	 * 		(however, outputEntry is encrypted so you don't know it).
+	 * 		The failure is caused by: 1. currentCounter too large
 	 *
 	 * @param inputEntry
 	 * 		the userEntry that is asymmetrically encrypted by SafeCore's public key
@@ -122,7 +126,47 @@ public:
 	 * The updateTime of outputEntry will be set up using the
 	 * clock inside the hardware.(This is for incremental update)
 	 */
-	bool makeUserEntry(const UserEntry& inputEntry, UserEntry& outputEntry);
+	TimeType makeNewUserEntry(const UserEntry& inputEntry,
+			UserEntry& outputEntry);
+
+	/*
+	 * a leak operation
+	 *
+	 * @return
+	 * 		0 when operations failed, the hardware time when this
+	 * 		operation is successfully done otherwise. The time
+	 * 		is identical to the updateTime inside the outputEntry
+	 * 		(however, outputEntry is encrypted so you don't know it).
+	 * 		The failure is caused by: 1. currentCounter too large
+	 *
+	 * @param oldEntry
+	 *		the old userEntry that is encrypted symmetrically by SafeCore's currentKey.
+	 *		This is to ensure that the update operation is originated by the
+	 *		real user. We will check whether inputEntry is encrypted by oldEntry's
+	 *		private key(a signature).
+	 *
+	 * @param inputEntry
+	 * 		the userEntry that is asymmetrically encrypted by SafeCore's public key,
+	 * 		and then asymmetrically encrypted by user's private key as a signature.
+	 *
+	 * @param outputEntry
+	 * 		the entry we need, which is encrypted symmetrically by SafeCore's currentKey
+	 *
+	 * Note that our system is not that secured. Once someone know your phone number
+	 * and he also knows your friend's phone number, he may become an impostor and
+	 * get your friend's information. However, that's not the security we are concerned about
+	 * because the impostor already know the phone number of yours and your friends'.
+	 * However, even we can't ensure this security in such a high alert level(by hardware),
+	 * we may ensure it by administrator and our software system.
+	 *
+	 * However, we make sure that once you are registered, no one can be an impostor
+	 * to change your profile, using the mechanism of signature.
+	 *
+	 * The updateTime of outputEntry will be set up using the
+	 * clock inside the hardware.(This is for incremental update)
+	 */
+	TimeType makeUpdateUserEntry(const UserEntry& oldEntry,
+			const UserEntry& inputEntry, UserEntry& outputEntry);
 
 	/*
 	 * a non-leak operation
@@ -136,7 +180,8 @@ public:
 	 * And the lastRefreshIndex will be set to the larger one of firstIndex and
 	 * secondIndex in input.
 	 */
-	void refreshEntries(Index& firstIndex, UserEntry& firstEntry, Index& secondIndex, UserEntry& secondEntry);
+	void refreshEntries(Index& firstIndex, UserEntry& firstEntry,
+			Index& secondIndex, UserEntry& secondEntry);
 
 	/*
 	 * a non-leak operation
@@ -156,6 +201,5 @@ public:
 };
 
 #define HARDWARE_H_
-
 
 #endif /* HARDWARE_H_ */
