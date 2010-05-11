@@ -3,7 +3,19 @@
  * 系统首页，负责所有HTTP请求的分发操作
  * 该页面可通过http://server.lives.net或者http://info.lives.net（名字待定，分别代表手机服务器端以及网页端）访问。域名将作为第一级操作指令。
  * 第二级操作指令通过GET方法存储在名为op的变量中。
- * 当第一季操作指令为server（手机服务器端）时，op的值代表：
- * 		1 :		
+ * 所有操作所需的参数或数据通过GET方法或POST方法传送，具体定义见对应的inc文件
+ * 当第一级操作指令为server（手机服务器端）时，op的值代表：
+ * 		11 : 	register 用户注册 (mobil_register.inc.php)
+ * 		12 :	update 用户更新自己的信息(mobil_update.inc.php)
+ * 		13 :	getUpdatePackage 用户获取自己联系人的最新信息	(mobil_getUpdatePackage.inc.php)
+ * 当第一级操作指令为info（网页端）时，op值代表：
+ * 		21 :	search 搜索单向用户 (web_search.inc.php)
+ * 		22 :	profile 单向用户信息 (web_profile.inc.php)
+ * 		23 :	register 单向用户注册 (web_register.inc.php)（目前仅对管理团队开放）
+ * 		24 :	review 处理用户反馈 (web_review.inc.php)
  */
+
+define('IN_LIVES_CUBE', 1);
+include "common.inc.php";
+
 ?>
