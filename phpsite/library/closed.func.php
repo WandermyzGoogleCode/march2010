@@ -1,37 +1,37 @@
 <?php
 
 /*
- * ×¢Òâ£¬ÒÔÏÂÓÃµ½µÄEncryptedPhoneNumber, UserEntry, UpdateRequest, UpdatePackage
- * È«²¿ÊÇÓÃCÓïÑÔ¶¨ÒåµÄstruct£¬¾ßÌå¼ûdata.h¡£
+ * æ³¨æ„ï¼Œä»¥ä¸‹ç”¨åˆ°çš„EncryptedPhoneNumber, UserEntry, UpdateRequest, UpdatePackage
+ * å…¨éƒ¨æ˜¯ç”¨Cè¯­è¨€å®šä¹‰çš„structï¼Œå…·ä½“è§data.hã€‚
  * 
- * ²»ÖªµÀÈçºÎÈÃphpÖÐÒ²¿ÉÒÔ´¦ÀíÕâÖÖ´¿2½øÖÆÊý¾Ý£¿
+ * ä¸çŸ¥é“å¦‚ä½•è®©phpä¸­ä¹Ÿå¯ä»¥å¤„ç†è¿™ç§çº¯2è¿›åˆ¶æ•°æ®ï¼Ÿ
  */
 
 /**
- * ÓÃ»§×¢²á
- * @param $encryptedPhoneNumber ¼ÓÉÏPADDING²¢ÓÃ·þÎñÆ÷¹«Ô¿×ö¼ÓÃÜºóµÃµ½µÄEncryptedPhoneNumber
- * @param $userEntry ÓÃ·þÎñÆ÷¹«Ô¿×ö¼ÓÃÜºóµÃµ½µÄUserEntry
- * @return Íê³É×¢²áµÄUnix timestamp£¬0±íÊ¾Ê§°Ü
+ * ç”¨æˆ·æ³¨å†Œ
+ * @param $encryptedPhoneNumber åŠ ä¸ŠPADDINGå¹¶ç”¨æœåŠ¡å™¨å…¬é’¥åšåŠ å¯†åŽå¾—åˆ°çš„EncryptedPhoneNumber
+ * @param $userEntry ç”¨æœåŠ¡å™¨å…¬é’¥åšåŠ å¯†åŽå¾—åˆ°çš„UserEntry
+ * @return å®Œæˆæ³¨å†Œçš„Unix timestampï¼Œ0è¡¨ç¤ºå¤±è´¥
  */
 function register($encryptedPhoneNumber, $userEntry){
 	//TODO
 }
 
 /**
- * ÓÃ»§¸üÐÂ×Ô¼ºµÄÐÅÏ¢
- * @param $encryptedPhoneNumber ¼ÓÉÏPADDING²¢ÓÃ·þÎñÆ÷¹«Ô¿×ö¼ÓÃÜºóµÃµ½µÄEncryptedPhoneNumber
- * @param $userEntry ÏÈÓÃ·þÎñÆ÷¹«Ô¿×ö¼ÓÃÜ£¬ÔÙÓÃÓÃ»§×Ô¼ºµÄË½Ô¿¼ÓÃÜºóµÃµ½µÄUserEntry
- * @return Íê³É×¢²áµÄUnix timestamp£¬0±íÊ¾Ê§°Ü
+ * ç”¨æˆ·æ›´æ–°è‡ªå·±çš„ä¿¡æ¯
+ * @param $encryptedPhoneNumber åŠ ä¸ŠPADDINGå¹¶ç”¨æœåŠ¡å™¨å…¬é’¥åšåŠ å¯†åŽå¾—åˆ°çš„EncryptedPhoneNumber
+ * @param $userEntry å…ˆç”¨æœåŠ¡å™¨å…¬é’¥åšåŠ å¯†ï¼Œå†ç”¨ç”¨æˆ·è‡ªå·±çš„ç§é’¥åŠ å¯†åŽå¾—åˆ°çš„UserEntry
+ * @return å®Œæˆæ³¨å†Œçš„Unix timestampï¼Œ0è¡¨ç¤ºå¤±è´¥
  */
 function update($encryptedPhoneNumber, $userEntry){
 	//TODO
 }
 
 /**
- * ÓÃ»§»ñÈ¡×Ô¼ºÁªÏµÈËµÄ×îÐÂÐÅÏ¢
- * @param $encryptedPhoneNumber ¼ÓÉÏPADDING²¢ÓÃ·þÎñÆ÷¹«Ô¿×ö¼ÓÃÜºóµÃµ½µÄEncryptedPhoneNumber
- * @param $updateRequest ÆÕÍ¨µÄUpdateRequest£¬ÆäÖÐ°üº¬ÁËÐèÒª»ñµÃÄÄÐ©ÁªÏµÈËµÄ×îÐÂÐÅÏ¢
- * @return »ñµÃµÄUpdatePackage£¬°üº¬ÁË¸üÐÂ¹ýµÄÁªÏµÈËÐÅÏ¢£¨ÒÑ¾­×öÁËÊ±¼äÔöÁ¿´¦Àí£©
+ * ç”¨æˆ·èŽ·å–è‡ªå·±è”ç³»äººçš„æœ€æ–°ä¿¡æ¯
+ * @param $encryptedPhoneNumber åŠ ä¸ŠPADDINGå¹¶ç”¨æœåŠ¡å™¨å…¬é’¥åšåŠ å¯†åŽå¾—åˆ°çš„EncryptedPhoneNumber
+ * @param $updateRequest æ™®é€šçš„UpdateRequestï¼Œå…¶ä¸­åŒ…å«äº†éœ€è¦èŽ·å¾—å“ªäº›è”ç³»äººçš„æœ€æ–°ä¿¡æ¯
+ * @return èŽ·å¾—çš„UpdatePackageï¼ŒåŒ…å«äº†æ›´æ–°è¿‡çš„è”ç³»äººä¿¡æ¯ï¼ˆå·²ç»åšäº†æ—¶é—´å¢žé‡å¤„ç†ï¼‰
  */
 function getUpdatePackage($encryptedPhoneNumber, $updateRequest){
 	//TODO

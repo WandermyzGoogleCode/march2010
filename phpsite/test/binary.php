@@ -1,6 +1,11 @@
 <?php
 	$binstr = pack("L*", 1, 2, 3);	
 	
+	$base64 = base64_encode($binstr);
+	//echo $base64;
+	$decoded = base64_decode($base64);
+	
+	
 	
 	header('Content-Description: File Transfer');
 	header('Content-Type: application/octet-stream');
@@ -12,5 +17,6 @@
     ob_clean();
     flush();
     
-    echo $binstr;
+    echo $decoded;
+    
 ?>
