@@ -7,7 +7,7 @@
   * include 存放会被其他文件include的文件。该文件夹中的文件被include之后，其内容会被直接执行，因为这些文件中存在写在函数或类定义之外的语句。
   * configuration 存放配置文件
   * index.php 根目录下唯一的PHP文件，也是唯一可直接由HTTP访问的文件。所有HTTP请求通过该文件分发到include中的各inc文件中。index.php的GET和POST接口见该文件的注释。
- * http://server.lives3.net（手机服务器端）和http://info.lives3.net（网页端）均会指向index.php。index.php将根据域名做第一级指令分类。index.php的GET查询中包含了第二级指令分类。
+ * `http://server.lives3.net`（手机服务器端）和`http://info.lives3.net`（网页端）均会指向index.php。index.php将根据域名做第一级指令分类。index.php的GET查询中包含了第二级指令分类。
 
 =命名规范=
  * 类定义文件：{class_name}.class.php，存入library文件夹。
@@ -20,4 +20,3 @@
  * 服务器上的SVN不知为什么连不上，我暂时把工程放在了[https://march2010.googlecode.com/svn/trunk/phpsite]
  * 请用eclipse的插件subclipse从上述地址checkout我们的工程。
  * 服务器上的SVN修复后，应该可以用subclipse提供的“切换/Switch”功能换到服务器的SVN上。
-
