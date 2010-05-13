@@ -78,6 +78,13 @@ void symmetricallyEncrypt(void* data, int data_size, const SymmetricKey& key);
  */
 void symmetricallyDecrypt(void* data, int data_size, const SymmetricKey& key);
 
+/*
+ * The following three generate functions should satisfy:
+ * 	1. Same input, same output
+ *  2. Without knowing the input, it's very hard to know the output
+ *  3. The input and output key should be legal to their definition
+ */
+
 //use the codeword input by user to generate a private key
 PrivateKey generatePrivateKey(const std::string& codeword);
 
