@@ -140,7 +140,7 @@ class MySqlImproved
 	}
 	
 	/**
-	 * 返回上一次查询时的错误信息
+	 * 返回上一次查询时的错误信息 TODO：如果没错呢？
 	 */
 	function error()
 	{
