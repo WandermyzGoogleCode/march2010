@@ -42,6 +42,8 @@ class Binary
 		
 	}
 	
+	//TODO: unpack
+	
 	/**
 	 * 编码成base64数据
 	 */
