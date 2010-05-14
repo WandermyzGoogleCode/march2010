@@ -3,6 +3,8 @@
  *
  *  Created on: 2010-5-8
  *      Author: spaceflyer
+ *  Modified on: 2010-5-14
+ *  	Author: skywalker
  */
 
 #ifndef CRYPTO_H_
