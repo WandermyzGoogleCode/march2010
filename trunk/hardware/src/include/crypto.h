@@ -27,7 +27,7 @@ struct SymmetricKey{};//TODO You should specify the detailed members and structu
  * @param key
  * 		the key used
  */
-void encryptByPublicKey(void* data, int data_size, const PublicKey& key);
+void encryptByPublicKey(unsigned char* data, int data_size, const PublicKey& key);
 
 /*
  * @param data
@@ -37,7 +37,7 @@ void encryptByPublicKey(void* data, int data_size, const PublicKey& key);
  * @param key
  * 		the key used
  */
-void decryptByPublicKey(void* data, int data_size, const PublicKey& key);
+void decryptByPublicKey(unsigned char* data, int data_size, const PublicKey& key);
 
 //data encrypted by private key can only be decrypted by public key
 /*
@@ -48,7 +48,7 @@ void decryptByPublicKey(void* data, int data_size, const PublicKey& key);
  * @param key
  * 		the key used
  */
-void encryptByPrivateKey(void* data, int data_size, const PrivateKey& key);
+void encryptByPrivateKey(unsigned char* data, int data_size, const PrivateKey& key);
 
 /*
  * @param data
@@ -58,7 +58,7 @@ void encryptByPrivateKey(void* data, int data_size, const PrivateKey& key);
  * @param key
  * 		the key used
  */
-void decryptByPrivateKey(void* data, int data_size, const PrivateKey& key);
+void decryptByPrivateKey(unsigned char* data, int data_size, const PrivateKey& key);
 
 /*
  * @param data
@@ -68,7 +68,7 @@ void decryptByPrivateKey(void* data, int data_size, const PrivateKey& key);
  * @param key
  * 		the key used
  */
-void symmetricallyEncrypt(void* data, int data_size, const SymmetricKey& key);
+void symmetricallyEncrypt(unsigned char* data, int data_size, const SymmetricKey& key);
 
 /*
  * @param data
@@ -78,7 +78,7 @@ void symmetricallyEncrypt(void* data, int data_size, const SymmetricKey& key);
  * @param key
  * 		the key used
  */
-void symmetricallyDecrypt(void* data, int data_size, const SymmetricKey& key);
+void symmetricallyDecrypt(unsigned char* data, int data_size, const SymmetricKey& key);
 
 /*
  * The following three generate functions should satisfy:
