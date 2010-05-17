@@ -12,6 +12,13 @@
 
 #include <string>
 
+/**
+ * just a buffer 256 bytes
+ */
+struct B256{
+	char b[256];
+};
+
 struct PrivateKey{};//TODO You should specify the detailed members and structure.
 
 struct PublicKey{};//TODO You should specify the detailed members and structure.
@@ -27,7 +34,7 @@ struct SymmetricKey{};//TODO You should specify the detailed members and structu
  * @param key
  * 		the key used
  */
-void encryptByPublicKey(unsigned char* data, int data_size, const PublicKey& key);
+void encryptByPublicKey(B256* block, const PublicKey& key);
 
 /*
  * @param data
@@ -37,7 +44,7 @@ void encryptByPublicKey(unsigned char* data, int data_size, const PublicKey& key
  * @param key
  * 		the key used
  */
-void decryptByPublicKey(unsigned char* data, int data_size, const PublicKey& key);
+void decryptByPublicKey(B256* data, const PublicKey& key);
 
 //data encrypted by private key can only be decrypted by public key
 /*
@@ -48,7 +55,7 @@ void decryptByPublicKey(unsigned char* data, int data_size, const PublicKey& key
  * @param key
  * 		the key used
  */
-void encryptByPrivateKey(unsigned char* data, int data_size, const PrivateKey& key);
+void encryptByPrivateKey(B256* data, const PrivateKey& key);
 
 /*
  * @param data
@@ -58,7 +65,7 @@ void encryptByPrivateKey(unsigned char* data, int data_size, const PrivateKey& k
  * @param key
  * 		the key used
  */
-void decryptByPrivateKey(unsigned char* data, int data_size, const PrivateKey& key);
+void decryptByPrivateKey(B256* data, const PrivateKey& key);
 
 /*
  * @param data
