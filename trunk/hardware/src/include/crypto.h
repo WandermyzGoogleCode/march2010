@@ -140,4 +140,6 @@ SymmetricKey generateSymmetricKey(const PrivateKey& key);
 //This function should be determinant.
 SymmetricKey generateNextKey(const SymmetricKey& key);
 
+PublicKey getPublicKey(const PrivateKey& key);
+
 #endif /* CRYPTO_H_ */
