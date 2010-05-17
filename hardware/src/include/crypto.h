@@ -11,81 +11,117 @@
 #define CRYPTO_H_
 
 #include <string>
+#include <openssl/rsa.h>
 
 /**
  * just a buffer 256 bytes
  */
-struct B256{
-	char b[256];
+struct B256
+{
+	unsigned char b[256];
 };
 
-struct PrivateKey{};//TODO You should specify the detailed members and structure.
+struct PrivateKey
+{
+	// RSA key, including both public components and private components and
+	// private components, and also big prime p and q which speed up the
+	// calculation. Struct RSA is from OpenSSL.
+	RSA *rsaKey;
+};
 
-struct PublicKey{};//TODO You should specify the detailed members and structure.
+struct PublicKey
+{
+	// only public components of struct RSA are included here
+	BIGNUM *e;
+	BIGNUM *n;
+};
 
-struct SymmetricKey{};//TODO You should specify the detailed members and structure.
+struct SymmetricKey
+{
+	int len; // the length of the symmetric key
+	unsigned char* keycode; // the content of the symmetric key
+};
+
+/**
+ * for all the routines below, size refers to number of bytes of data, not bits!
+ */
 
 //data encrypted by public key can only be decrypted by private key
 /*
  * @param data
  * 		the binary data that should be processed.
- * @param data size
+ * @param data_size
  *		the size of data. You may specify additional condition to the size and discuss with us.
  * @param key
  * 		the key used
+ * @return
+ * 		whether the operation is successful
+ *
+ * Special Note: data_size should be 512 exactly, while the size of useful data should be smaller
+ *               than 470. If we use 256-bit
  */
-void encryptByPublicKey(B256* block, const PublicKey& key);
+bool encryptByPublicKey(B256* block, const PublicKey& key);
 
 /*
  * @param data
  * 		the binary data that should be processed.
- * @param data size
+ * @param data_size
  *		the size of data. You may specify additional condition to the size and discuss with us.
  * @param key
  * 		the key used
+ * @return
+ * 		whether the operation is successful
  */
-void decryptByPublicKey(B256* data, const PublicKey& key);
+bool verifyByPublicKey(B256* block, B256* sig, const PublicKey& key);
 
 //data encrypted by private key can only be decrypted by public key
 /*
  * @param data
  * 		the binary data that should be processed.
- * @param data size
+ * @param data_size
  *		the size of data. You may specify additional condition to the size and discuss with us.
  * @param key
  * 		the key used
+ * @return
+ * 		whether the operation is successful
  */
-void encryptByPrivateKey(B256* data, const PrivateKey& key);
+bool signByPrivateKey(B256* data, const PrivateKey& key);
 
 /*
  * @param data
  * 		the binary data that should be processed.
- * @param data size
+ * @param data_size
  *		the size of data. You may specify additional condition to the size and discuss with us.
  * @param key
  * 		the key used
+ * @return
+ * 		whether the operation is successful
  */
-void decryptByPrivateKey(B256* data, const PrivateKey& key);
+bool decryptByPrivateKey(B256* data, const PrivateKey& key);
 
 /*
  * @param data
  * 		the binary data that should be processed.
- * @param data size
+ * @param data_size
  *		the size of data. You may specify additional condition to the size and discuss with us.
  * @param key
  * 		the key used
+ * @return
+ * 		whether the operation is successful
  */
-void symmetricallyEncrypt(unsigned char* data, int data_size, const SymmetricKey& key);
+bool symmetricallyEncrypt(unsigned char* data, int data_size, const SymmetricKey& key);
 
 /*
  * @param data
  * 		the binary data that should be processed.
- * @param data size
+ * @param data_size
  *		the size of data. You may specify additional condition to the size and discuss with us.
  * @param key
  * 		the key used
+ * @return
+ * 		whether the operation is successful
  */
-void symmetricallyDecrypt(unsigned char* data, int data_size, const SymmetricKey& key);
+bool symmetricallyDecrypt(unsigned char* data, int data_size, const SymmetricKey& key);
 
 /*
  * The following three generate functions should satisfy:
@@ -103,8 +139,5 @@ SymmetricKey generateSymmetricKey(const PrivateKey& key);
 //Generate next symmetric key according to the current key.
 //This function should be determinant.
 SymmetricKey generateNextKey(const SymmetricKey& key);
-
-//Get the public key of the given private key.
-PublicKey getPublicKey(const PrivateKey& key);
 
 #endif /* CRYPTO_H_ */
