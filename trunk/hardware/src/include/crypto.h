@@ -48,78 +48,76 @@ struct SymmetricKey
 
 //data encrypted by public key can only be decrypted by private key
 /*
- * @param data
- * 		the binary data that should be processed.
- * @param data_size
- *		the size of data. You may specify additional condition to the size and discuss with us.
+ * @param block
+ * 		contains the binary data that should be processed.
  * @param key
  * 		the key used
  * @return
  * 		whether the operation is successful
  *
- * Special Note: data_size should be 512 exactly, while the size of useful data should be smaller
- *               than 470. If we use 256-bit
+ * Special Note: data size should be 256 exactly. And this function is only used to
+ *               encrypt 32-byte symmetric key.
  */
 bool encryptByPublicKey(B256* block, const PublicKey& key);
 
 /*
- * @param data
- * 		the binary data that should be processed.
- * @param data_size
- *		the size of data. You may specify additional condition to the size and discuss with us.
+ * @param block
+ * 		contains the decrypted symmetric key
+ * @param sig
+ *      the buffer which holds the signature for block
  * @param key
  * 		the key used
  * @return
- * 		whether the operation is successful
+ * 		whether verification is successful
+ *
+ * Special Note: sig is exactly generated in function signByPublicKey
  */
 bool verifyByPublicKey(B256* block, B256* sig, const PublicKey& key);
 
 //data encrypted by private key can only be decrypted by public key
 /*
- * @param data
- * 		the binary data that should be processed.
- * @param data_size
- *		the size of data. You may specify additional condition to the size and discuss with us.
+ * @param block
+ * 		contains the binary data that should be processed.
  * @param key
  * 		the key used
  * @return
  * 		whether the operation is successful
  */
-bool signByPrivateKey(B256* data, const PrivateKey& key);
+bool signByPrivateKey(B256* block, const PrivateKey& key);
 
 /*
- * @param data
- * 		the binary data that should be processed.
- * @param data_size
- *		the size of data. You may specify additional condition to the size and discuss with us.
+ * @param block
+ * 		contains the binary data that should be processed.
  * @param key
  * 		the key used
  * @return
  * 		whether the operation is successful
  */
-bool decryptByPrivateKey(B256* data, const PrivateKey& key);
+bool decryptByPrivateKey(B256* block, const PrivateKey& key);
 
 /*
- * @param data
- * 		the binary data that should be processed.
- * @param data_size
- *		the size of data. You may specify additional condition to the size and discuss with us.
+ * @param block
+ * 		contains the binary data that should be processed.
  * @param key
  * 		the key used
  * @return
  * 		whether the operation is successful
+ *
+ * Special Note: data_size should be multiple of 16, while the size of useful data in 'data' should
+ *               be smaller than data_size
  */
 bool symmetricallyEncrypt(unsigned char* data, int data_size, const SymmetricKey& key);
 
 /*
- * @param data
- * 		the binary data that should be processed.
- * @param data_size
- *		the size of data. You may specify additional condition to the size and discuss with us.
+ * @param block
+ * 		contains the binary data that should be processed.
  * @param key
  * 		the key used
  * @return
  * 		whether the operation is successful
+ *
+ * Special Note: data should be exactly generated from 'symmetricallyEncrypt', whose size is multiple of 16.
+ *               so you don't need to take care of padding
  */
 bool symmetricallyDecrypt(unsigned char* data, int data_size, const SymmetricKey& key);
 
@@ -140,6 +138,7 @@ SymmetricKey generateSymmetricKey(const PrivateKey& key);
 //This function should be determinant.
 SymmetricKey generateNextKey(const SymmetricKey& key);
 
+// Get the public key from private key
 PublicKey getPublicKey(const PrivateKey& key);
 
 #endif /* CRYPTO_H_ */
