@@ -23,6 +23,11 @@ private:
 	PrivateKey initKey;
 
 	/*
+	 * the public key of initKey
+	 */
+	PublicKey pubKey;
+
+	/*
 	 * currentKey: 	the private key used now for symmetric encryption.
 	 * 				note that asymmetric encryption always uses initKey as private key
 	 * nextKey: 	the private key used in next generation
@@ -197,7 +202,9 @@ public:
 	 *
 	 * Just to get the public key of SafeCore
 	 */
-	PublicKey getPublicKey();
+	PublicKey getPublicKey(){
+		return pub
+	}
 };
 
 #define HARDWARE_H_
