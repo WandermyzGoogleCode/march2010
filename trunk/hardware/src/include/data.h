@@ -10,6 +10,7 @@
 #include "crypto.h"
 #include <assert.h>
 
+typedef unsigned char		BYTE;
 typedef long long 			int64;
 typedef unsigned long long 	uint64;
 typedef uint64				PhoneNumber;
@@ -33,15 +34,25 @@ struct EncryptedPhoneNumber
 struct Index
 {
 	unsigned char b[INDEX_LENGTH];
+
+	int compare(const Index& x){
+		for(int i=0; i<INDEX_LENGTH; i++)
+			if (b[i] != x.b[i])
+				return ((int)b[i]-x.b[i]);
+		return 0;
+	}
 };
 
 //Size about 3KB-4KB
 struct UserEntry
 {
+	static const int RAND_PADDING_SIZE = 3;
+
 	PublicKey pubKey;//The public key of this user
 	PhoneNumber myNumber;//The phone number of this user
 
 	TimeType updateTime;
+	int nOfConnection;
 	PhoneNumber connection[MAX_CONNECTION];
 	char name[MAX_NAME_LENGTH];
 	char status[MAX_STATUS_LENGTH];
@@ -51,7 +62,7 @@ struct UserEntry
 	//are using our system
 	bool valid;
 
-	char randPadding[3];
+	char randPadding[RAND_PADDING_SIZE];
 
 	B256 symKey;//a symKey or an asymmetrically encrypted symKey
 
@@ -65,7 +76,7 @@ struct UserEntry
 	 *
 	 * the remains are signature and symKey.
 	 */
-	int validSize(){
+	static int validSize(){
 		int res = sizeof(UserEntry)-2*sizeof(B256);
 		assert(res%16 == 0);//for symmetrically encryption
 		return res;
@@ -75,11 +86,13 @@ struct UserEntry
 //Size: 1KB+40BYTE
 struct UpdateEntry
 {
+	static const int RAND_PADDING_SIZE = 8;
+
 	PhoneNumber phone;
 	char name[MAX_NAME_LENGTH];
 	char status[MAX_STATUS_LENGTH];
 
-	char randPadding[8];
+	char randPadding[RAND_PADDING_SIZE];
 
 	B256 symKey;//a symKey or an asymmetrically encrypted symKey
 
@@ -88,7 +101,7 @@ struct UpdateEntry
 	 *
 	 * the remains is symKey.
 	 */
-	int validSize(){
+	static int validSize(){
 		int res = sizeof(UpdateEntry)-sizeof(B256);
 		assert(res%16 == 0);//for symmetrically encryption
 		return res;

@@ -9,8 +9,8 @@
  *  	Author: skywalker
  */
 
-#include "crypto.h"
-#include "aux.h"
+#include "../include/crypto.h"
+#include "../include/aux.h"
 #include <openssl/sha.h>
 #include <openssl/ssl.h>
 #include <stdlib.h>
@@ -257,4 +257,7 @@ PublicKey getPublicKey(const PrivateKey& key)
 
 	return res;
 }
+
+//TODO
+SymmetricKey generateRandomSymmetricKey(){}
 

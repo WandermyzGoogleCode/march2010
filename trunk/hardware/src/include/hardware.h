@@ -8,6 +8,10 @@
 #ifndef HARDWARE_H_
 
 #include "data.h"
+#include "crypto.h"
+#include "lock.h"
+#include <assert.h>
+#include <stdio.h>
 
 /*
  * All private things can only be
@@ -53,6 +57,18 @@ private:
 	//Only private constructor
 	SafeCore(const PrivateKey& initKey);
 
+	//Only to load
+	SafeCore() {
+	}
+
+	void clearGeneration();
+
+	TimeType makeUserEntry(UserEntry& outputEntry);
+
+	TimeType getTimeNow();
+
+	void fillRandPadding(void* p, int size);
+
 public:
 	/*
 	 * The maximum number that one key can be used to
@@ -67,7 +83,23 @@ public:
 	}
 
 	//factory method
-	static SafeCore* makeSafeCore(const PrivateKey& initKey);
+	static void makeSafeCore(FILE* file, const PrivateKey& initKey) {
+		SafeCore core(initKey);
+		assert(fwrite(&core, sizeof(SafeCore), 1, file) == 1);
+	}
+
+	/*
+	 * load a SafeCore from a file.
+	 *
+	 * In real hardware, this is not needed, since everything should
+	 * be stored in hardware.
+	 *
+	 *
+	 */
+	static SafeCore* loadSafeCore(FILE* file) {
+		SafeCore* res = new SafeCore;
+		assert(fread(res, sizeof(SafeCore), 1, file) == 1);
+	}
 
 	/* a leak operation
 	 *
@@ -121,12 +153,8 @@ public:
 	 * @param outputEntry
 	 * 		the entry we need, which is encrypted symmetrically by SafeCore's currentKey
 	 *
-	 * Note that our system is not that secured. Once someone know your phone number
-	 * and he also knows your friend's phone number, he may become an impostor and
-	 * get your friend's information. However, that's not the security we are concerned about
-	 * because the impostor already know the phone number of yours and your friends'.
-	 * However, even we can't ensure this security in such a high alert level(by hardware),
-	 * we may ensure it by administrator and our software system.
+	 * Even someone know your phone number, he can't retrieve your friend's information
+	 * without knowing your private key.
 	 *
 	 * The updateTime of outputEntry will be set up using the
 	 * clock inside the hardware.(This is for incremental update)
@@ -157,12 +185,8 @@ public:
 	 * @param outputEntry
 	 * 		the entry we need, which is encrypted symmetrically by SafeCore's currentKey
 	 *
-	 * Note that our system is not that secured. Once someone know your phone number
-	 * and he also knows your friend's phone number, he may become an impostor and
-	 * get your friend's information. However, that's not the security we are concerned about
-	 * because the impostor already know the phone number of yours and your friends'.
-	 * However, even we can't ensure this security in such a high alert level(by hardware),
-	 * we may ensure it by administrator and our software system.
+	 * Even someone know your phone number, he can't retrieve your friend's information
+	 * without knowing your private key.
 	 *
 	 * However, we make sure that once you are registered, no one can be an impostor
 	 * to change your profile, using the mechanism of signature.
@@ -202,8 +226,8 @@ public:
 	 *
 	 * Just to get the public key of SafeCore
 	 */
-	PublicKey getPublicKey(){
-		return pub
+	PublicKey getPublicKey() {
+		return pubKey;
 	}
 };
 
