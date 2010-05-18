@@ -5,12 +5,12 @@
  *      Author: skywalker
  */
 
-#include "crypto.h"
+#include "../include/crypto.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <string>
-#include "aux.h"
+#include "../include/aux.h"
 
 int main()
 {

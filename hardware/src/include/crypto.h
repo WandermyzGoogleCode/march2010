@@ -141,4 +141,7 @@ SymmetricKey generateNextKey(const SymmetricKey& key);
 // Get the public key from private key
 PublicKey getPublicKey(const PrivateKey& key);
 
+// Generate a random symmetric key.
+SymmetricKey generateRandomSymmetricKey();
+
 #endif /* CRYPTO_H_ */
