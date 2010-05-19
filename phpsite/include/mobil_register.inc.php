@@ -10,7 +10,7 @@
  * 		内容：完成注册的Unix timestamp，0表示失败
  */
 
-if(!defined(IN_LIVES_CUBE))
+if(!defined('IN_LIVES_CUBE'))
 {
 	exit("Access Denied");
 }

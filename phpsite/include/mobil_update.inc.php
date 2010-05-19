@@ -9,7 +9,7 @@
  * 		内容：完成更新的Unix timestamp，0表示失败
  */
 
-if(!defined(IN_LIVES_CUBE))
+if(!defined('IN_LIVES_CUBE'))
 {
 	exit("Access Denied");
 }

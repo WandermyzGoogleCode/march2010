@@ -8,7 +8,7 @@
  *	内容： 获得的UpdatePackage，包含了更新过的联系人信息（已经做了时间增量处理）（不使用base64编码！）
  */
 
-if(!defined(IN_LIVES_CUBE))
+if(!defined('IN_LIVES_CUBE'))
 {
 	exit("Access Denied");
 }
