@@ -10,7 +10,7 @@ This is a guide for deploy Rsync between windows server and Linux server.
 == rsync实现Linux下数据备份到Windows ==
 
 === linux作为rsync的服务端 ===
-# 打开配置文件/etc/xinetd.d/rsyncd.conf(没有的话创建），修改相应的配置
+ * 打开配置文件/etc/xinetd.d/rsyncd.conf(没有的话创建），修改相应的配置
  uid = root
  gid = root
  pid file = /var/run/rsyncd.pid
@@ -18,7 +18,8 @@ This is a guide for deploy Rsync between windows server and Linux server.
  log file = /var/log/rsyncd.log
  use chroot = no
 
-# 注意这个用户id和组id，如果方便的话可以设置为root，这样rsync几乎可以读取任何文件和目录了，但是也带来安全隐患。建议设置成只能读取你要备份的目录和文件即可。
+ * 注意这个用户id和组id，如果方便的话可以设置为root，这样rsync几乎可以读取任何文件和目录了，但是也带来安全隐患。建议设置成只能读取你要备份的目录和文件即可。
+{{{
 max connections = 4    #最大连接数 4
 [www]                  #指定认证的备份模块名
 path = /www            #需要备份的目录
@@ -29,21 +30,31 @@ list = no              #不允许列文件
 auth users = root      #认证的用户名，如果没有这行，则表明是匿名
 hosts allow = 192.168.1.222 #运行连接服务器的主机ip地址
 secrets file = /etc/root.pass  #认证文件名，用来存放密码
-这一段修改完成
-注意：如果同时还需要备份其它目录的话，可以直接在备份文件的后面继续增加配置内容，例如：
+}}}
+ * 这一段修改完成
+ * 注意：如果同时还需要备份其它目录的话，可以直接在备份文件的后面继续增加配置内容，例如：
+{{{
 [database]
 path = /var
 .....
-这样就可以同时备份多个目录了
+}}}
+ * 这样就可以同时备份多个目录了
 
-执行 ln -s /etc/xinetd.d/rsyncd.conf /etc/rsyncd.conf
+ * 执行 
+{{{
+ln -s /etc/xinetd.d/rsyncd.conf /etc/rsyncd.conf
+}}}
 
-然后为备份模块设置密码文件，设置密码文件/etc/root.pass
+ * 然后为备份模块设置密码文件，设置密码文件/etc/root.pass
+{{{
 vi /etc/root.pass
 root:123456
-这样，为备份模块www的用户root设置了密码123456 ，注意，出于安全的目的，这个文件的属性必须为只读，否则rsync将拒绝运行
+}}}
+ * 这样，为备份模块www的用户root设置了密码123456 ，注意，出于安全的目的，这个文件的属性必须为只读，否则rsync将拒绝运行
+{{{
 chmod 600 /etc/root.pass
-设置rsync服务在系统启动时自动运行，可以通过ntsysv来设置
+}}}
+ * 设置rsync服务在系统启动时自动运行，可以通过ntsysv来设置
 
 最后在服务器端我们需要启动rsync服务器：
 service xinetd restart
