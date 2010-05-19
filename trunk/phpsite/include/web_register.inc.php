@@ -34,12 +34,15 @@ if(checkSubmit('registerSubmit'))
 			$env->POST['Name'],
 			$cfg->newUserStatus,
 			$env->POST['MemberInfo'],
-			implode(',', $env->POST['Tags'])
+			$env->POST['Tags'] ? implode(',', $env->POST['Tags']) : ""
 		);
 		
-	foreach($env->POST['Tags'] as $tag)
+	if($env->POST['Tags'])
 	{
-		$db->query('INSERT INTO lives3_tags VALUES(?, ?)', 'ss', $tag, $env->POST['PhoneNumber']);
+		foreach($env->POST['Tags'] as $tag)
+		{
+			$db->query('INSERT INTO lives3_tags VALUES(?, ?)', 'ss', $tag, $env->POST['PhoneNumber']);
+		}
 	}
 	
 	$entry = new PlainUserEntry();
