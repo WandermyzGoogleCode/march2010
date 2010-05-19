@@ -16,7 +16,7 @@ $data = $db->fetch_assoc($result);
 
 if(!$data)
 {
-	showMessage("指定的用户({$env->GET['phonenumber']})不存在，将返回上一页。", -1);
+	showMessage("指定的用户({$env->GET['phonenumber']})不存在，将返回上一页。", '用户不存在', -1);
 }
 
 //prepare tags

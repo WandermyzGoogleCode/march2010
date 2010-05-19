@@ -1,6 +1,6 @@
 {include file='web/header.tpl'}
 
-<form id="registerForm" name="registerForm" method="post" action="">
+<form id="registerForm" name="registerForm" method="post" action="./?op=24">
 	<input type="hidden" name="registerSubmit" id="registerSubmit" value="1"/>
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>

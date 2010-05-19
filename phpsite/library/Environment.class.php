@@ -87,6 +87,20 @@ class Environment
 	{
 		return microtime(true) - $this->timeStart;
 	}
+	
+	/**
+	 * 返回GET的POST混合的数据；若有冲突则POSTy优先
+	 */
+	function getCombinedInput()
+	{
+		$inputCombined = $this->GET;
+		foreach($this->POST as $key => $value)
+		{
+			$inputCombined[$key] = $value;
+		}
+		
+		return $inputCombined;
+	}
 }
 
 
