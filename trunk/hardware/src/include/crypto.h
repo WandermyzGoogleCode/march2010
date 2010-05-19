@@ -10,6 +10,8 @@
 #ifndef CRYPTO_H_
 #define CRYPTO_H_
 
+#define SYMMETRIC_KEY_SIZE 32
+
 #include <string>
 #include <openssl/rsa.h>
 
@@ -38,8 +40,18 @@ struct PublicKey
 
 struct SymmetricKey
 {
-	int len; // the length of the symmetric key
-	unsigned char* keycode; // the content of the symmetric key
+	// the length of symmetric key should be 32 bytes, i.e. 256 bits.
+	unsigned char keycode[SYMMETRIC_KEY_SIZE]; // the content of the symmetric key
+};
+
+struct PublicKeyToTransfer
+{
+	unsigned char block[400];
+};
+
+struct PrivateKeyToTransfer
+{
+	unsigned char block[1500];
 };
 
 /**
@@ -143,5 +155,13 @@ PublicKey getPublicKey(const PrivateKey& key);
 
 // Generate a random symmetric key.
 SymmetricKey generateRandomSymmetricKey();
+
+// The following interface converts between asymmetric keys and memory buffers
+
+PrivateKeyToTransfer writePrivateKeyToMem(const PrivateKey& key);
+PrivateKey getPrivateKeyFromMem(const PrivateKeyToTransfer& transfer);
+
+PublicKeyToTransfer writePublicKeyToMem(const PublicKey& key);
+PublicKey getPublicKeyFromMem(const PublicKeyToTransfer& transfer);
 
 #endif /* CRYPTO_H_ */

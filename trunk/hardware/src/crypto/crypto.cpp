@@ -20,11 +20,6 @@
 bool symmetricallyEncrypt(unsigned char* data, int data_size,
 		const SymmetricKey& key)
 {
-	int keyLength = key.len;
-
-	if (keyLength != 32) // key length should be 32bytes, i.e. 256 bits.
-		return false;
-
 	// initialize the AES cipher
 	EVP_CIPHER *pAesCipher = (EVP_CIPHER*) EVP_aes_256_cbc();
 	EVP_CIPHER_CTX *encryptCtx = (EVP_CIPHER_CTX*) malloc(
@@ -41,17 +36,13 @@ bool symmetricallyEncrypt(unsigned char* data, int data_size,
 
 	memcpy(data, ciphertext, data_size);
 	free(ciphertext);
+	free(encryptCtx);
 	return true;
 }
 
 bool symmetricallyDecrypt(unsigned char* data, int data_size,
 		const SymmetricKey& key)
 {
-	int keyLength = key.len;
-
-	if (keyLength != 32) // key length should be 32bytes, i.e. 256 bits.
-		return false;
-
 	// initialize the AES cipher
 	EVP_CIPHER *pAesCipher = (EVP_CIPHER*) EVP_aes_256_cbc();
 	EVP_CIPHER_CTX *decryptCtx = (EVP_CIPHER_CTX*) malloc(
@@ -63,6 +54,7 @@ bool symmetricallyDecrypt(unsigned char* data, int data_size,
 
 	memcpy(data, decrypted, data_size);
 	free(decrypted);
+	free(decryptCtx);
 	return true;
 }
 
@@ -79,7 +71,7 @@ bool encryptByPublicKey(B256* block, const PublicKey& key)
 	publicKey->d = NULL;
 
 	unsigned char* res = (unsigned char*) malloc(data_size);
-	if (RSA_public_encrypt(32, data, res, publicKey, RSA_PKCS1_OAEP_PADDING)
+	if (RSA_public_encrypt(SYMMETRIC_KEY_SIZE, data, res, publicKey, RSA_PKCS1_OAEP_PADDING)
 			== -1)
 		return false;
 
@@ -108,10 +100,8 @@ bool decryptByPrivateKey(B256* block, const PrivateKey& key)
 SymmetricKey generateNextKey(const SymmetricKey& key)
 {
 	SymmetricKey newKey;
-	newKey.len = key.len;
-	newKey.keycode = (unsigned char*) malloc(newKey.len);
 
-	SHA256(key.keycode, 32, newKey.keycode);
+	SHA256(key.keycode, SYMMETRIC_KEY_SIZE, newKey.keycode);
 
 	return newKey;
 }
@@ -135,7 +125,6 @@ bool signByPrivateKey(B256* block, const PrivateKey& key)
 
 bool verifyByPublicKey(B256* block, B256* sig, const PublicKey& key)
 {
-	int data_size = 256;
 	int sig_size = 256;
 	unsigned char* data = (unsigned char*)block->b;
 	unsigned char* sig_buf = (unsigned char*)sig->b;
@@ -165,11 +154,10 @@ SymmetricKey generateSymmetricKey(const PrivateKey& key)
 	BN_bn2bin(bn, tmp_buf);
 
 	SymmetricKey res;
-	res.len = 32;
-	res.keycode = (unsigned char*)malloc(res.len);
 	SHA256(tmp_buf, len, res.keycode);
 
 	BN_free(bn);
+	free(tmp_buf);
 	return res;
 }
 
@@ -258,6 +246,71 @@ PublicKey getPublicKey(const PrivateKey& key)
 	return res;
 }
 
-//TODO
-SymmetricKey generateRandomSymmetricKey(){}
+SymmetricKey generateRandomSymmetricKey()
+{
+	SymmetricKey sk;
+	selectRandomKeyAES(sk.keycode, 32);
+	return sk;
+}
+
+PrivateKeyToTransfer writePrivateKeyToMem(const PrivateKey& key)
+{
+	PrivateKeyToTransfer transfer;
+
+	int len = 1500;
+	unsigned char *buf, *next;
+	buf = next = (unsigned char*)malloc(len);
+	i2d_RSAPrivateKey(key.rsaKey, &next);
+	memcpy(transfer.block, buf, len);
+
+	free(buf);
+	return transfer;
+}
+
+PrivateKey getPrivateKeyFromMem(const PrivateKeyToTransfer& transfer)
+{
+	PrivateKey pk;
+	unsigned char* buf = (unsigned char*)malloc(1500);
+	unsigned char* b = buf;
+	memcpy(buf, transfer.block, 1500);
+	pk.rsaKey = d2i_RSAPrivateKey(NULL, (const unsigned char**)&buf, 1500);
+
+	free(b);
+	return pk;
+}
+
+PublicKeyToTransfer writePublicKeyToMem(const PublicKey& key)
+{
+	PublicKeyToTransfer transfer;
+
+	RSA* publicKey = RSA_generate_key(2048, RSA_F4, NULL, NULL);
+	BN_copy(publicKey->e, key.e);
+	BN_copy(publicKey->n, key.n);
+
+	int len = 400;
+	unsigned char *buf, *next;
+	buf = next = (unsigned char*)malloc(len);
+	i2d_RSAPublicKey(publicKey, &next);
+	memcpy(transfer.block, buf, len);
+
+	free(buf);
+	return transfer;
+}
+
+PublicKey getPublicKeyFromMem(const PublicKeyToTransfer& transfer)
+{
+	PublicKey pk;
+
+	unsigned char* buf = (unsigned char*)malloc(400);
+	memcpy(buf, transfer.block, 400);
+	unsigned char* b = buf;
+
+	RSA* publicKey = d2i_RSAPublicKey(NULL, (const unsigned char**)&buf, 400);
+
+	pk.e = publicKey->e;
+	pk.n = publicKey->n;
+
+	free(b);
+	return pk;
+}
 
