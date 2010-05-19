@@ -9,7 +9,7 @@
  * 		status	状态文本
  */
 
-if(!defined(IN_LIVES_CUBE))
+if(!defined('IN_LIVES_CUBE'))
 {
 	exit("Access Denied");
 }

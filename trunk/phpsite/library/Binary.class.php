@@ -1,7 +1,7 @@
 <?php
 
 
-if(!defined(IN_LIVES_CUBE))
+if(!defined('IN_LIVES_CUBE'))
 {
 	exit("Access Denied");
 }
@@ -14,6 +14,11 @@ if(!defined(IN_LIVES_CUBE))
 class Binary
 {
 	var $binstr;
+	
+	private function __construct()
+	{
+		
+	}
 	
 	/**
 	 * 由文件读入二进制数据
