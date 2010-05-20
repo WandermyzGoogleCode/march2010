@@ -57,7 +57,6 @@ if(checkSubmit('registerSubmit'))
 else
 {
 	$tpl->assign('tags', $cfg->defaultTags);
-	$tpl->assign('title', '新单向用户注册（仅管理员）');
 	$tpl->display('register.tpl');
 }
 
