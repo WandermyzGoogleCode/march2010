@@ -11,13 +11,14 @@ This is a guide for deploy Rsync between windows server and Linux server.
 
 === linux作为rsync的服务端 ===
  * 打开配置文件/etc/xinetd.d/rsyncd.conf(没有的话创建），修改相应的配置
+{{{
  uid = root
  gid = root
  pid file = /var/run/rsyncd.pid
  lock file = /var/run/rsync.lock
  log file = /var/log/rsyncd.log
  use chroot = no
-
+}}}
  * 注意这个用户id和组id，如果方便的话可以设置为root，这样rsync几乎可以读取任何文件和目录了，但是也带来安全隐患。建议设置成只能读取你要备份的目录和文件即可。
 {{{
 max connections = 4    #最大连接数 4
