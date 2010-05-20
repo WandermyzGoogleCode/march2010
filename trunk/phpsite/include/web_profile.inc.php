@@ -20,18 +20,19 @@ if(!$data)
 }
 
 //prepare tags
-$tags = array();
+$tags = explode(',', $data['TagStr']);
+/*
 foreach(explode(',', $data['TagStr']) as $tag)
 {
 	$tags[] = array(
 		'str' => $tag,
 		'url' => urlencode($tag)	//TODO: PHP手册urlencode的Note
 	);	
-}
+}*/
 
 $tpl->assign('info', $data);
 $tpl->assign('tags', $tags);
-$tpl->assign('title', $data['Name']);
+//$tpl->assign('title', $data['Name']);
 $tpl->display('profile.tpl');
 
 ?>

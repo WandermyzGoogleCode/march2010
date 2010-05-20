@@ -1,4 +1,4 @@
-{include file='web/header.tpl'}
+{include file='web/header.tpl' title='新单向用户注册（仅管理员）'}
 
 <form id="registerForm" name="registerForm" method="post" action="./?op=24">
 	<input type="hidden" name="registerSubmit" id="registerSubmit" value="1"/>

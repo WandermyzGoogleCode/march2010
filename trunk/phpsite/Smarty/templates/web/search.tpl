@@ -1,4 +1,4 @@
-{include file='web/header.tpl'}
+{include file='web/header.tpl' title='高级搜索'}
 
 <form id="searchForm" name="searchForm" method="post" action="./?op=22">
   <table width="100%" border="0" cellspacing="0" cellpadding="0">

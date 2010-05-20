@@ -24,6 +24,7 @@ if($env->serverMode == LIVES_CUBE_WEB_SERVER)
 	switch($env->GET['op'])
 	{
 		case 21:
+		default:
 			include './include/web_index.inc.php';
 			exit();
 			
@@ -42,9 +43,6 @@ if($env->serverMode == LIVES_CUBE_WEB_SERVER)
 		case 25:
 			include './include/web_review.inc.php';
 			exit();
-			
-		default:
-			die('INVALID REQUEST');
 	}
 }
 else if($env->serverMode == LIVES_CUBE_MOBILE_SERVER)

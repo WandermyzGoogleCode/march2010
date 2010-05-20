@@ -1,4 +1,4 @@
-{include file='web/header.tpl'}
+{include file='web/header.tpl' title=$info.Name}
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
@@ -21,7 +21,7 @@
     <th scope="row">标签</th>
     <td>
     {foreach item=tag from=$tags}
-        <a href="./?op=22&tag={$tag.url}">{$tag.str}</a>&nbsp;&nbsp;
+        <a href="./?op=22&tag={$tag|escape:'url'}">{$tag}</a>&nbsp;&nbsp;
     {foreachelse}
     	（无）
     {/foreach}
