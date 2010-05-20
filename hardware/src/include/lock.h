@@ -15,7 +15,7 @@
 #include <fcntl.h>
 
 static int getExclusiveFd(const char* filename){
-	int fd = open(filename, O_RDWR | O_CREAT, S_IRUSR, S_IWUSR);
+	int fd = open(filename, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
 	flock(fd, LOCK_EX);
 	return fd;
 }

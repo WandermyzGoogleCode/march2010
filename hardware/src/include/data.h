@@ -9,6 +9,7 @@
 
 #include "crypto.h"
 #include <assert.h>
+#include <string.h>
 
 typedef unsigned char		BYTE;
 typedef long long 			int64;
@@ -26,9 +27,24 @@ const int MAX_NAME_LENGTH = 32;
 const int MAX_STATUS_LENGTH =1024;
 const int MAX_CONNECTION = 256;
 
+static void fillRandPadding(void* p, int size) {
+	for (int i = 0; i < size; i++)
+		(((BYTE*) p)[i]) = rand() % 256;
+}
+
 struct EncryptedPhoneNumber
 {
 	unsigned char b[ENCRYPTED_PHONENUMBER_LENGTH];
+
+	const static int PADDING_SIZE = 32-sizeof(PhoneNumber);
+
+	static EncryptedPhoneNumber getEncryptedPhoneNumber(PhoneNumber pn, const PublicKey& pubkey){
+		EncryptedPhoneNumber epn;
+		memcpy(&epn, &pn, sizeof(pn));
+		fillRandPadding(((BYTE*) (&epn)) + sizeof(pn), epn.PADDING_SIZE);
+		encryptByPublicKey((B256*) &epn, pubkey);
+		return epn;
+	}
 };
 
 struct Index
@@ -43,12 +59,12 @@ struct Index
 	}
 };
 
-//Size about 3KB-4KB
+//Size about 5KB-6KB
 struct UserEntry
 {
 	static const int RAND_PADDING_SIZE = 3;
 
-	PublicKey pubKey;//The public key of this user
+	PublicKeyToTransfer pubKey;//The public key of this user
 	PhoneNumber myNumber;//The phone number of this user
 
 	TimeType updateTime;
