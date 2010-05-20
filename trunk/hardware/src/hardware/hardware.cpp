@@ -24,13 +24,9 @@ TimeType SafeCore::getTimeNow() {
 	return TimeType(t.tv_sec);
 }
 
-void SafeCore::fillRandPadding(void* p, int size) {
-	for (int i = 0; i < size; i++)
-		(((BYTE*)p)[i]) = rand() % 256;
-}
-
 SafeCore::SafeCore(const PrivateKey& initKey) {
-	pubKey = ::getPublicKey(initKey);
+	this->initKey = writePrivateKeyToMem(initKey);
+	pubKey = writePublicKeyToMem(::getPublicKey(initKey));
 	currentKey = generateSymmetricKey(initKey);
 	nextKey = generateNextKey(currentKey);
 	generation = 0;
@@ -43,8 +39,8 @@ bool SafeCore::getIndex(const EncryptedPhoneNumber& epn, Index& res) {
 	currentCounter++;
 	B256 buffer;
 	memcpy(&buffer, &epn, sizeof(EncryptedPhoneNumber));
-	decryptByPrivateKey(&buffer, initKey);
-	memset(&buffer + sizeof(PhoneNumber), 0, sizeof(buffer)
+	decryptByPrivateKey(&buffer, getPrivateKeyFromMem(initKey));
+	memset(buffer.b + sizeof(PhoneNumber), 0, sizeof(buffer)
 			- sizeof(PhoneNumber));//clear random padding
 	memcpy(&res, &buffer, sizeof(Index));
 	symmetricallyEncrypt((BYTE*) &res, sizeof(Index), currentKey);
@@ -84,15 +80,15 @@ bool SafeCore::getUpdateEntry(const UserEntry& operateUser,
 	symmetricallyEncrypt((BYTE*) &res, res.validSize(), key);
 
 	memcpy(&(res.symKey), &key, sizeof(key));
-	encryptByPublicKey(&(res.symKey), rOperateUser.pubKey);
+	encryptByPublicKey(&(res.symKey), getPublicKeyFromMem(rOperateUser.pubKey));
 	return true;
 }
 
-TimeType SafeCore::makeUserEntry(UserEntry& outputEntry){
-	decryptByPrivateKey(&outputEntry.symKey, initKey);
+TimeType SafeCore::makeUserEntry(UserEntry& outputEntry) {
+	decryptByPrivateKey(&outputEntry.symKey, getPrivateKeyFromMem(initKey));//TODO check whether symKey is 32bytes
 	SymmetricKey symKey;
 	memcpy(&symKey, &outputEntry.symKey, sizeof(symKey));
-	symmetricallyDecrypt((BYTE*)&outputEntry, outputEntry.validSize(), symKey);
+	symmetricallyDecrypt((BYTE*) &outputEntry, outputEntry.validSize(), symKey);
 	TimeType res = outputEntry.updateTime = getTimeNow();
 	outputEntry.valid = true;
 	fillRandPadding(&(outputEntry.randPadding), outputEntry.RAND_PADDING_SIZE);
@@ -103,11 +99,18 @@ TimeType SafeCore::makeUserEntry(UserEntry& outputEntry){
 	return res;
 }
 
-TimeType SafeCore::makeNewUserEntry(const UserEntry& inputEntry,
-		UserEntry& outputEntry) {
+TimeType SafeCore::makeNewUserEntry(bool hasOld, const UserEntry& oldEntry,
+		const UserEntry& inputEntry, UserEntry& outputEntry) {
 	if (currentCounter >= MAX_COUNT)
-		return false;
+		return 0;
 	currentCounter++;
+	if (hasOld){
+		UserEntry rOldEntry = oldEntry;
+		symmetricallyDecrypt((BYTE*) &rOldEntry, rOldEntry.validSize(),
+				currentKey);
+		if (rOldEntry.valid)
+			return 0;
+	}
 	outputEntry = inputEntry;
 	return makeUserEntry(outputEntry);
 }
@@ -115,15 +118,40 @@ TimeType SafeCore::makeNewUserEntry(const UserEntry& inputEntry,
 TimeType SafeCore::makeUpdateUserEntry(const UserEntry& oldEntry,
 		const UserEntry& inputEntry, UserEntry& outputEntry) {
 	if (currentCounter >= MAX_COUNT)
-		return false;
+		return 0;
 	currentCounter++;
 	UserEntry rOldEntry = oldEntry, rInputEntry = inputEntry;
-	symmetricallyDecrypt((BYTE*)&rOldEntry, rOldEntry.validSize(), currentKey);
-	if (!verifyByPublicKey(&rInputEntry.symKey, &rInputEntry.siganture, rOldEntry.pubKey))
-		return false;
+	symmetricallyDecrypt((BYTE*) &rOldEntry, rOldEntry.validSize(), currentKey);
+	if (!rOldEntry.valid || !verifyByPublicKey(&rInputEntry.symKey,
+			&rInputEntry.siganture, getPublicKeyFromMem(rOldEntry.pubKey)))
+		return 0;
 	outputEntry = inputEntry;
 	return makeUserEntry(outputEntry);
 }
 
-int main() {
+void SafeCore::refreshEntries(Index& firstIndex,
+		UserEntry& firstEntry, Index& secondIndex, UserEntry& secondEntry) {
+	Index rIndex[2] = { firstIndex, secondIndex };
+	UserEntry rEntry[2] = { firstEntry, secondEntry };
+	for (int i = 0; i < 2; i++) {
+		symmetricallyDecrypt((BYTE*) (rIndex + i), sizeof(Index), currentKey);
+		memset(((BYTE*) (rIndex + i)) + sizeof(PhoneNumber), 0, sizeof(Index)
+				- sizeof(PhoneNumber));
+		symmetricallyEncrypt((BYTE*) (rIndex + i), sizeof(Index), nextKey);
+
+		symmetricallyDecrypt((BYTE*) (rEntry + i), rEntry[i].validSize(),
+				currentKey);
+		symmetricallyEncrypt((BYTE*) (rEntry + i), rEntry[i].validSize(),
+				nextKey);
+		memset(((BYTE*) (rEntry + i)) + rEntry[i].validSize(), 0,
+				sizeof(rEntry[i]) - rEntry[i].validSize());
+	}
+	if (rIndex[0].compare(rIndex[1]) > 0){
+		std::swap(rIndex[0], rIndex[1]);
+		std::swap(rEntry[0], rEntry[1]);
+	}
+	firstIndex = rIndex[0];
+	firstEntry = rEntry[0];
+	secondIndex = rIndex[1];
+	secondEntry = rEntry[1];
 }

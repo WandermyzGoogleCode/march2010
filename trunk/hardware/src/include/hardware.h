@@ -24,12 +24,12 @@ private:
 	/*
 	 * initKey: 	the initial private key
 	 */
-	PrivateKey initKey;
+	PrivateKeyToTransfer initKey;
 
 	/*
 	 * the public key of initKey
 	 */
-	PublicKey pubKey;
+	PublicKeyToTransfer pubKey;
 
 	/*
 	 * currentKey: 	the private key used now for symmetric encryption.
@@ -67,8 +67,6 @@ private:
 
 	TimeType getTimeNow();
 
-	void fillRandPadding(void* p, int size);
-
 public:
 	/*
 	 * The maximum number that one key can be used to
@@ -99,6 +97,12 @@ public:
 	static SafeCore* loadSafeCore(FILE* file) {
 		SafeCore* res = new SafeCore;
 		assert(fread(res, sizeof(SafeCore), 1, file) == 1);
+		return res;
+	}
+
+	void save(FILE* file){
+		fseek(file, 0, SEEK_SET);
+		assert(fwrite(this, sizeof(SafeCore), 1, file) == 1);
 	}
 
 	/* a leak operation
@@ -147,7 +151,13 @@ public:
 	 * 		is identical to the updateTime inside the outputEntry
 	 * 		(however, outputEntry is encrypted so you don't know it).
 	 * 		The failure is caused by: 1. currentCounter too large
+	 * 		2. the oldEntry is valid.
 	 *
+	 * @param hasOld
+	 * 		whether there is an oldEntry.
+	 * @param oldEntry
+	 * 		the oldEntry.
+	 * 		if this oldEntry is valid, we will return false.
 	 * @param inputEntry
 	 * 		the userEntry that is asymmetrically encrypted by SafeCore's public key
 	 * @param outputEntry
@@ -159,7 +169,7 @@ public:
 	 * The updateTime of outputEntry will be set up using the
 	 * clock inside the hardware.(This is for incremental update)
 	 */
-	TimeType makeNewUserEntry(const UserEntry& inputEntry,
+	TimeType makeNewUserEntry(bool hasOld, const UserEntry& oldEntry, const UserEntry& inputEntry,
 			UserEntry& outputEntry);
 
 	/*
@@ -171,6 +181,7 @@ public:
 	 * 		is identical to the updateTime inside the outputEntry
 	 * 		(however, outputEntry is encrypted so you don't know it).
 	 * 		The failure is caused by: 1. currentCounter too large
+	 * 		2. oldEntry is not valid or the signature is wrong.
 	 *
 	 * @param oldEntry
 	 *		the old userEntry that is encrypted symmetrically by SafeCore's currentKey.
@@ -219,14 +230,19 @@ public:
 	 * reset lastRefreshIndex and assign nextKey to currentKey and generate
 	 * the next nextKey.
 	 */
-	void shiftToNextKey();
+	void shiftToNextKey(){
+		currentKey = nextKey;
+		nextKey = generateNextKey(currentKey);
+		clearGeneration();
+		generation++;
+	}
 
 	/*
 	 * a non-leak operation
 	 *
 	 * Just to get the public key of SafeCore
 	 */
-	PublicKey getPublicKey() {
+	PublicKeyToTransfer getPublicKey() {
 		return pubKey;
 	}
 };
