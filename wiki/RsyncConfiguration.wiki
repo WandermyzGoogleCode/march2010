@@ -71,7 +71,7 @@ service xinetd restart
  * 在windows下安装cwRsync软件
  * 在windows下打开cmd窗口
 {{{
- C:\Program Files\cwRsync\bin>rsync.exe -vzrtopg --progress --deleteroot@192.168
+ C:\Program Files\cwRsync\bin>rsync.exe -vrtopg root@192.168
 .1.222::bak /cygdrive/f/bak --password-file=/cygdrive/f/root.pass
 }}}
  * 说明：命令行中-vzrtopg里的v是verbose，z是压缩，r是recursive，topg都是保持文件原有属性如属主、时间的参数。--progress是指显示出详细的进度情况，--delete是指如果服务器端删除了这一文件，那么客户端也相应把文件删除，保持真正的一致。--exclude "count/" 表示不对count目录下的文件进行备份 
