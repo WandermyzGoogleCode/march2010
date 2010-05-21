@@ -11,6 +11,7 @@
 #include <cstring>
 #include "../include/data.h"
 #include "../include/crypto.h"
+#include "../include/aux.h"
 using namespace std;
 
 const string caller_path =
@@ -43,7 +44,9 @@ void testMakeSafeCore() {
 
 void testGetPubKey() {
 	printf("TEST-----get public key\n");
-	system((caller_path + " safecore getPublicKey pubkey").c_str());
+	int status =
+			system((caller_path + " safecore getPublicKey pubkey").c_str());
+	printf("result=%d\n", WEXITSTATUS(status));
 	PublicKeyToTransfer pkt;
 	FILE* pf = fopen("pubkey", "rb");
 	fread(&pkt, sizeof(pkt), 1, pf);
@@ -87,8 +90,11 @@ void testMakeNewUser(PhoneNumber myNumber, PhoneNumber conNumber,
 	strcpy(user.name, name.c_str());
 	user.pubKey = writePublicKeyToMem(getPublicKey(generatePrivateKey(name)));
 	SymmetricKey symKey = generateRandomSymmetricKey();
+	hexDump(stdout, "before transfer: ", symKey.keycode, 32);
 	memcpy(&(user.symKey), &symKey, sizeof(symKey));
+	hexDump(stdout, "before transfer: ", user.symKey.b, 32);
 	symmetricallyEncrypt((BYTE*) &user, user.validSize(), symKey);
+	hexDump(stdout, "before transfer: ", user.symKey.b, 32);
 	encryptByPublicKey(&(user.symKey), pubkey);//FIXME symKey valid 32 bytes or 256 bytes?
 	testfile = fopen(filename.c_str(), "wb");
 	bool hasOld = false;
@@ -103,14 +109,40 @@ void testMakeNewUser(PhoneNumber myNumber, PhoneNumber conNumber,
 	printf("\n");
 }
 
+UserEntry getUser(const string& name) {
+	UserEntry res;
+	testfile = fopen(name.c_str(), "rb");
+	fread(&res, sizeof(res), 1, testfile);
+	fclose(testfile);
+	return res;
+}
+
+void testGetUpdateEntry(const string& name1, const string& name2) {
+	printf("TEST-----get update entry\n");
+	UserEntry user1, user2;
+	user1 = getUser(name1);
+	user2 = getUser(name2);
+	TimeType threshold = 0;
+	testfile = fopen(filename.c_str(), "wb");
+	fwrite(&user1, sizeof(user1), 1, testfile);
+	fwrite(&user2, sizeof(user2), 1, testfile);
+	fwrite(&threshold, sizeof(threshold), 1, testfile);
+	fclose(testfile);
+	int status = system(
+			(caller_path + " safecore getUpdateEntry " + filename).c_str());
+	printf("result=%d\n", WEXITSTATUS(status));
+	printf("\n");
+}
+
 int main() {
-	srand(time(0));
+	//srand(time(0));
 	chdir(run_path.c_str());
-	testMakeSafeCore();
+	//testMakeSafeCore();
 	testGetPubKey();
-	testCompareIndex();
-	testGetCounter();
-	//testMakeNewUser(123, 456, "user.123");
-	//testMakeNewUser(456, 123, "user.456");
-	//testMakeNewUser(789, 0, "user.789");
+	//testCompareIndex();
+	//testGetCounter();
+	//	testMakeNewUser(123, 456, "user.123");
+	//	testMakeNewUser(456, 123, "user.456");
+	//	testMakeNewUser(789, 0, "user.789");
+	testGetUpdateEntry("user.123", "user.456");
 }

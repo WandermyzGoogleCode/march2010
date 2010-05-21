@@ -9,6 +9,7 @@
 #include "../include/hardware.h"
 #include "../include/crypto.h"
 #include "../include/lock.h"
+#include "../include/aux.h"
 #include <sys/time.h>
 #include <string.h>
 #include <stdlib.h>
@@ -86,8 +87,10 @@ bool SafeCore::getUpdateEntry(const UserEntry& operateUser,
 
 TimeType SafeCore::makeUserEntry(UserEntry& outputEntry) {
 	decryptByPrivateKey(&outputEntry.symKey, getPrivateKeyFromMem(initKey));//TODO check whether symKey is 32bytes
+	//hexDump(stdout, "After transfer: ", outputEntry.symKey.b, 32);
 	SymmetricKey symKey;
 	memcpy(&symKey, &outputEntry.symKey, sizeof(symKey));
+	//hexDump(stdout, "After transfer: ", outputEntry.symKey.b, 32);
 	symmetricallyDecrypt((BYTE*) &outputEntry, outputEntry.validSize(), symKey);
 	TimeType res = outputEntry.updateTime = getTimeNow();
 	outputEntry.valid = true;
