@@ -1,0 +1,14 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+They way to add a virtual partition in the file system.
+
+
+= Details =
+
+ * Add a virtual partition with default size.(The default value should be half of the entire physical memory)
+{{{
+tmpfs /media/ramdisk tmpfs defaults,noatime,mode=1777 0 0
+}}}
+ * I don't know how to specific the partitions size currently...
