@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2010 年 05 月 20 日 06:28
+-- 生成日期: 2010 年 05 月 21 日 01:16
 -- 服务器版本: 5.1.45
 -- PHP 版本: 5.2.13
 
@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `lives3_openinfo` (
 
 INSERT INTO `lives3_openinfo` (`PhoneNumber`, `Name`, `Status`, `MemberInfo`, `TagStr`) VALUES
 (13311111112, '测试测试', 0xe8afa5e794a8e688b7e8bf98e6b2a1e69c89e8aebee7bdaee8bf87e78ab6e68081, 0x617364667177657271777265777277727265, ''),
+(13311111113, '开会', 0xe8afa5e794a8e688b7e8bf98e6b2a1e69c89e8aebee7bdaee8bf87e78ab6e68081, 0x77657172657771727265657761736466647373, '食品店,打印服务,协会和社团'),
 (13333333333, '刘洋', 0x54657374696e672e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e, NULL, ''),
 (13900000000, '测试1', 0x54657374696e672e2e2e2e2e746573742e2e2e2e, 0x5473696e6768756120556e6976657273697479, ''),
 (13911000000, '测试Virtual', 0xe8afa5e794a8e688b7e8bf98e6b2a1e69c89e8aebee7bdaee8bf87e78ab6e68081, 0x5669727475616c, '餐饮外卖'),
@@ -66,8 +67,11 @@ CREATE TABLE IF NOT EXISTS `lives3_tags` (
 
 INSERT INTO `lives3_tags` (`Tag`, `PhoneNumber`) VALUES
 ('其它', 13911112223),
+('协会和社团', 13311111113),
 ('协会和社团', 13911112222),
+('打印服务', 13311111113),
 ('打印服务', 13911112223),
+('食品店', 13311111113),
 ('食品店', 13911112222),
 ('餐饮外卖', 13911000000),
 ('餐饮外卖', 13911112222);
