@@ -26,6 +26,7 @@ const int ENCRYPTED_PHONENUMBER_LENGTH = 256;
 const int MAX_NAME_LENGTH = 32;
 const int MAX_STATUS_LENGTH =1024;
 const int MAX_CONNECTION = 256;
+const int MAX_REQ_NUM = 16;
 
 static void fillRandPadding(void* p, int size) {
 	for (int i = 0; i < size; i++)
@@ -94,7 +95,7 @@ struct UserEntry
 	 */
 	int validSize(){
 		int res = (BYTE*)&symKey-(BYTE*)this;
-		printf("%d %d\n", res, (BYTE*)&valid-(BYTE*)this);
+		//printf("%d %d\n", res, (BYTE*)&valid-(BYTE*)this);
 		//printf("size=%d\n", res);
 		assert(res%16 == 0);//for symmetrically encryption
 		return res;
@@ -136,7 +137,7 @@ struct UpdatePackage
 	int nOfEntry;
 
 	//Only first nOfEntry are valid
-	UpdateEntry entries[MAX_CONNECTION];
+	UpdateEntry entries[MAX_REQ_NUM];
 };
 
 //Size: 4BYTE+nOfEntry*16BYTE
@@ -148,7 +149,7 @@ struct UpdateRequest
 {
 	int nOfEntry;
 
-	EncryptedPhoneNumber entries[MAX_CONNECTION];
+	EncryptedPhoneNumber entries[MAX_REQ_NUM];
 };
 
 #define DATA_H_

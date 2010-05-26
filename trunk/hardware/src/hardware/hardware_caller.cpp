@@ -123,8 +123,9 @@ int main(int argc, char* argv[]) {
 			} while (false);
 		} else if (op == "getCurrentCounter") {
 			do {
+				freopen(argv[3], "w", iofile);
 				int count = core->getCurrentCounter();
-				if (fwrite(&count, sizeof(count), 1, iofile) != 1) {
+				if (fprintf(iofile, "%d\n", count) < 0) {
 					printf("Write count failed.\n");
 					res = 3;
 					break;
