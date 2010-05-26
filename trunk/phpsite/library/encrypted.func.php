@@ -23,43 +23,50 @@ require_once './library/hardwareaux.func.php';
 function encryptedRegister($encryptedPhoneNumber, $userEntry){
 	include './include/hardwarecfg.inc.php';
 	$lockfp = acquireLock($lockFileName);
+	$res = false;
 	
-	$currentCounter = getCurrentCounter();
-	$counterNeeded = 1;
-	if ($currentCounter+$counterNeeded >= MAX_COUNTER)//TODO SHIFT TO NEXT KEY
-		return 0;
-	
-	$temp = getIndex($encryptedPhoneNumber);
-	if ($temp[1] != 0)
-		return 0;
-	$index = $temp[0];
-	
-	global $db;
-	$result = $db->query("select * from lives3_encryptedinfo where index=?", "b", $index);
-	$hasOld = ($db->num_rows($result) > 0 ? true : false);
-	if ($hasOld){
-		$row = $db->fetch_assoc($result);
-		$oldUserEntry = $row["userEntry"];
-		$hasOldBin = pack("C", 1);
-	}
-	else{
-		$oldUserEntry = $userEntry;
-		$hasOldBin = pack("C", 0);
-	}
+	do{
+		$currentCounter = getCurrentCounter();
+		$counterNeeded = 2;
+		if ($currentCounter+$counterNeeded >= MAX_COUNTER)//TODO SHIFT TO NEXT KEY
+			break;
 		
-	$exchangeFile = fopen($exchangeFileName, "wb");
-	fwrite($exchangeFile, $hasOldBin, 1);
-	fwrite($exchangeFile, $oldUserEntry, strlen($oldUserEntry));
-	fwrite($exchangeFile, $userEntry, strlen($userEntry));
-	fclose($exchangeFile);
-	
-	system("$callerName $safeCoreName makeNewUserEntry $exchangeFileName", $status);
-	if ($status != 0)
-		return 0;
-	$exchangeFile = fopen($exchangeFileName, "rb");
-	fread($exchangeFile, $newUserEntry, SIZE_UserEntry);
+		$temp = getIndex($encryptedPhoneNumber);
+		if ($temp[1] != 0)
+			break;
+		$index = $temp[0];
+		
+		global $db;
+		$temp = getUserEntryFromDataBase($index);
+		$hasOld = $temp[0];
+		$oldUserEntry = $temp[1];
+		if ($hasOld){
+			$hasOldBin = pack("C", 1);
+		} else {
+			$oldUserEntry = $userEntry;
+			$hasOldBin = pack("C", 0);
+		}
+			
+		$exchangeFile = fopen($exchangeFileName, "wb");
+		fwrite($exchangeFile, $hasOldBin, 1);
+		fwrite($exchangeFile, $oldUserEntry, strlen($oldUserEntry));
+		fwrite($exchangeFile, $userEntry, strlen($userEntry));
+		fclose($exchangeFile);
+		
+		system("$callerName $safeCoreName makeNewUserEntry $exchangeFileName", $status);
+		if ($status != 0)
+			break;
+		$exchangeFile = fopen($exchangeFileName, "rb");
+		fread($exchangeFile, $newUserEntry, SIZE_UserEntry);
+		fclose($exchangeFile);
+		
+		$db->query("replace into lives3_encryptedinfo values(?, ?)", "bb", $index, $newUserEntry);
+		$res = true;
+		break;
+	} while (true);
 	
 	releaseLock($lockfp);
+	return $res;
 }
 
 /**
@@ -69,7 +76,47 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
  * @return 一个bool表示成功或者失败
  */
 function encryptedUpdate($encryptedPhoneNumber, $userEntry){
-	//TODO
+	include './include/hardwarecfg.inc.php';
+	$lockfp = acquireLock($lockFileName);
+	$res = false;
+	
+	do{
+		$currentCounter = getCurrentCounter();
+		$counterNeeded = 2;
+		if ($currentCounter+$counterNeeded >= MAX_COUNTER)//TODO SHIFT TO NEXT KEY
+			break;
+		
+		$temp = getIndex($encryptedPhoneNumber);
+		if ($temp[1] != 0)
+			break;
+		$index = $temp[0];
+		
+		global $db;
+		$temp = getUserEntryFromDataBase($index);
+		$hasOld = $temp[0];
+		$oldUserEntry = $temp[1];
+		if (!$hasOld)
+			break;
+			
+		$exchangeFile = fopen($exchangeFileName, "wb");
+		fwrite($exchangeFile, $oldUserEntry, strlen($oldUserEntry));
+		fwrite($exchangeFile, $userEntry, strlen($userEntry));
+		fclose($exchangeFile);
+		
+		system("$callerName $safeCoreName makeUpdateUserEntry $exchangeFileName", $status);
+		if ($status != 0)
+			break;
+		$exchangeFile = fopen($exchangeFileName, "rb");
+		fread($exchangeFile, $newUserEntry, SIZE_UserEntry);
+		fclose($exchangeFile);
+		
+		$db->query("replace into lives3_encryptedinfo values(?, ?)", "bb", $index, $newUserEntry);
+		$res = true;
+		break;
+	} while (true);
+	
+	releaseLock($lockfp);
+	return $res;
 }
 
 /**
@@ -78,8 +125,35 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
  * @param $updateRequest 普通的UpdateRequest，其中包含了需要获得哪些联系人的最新信息（加密过的）
  * @return 获得的UpdatePackage，包含了更新过的联系人信息（已经做了时间增量处理）
  */
-function getEncryptedUpdatePackage($encryptedPhoneNumber, $updateRequest){
-	//TODO
+function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, $threshold){
+	include './include/hardwarecfg.inc.php';
+	$lockfp = acquireLock($lockFileName);
+	$res = array();
+	
+	do{
+		$currentCounter = getCurrentCounter();
+		$counterNeeded = 1+count($updateRequest)*2;
+		if ($currentCounter+$counterNeeded >= MAX_COUNTER)//TODO SHIFT TO NEXT KEY
+			break;
+		
+		$temp = getIndex($encryptedPhoneNumber);
+		if ($temp[1] != 0)
+			break;
+		$operateIndex = $temp[0];
+		$temp = getUserEntryFromDataBase($operateIndex);
+		if (!$temp[0])
+			break;
+		else
+			$operateUser = $temp[1];
+		
+		for($i=0; $i<count($updateRequest); $i++){
+			$temp = getIndex($updateRequest[i]);
+			if ($temp[1] != 0)
+				continue;
+			$targetIndex = $temp[0];
+			$temp = getUserEntryFromDataBase($targetIndex);
+		}
+	} while (true);
 }
 
 ?>

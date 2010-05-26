@@ -47,4 +47,20 @@ function getCurrentCounter(){
 	return array($count, $status);
 }
 
+/**
+ * @param $index the index of database
+ * @return array(0 => hasEntry, 1 => userEntry)
+ */
+function getUserEntryFromDataBase($index){
+	global $db;
+	$result = $db->query("select * from lives3_encryptedinfo where index=?", "b", $index);
+	$hasEntry = ($db->num_rows($result) > 0 ? true : false);
+	$userEntry = NULL;
+	if ($hasEntry){
+		$row = $db->fetch_assoc($result);
+		$userEntry = $row["userEntry"];
+	}
+	return array($hasEntry, $userEntry);
+}
+
 ?>
