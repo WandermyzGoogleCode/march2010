@@ -60,6 +60,9 @@ bool SafeCore::getUpdateEntry(const UserEntry& operateUser,
 	symmetricallyDecrypt((BYTE*) &rTargetUser, rTargetUser.validSize(),
 			currentKey);
 
+	hexDump(stdout, "Operate Valid:", (BYTE*)&rOperateUser.valid, 1);
+	hexDump(stdout, "Target Valid:", (BYTE*)&rTargetUser.valid, 1);
+
 	bool connected = false;
 	if (rTargetUser.nOfConnection >= MAX_CONNECTION)//bad entry
 		return false;
@@ -95,8 +98,17 @@ TimeType SafeCore::makeUserEntry(UserEntry& outputEntry) {
 	TimeType res = outputEntry.updateTime = getTimeNow();
 	outputEntry.valid = true;
 	fillRandPadding(&(outputEntry.randPadding), outputEntry.RAND_PADDING_SIZE);
+	hexDump(stdout, "Valid:", (BYTE*)&outputEntry.valid, 8);
 	symmetricallyEncrypt((BYTE*) &outputEntry, outputEntry.validSize(),
 			currentKey);
+
+	//FIXME TESTING!
+	symmetricallyDecrypt((BYTE*) &outputEntry, outputEntry.validSize(),
+			currentKey);
+	hexDump(stdout, "Valid:", (BYTE*)&outputEntry.valid, 8);
+	symmetricallyEncrypt((BYTE*) &outputEntry, outputEntry.validSize(),
+			currentKey);
+
 	memset((BYTE*) &outputEntry + outputEntry.validSize(), 0,
 			sizeof(outputEntry) - outputEntry.validSize());
 	return res;
