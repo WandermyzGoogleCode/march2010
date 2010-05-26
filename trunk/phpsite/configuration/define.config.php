@@ -2,6 +2,7 @@
 	define('SIZE_Index', 16);
 	define('SIZE_EncryptedPhoneNumber', 256);
 	define('SIZE_UserEntry', 4048);
+	define('SIZE_ValidUserEntry', 3536);
 	define('SIZE_UpdateEntry', 1328);
 	define('SIZE_UpdateRequest', 4100);
 	define('SIZE_UpdatePackage', 21256);
