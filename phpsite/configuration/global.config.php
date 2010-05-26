@@ -29,6 +29,31 @@ class GlobalConfig
 	 */
 	var $tmpDir = '/usr/local/lives3/tmp/';
 	
+	/**
+	 * 硬件的存储文件，用来虚拟硬件的状态存储。
+	 * 注意，这只是个文件名，请和$dataDir配合使用
+	 */
+	var $safeCoreName = 'safecore';
+	
+	/**
+	 * 硬件使用锁文件，保证只有一个进程在使用
+	 * 硬件相关的函数。
+	 * 注意，这只是个文件名，请和$tmpDir配合使用。
+	 */
+	var $safeCoreLockName = 'safecore.lock';
+	
+	/**
+	 * 用来和硬件交换信息的临时文件。
+	 * 注意，这只是个文件名，请和$tmpDir配合使用。
+	 */
+	var $safeCoreExchangeName = 'safecore.exchange';
+	
+	/**
+	 * 硬件呼叫进程名。
+	 * 注意，这只是个文件名，请和$binDir配合使用。
+	 */
+	var $hardwareCallerName = 'hardware_caller';
+	
 	/****************************************
 	 * 数据库设置
 	 ****************************************/
