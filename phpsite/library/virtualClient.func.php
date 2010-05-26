@@ -6,6 +6,7 @@ if(!defined('IN_LIVES_CUBE'))
 
 require_once './library/PlainUserEntry.class.php';
 require_once './configuration/define.config.php';
+require_once './library/encrypted.func.php';
 
 /**
  * 注册一个新单向用户。此函数只需维护新用户在encryptedinfo表中的数据，但不用维护新用户在openinfo表中的数据
