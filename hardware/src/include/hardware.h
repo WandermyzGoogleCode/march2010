@@ -197,6 +197,8 @@ public:
 			const UserEntry& inputEntry, UserEntry& outputEntry);
 
 	/*
+	 * return whether successful. Failed may be caused by non-increasing index
+	 *
 	 * a non-leak operation
 	 *
 	 * The index and entry input is symmetrically encrypted by currentKey and
@@ -208,8 +210,25 @@ public:
 	 * And the lastRefreshIndex will be set to the larger one of firstIndex and
 	 * secondIndex in input.
 	 */
-	void refreshEntries(Index& firstIndex, UserEntry& firstEntry,
+	bool refreshEntries(Index& firstIndex, UserEntry& firstEntry,
 			Index& secondIndex, UserEntry& secondEntry);
+
+	/*
+	 * return whether successful. Failed may be caused by non-increasing index
+	 *
+	 * a non-leak operation
+	 *
+	 * The index and entry input is symmetrically encrypted by currentKey and
+	 * the index and entry output will be encrypted by nextKey.
+	 *
+	 * Note that index must be greater than lastRefreshIndex.
+	 * This is only for the last entry to update and the lastUpdateIndex
+	 * will set to largestIndex after this call.
+	 *
+	 * This call is designed to solve the problem that only
+	 * odd number of entries exist.
+	 */
+	bool refreshEntry(Index& index, UserEntry& entry);
 
 	/*
 	 * a non-leak operation

@@ -222,6 +222,8 @@ void testGetCurrentCounter(){
 	printf("\n");
 }
 
+//TODO TEST refreshEntry
+
 int main() {
 	srand(time(0));
 	chdir(run_path.c_str());
@@ -230,7 +232,7 @@ int main() {
 	//	testCompareIndex();
 	testGetCurrentCounter();
 
-//		testMakeNewUser(123, 456, "user.123");
+		testMakeNewUser(123, 456, "user.123");
 //		testMakeNewUser(456, 123, "user.456");
 //		testMakeNewUser(789, 0, "user.789");
 //		testGetUpdateEntry("user.123", "user.456");

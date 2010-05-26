@@ -58,6 +58,13 @@ struct Index
 				return ((int)b[i]-x.b[i]);
 		return 0;
 	}
+
+	static Index getLargestIndex(){
+		Index res;
+		for(int i=0; i<INDEX_LENGTH; i++)
+			res.b[i] = 255;
+		return res;
+	}
 };
 
 //Size about 5KB-6KB
