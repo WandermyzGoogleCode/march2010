@@ -1,7 +1,5 @@
 {include file='web/header.tpl' title=$info.Name}
 
-{$queryCodeword}
-
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <th width="21%" scope="row">用户名称</th>
@@ -32,9 +30,11 @@
   </tr>
 </table>
 <p>&nbsp;</p>
+
+<!--
 <p>您的评价将有助于我们改善产品：</p>
 <form method="post" action="./?op=25">
-<input type="hidden" name="query" value="{$query}" id="Query" />
+<input type="hidden" name="queryCodeword" value="{$queryCodeword}" id="queryCodeword" />
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <th width="21%" scope="row">这条信息对您有用吗？</th>
@@ -56,5 +56,6 @@
   </tr>
 </table>
 </form>
+-->
 
 {include file='web/footer.tpl'}
