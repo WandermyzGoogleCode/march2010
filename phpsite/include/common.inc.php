@@ -41,4 +41,6 @@ $cfg->clearSensitive();
  */
 $tpl = new Template($cfg, $env);
 
+date_default_timezone_set("Asia/Chongqing");
+
 ?>

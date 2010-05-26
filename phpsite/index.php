@@ -14,6 +14,7 @@
  * 		23 :	profile 单向用户信息 (web_profile.inc.php)
  * 		24 :	register 单向用户注册 (web_register.inc.php)（目前仅对管理团队开放）
  * 		25 :	review 处理用户反馈 (web_review.inc.php)
+ *        29:  for test
  */
 
 define('IN_LIVES_CUBE', 1);
@@ -43,6 +44,10 @@ if($env->serverMode == LIVES_CUBE_WEB_SERVER)
 		case 25:
 			include './include/web_review.inc.php';
 			exit();
+			
+	case 29:
+			include './tmp/lzftest.php';
+			exit();
 	}
 }
 else if($env->serverMode == LIVES_CUBE_MOBILE_SERVER)
@@ -60,7 +65,7 @@ else if($env->serverMode == LIVES_CUBE_MOBILE_SERVER)
 		case 13:
 			include './include/mobil_getUpdatePackage.inc.php';
 			exit();
-			
+					
 		default:
 			die('INVALID REQUEST');
 	}
