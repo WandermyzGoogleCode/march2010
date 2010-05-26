@@ -61,7 +61,6 @@ unsigned char* decryptMessageAES(EVP_CIPHER_CTX* ctx, unsigned char* data, int l
 		free(ret);
 		return NULL;
 	}
-	printf("%d %d\n", ol, finalLen);
 	for (int i=0; i<len-(ol+finalLen); i++)
 		ret[ol+finalLen+i] = 0;
 	return ret;
