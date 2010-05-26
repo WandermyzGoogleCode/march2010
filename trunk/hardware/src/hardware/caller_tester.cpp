@@ -80,22 +80,28 @@ void testGetCounter() {
 	printf("\n");
 }
 
-void testMakeNewUser(PhoneNumber myNumber, PhoneNumber conNumber,
+UserEntry makeUser(PhoneNumber myNumber, PhoneNumber conNumber,
 		const string& name) {
-	printf("TEST-----make new user\n");
 	UserEntry user;
 	user.myNumber = myNumber;
 	user.nOfConnection = 1;
 	user.connection[1] = conNumber;
 	strcpy(user.name, name.c_str());
 	user.pubKey = writePublicKeyToMem(getPublicKey(generatePrivateKey(name)));
+	return user;
+}
+
+void testMakeNewUser(PhoneNumber myNumber, PhoneNumber conNumber,
+		const string& name) {
+	printf("TEST-----make new user\n");
+	UserEntry user = makeUser(myNumber, conNumber, name);
 	SymmetricKey symKey = generateRandomSymmetricKey();
 	//hexDump(stdout, "before transfer: ", symKey.keycode, 32);
 	memcpy(&(user.symKey), &symKey, sizeof(symKey));
 	//hexDump(stdout, "before transfer: ", user.symKey.b, 32);
 	symmetricallyEncrypt((BYTE*) &user, user.validSize(), symKey);
 	//hexDump(stdout, "before transfer: ", user.symKey.b, 32);
-	encryptByPublicKey(&(user.symKey), pubkey);//FIXME symKey valid 32 bytes or 256 bytes?
+	encryptByPublicKey(&(user.symKey), pubkey);
 	testfile = fopen(filename.c_str(), "wb");
 	bool hasOld = false;
 	fwrite(&hasOld, sizeof(hasOld), 1, testfile);
@@ -104,7 +110,8 @@ void testMakeNewUser(PhoneNumber myNumber, PhoneNumber conNumber,
 	fwrite(&oldEntry, sizeof(oldEntry), 1, testfile);
 	fwrite(&user, sizeof(user), 1, testfile);
 	fclose(testfile);
-	int status = system((caller_path + " safecore makeNewUserEntry " + filename).c_str());
+	int status = system(
+			(caller_path + " safecore makeNewUserEntry " + filename).c_str());
 	printf("result=%d\n", WEXITSTATUS(status));
 	system(("cp " + filename + " " + name).c_str());
 	printf("\n");
@@ -135,15 +142,107 @@ void testGetUpdateEntry(const string& name1, const string& name2) {
 	printf("\n");
 }
 
+void testMakeUpdateUserEntry(const string& name, PhoneNumber myNumber,
+		PhoneNumber conNumber) {
+	printf("TEST-----make update userEntry\n");
+	UserEntry user = getUser(name);
+	UserEntry newUser = makeUser(myNumber, conNumber, name);
+	;
+	SymmetricKey symKey = generateRandomSymmetricKey();
+	memcpy(&(user.symKey), &symKey, sizeof(symKey));
+	symmetricallyEncrypt((BYTE*) &user, user.validSize(), symKey);
+	encryptByPublicKey(&(user.symKey), pubkey);
+	memcpy(&(user.siganture), &(user.symKey), sizeof(user.symKey));
+	signByPrivateKey(&(user.siganture), generatePrivateKey(name));
+	testfile = fopen(filename.c_str(), "wb");
+	fwrite(&user, sizeof(user), 1, testfile);
+	fwrite(&newUser, sizeof(newUser), 1, testfile);
+	fclose(testfile);
+	int status = system((caller_path + " safecore makeUpdateUserEntry "
+			+ filename).c_str());
+	printf("result=%d\n", WEXITSTATUS(status));
+	printf("\n");
+}
+
+void testRefreshEntries(PhoneNumber pn1, const string& name1, PhoneNumber pn2,
+		const string& name2) {
+	printf("TEST-----refresh entries\n");
+	UserEntry user1, user2;
+	user1 = getUser(name1);
+	user2 = getUser(name2);
+	PublicKey pubkey1 = getPublicKey(generatePrivateKey(name1));
+	PublicKey pubkey2 = getPublicKey(generatePrivateKey(name2));
+	Index ind1 = getIndex(EncryptedPhoneNumber::getEncryptedPhoneNumber(pn1,
+			pubkey1), "tInd");
+	Index ind2 = getIndex(EncryptedPhoneNumber::getEncryptedPhoneNumber(pn2,
+			pubkey2), "tInd");
+	testfile = fopen(filename.c_str(), "wb");
+	fwrite(&ind1, sizeof(ind1), 1, testfile);
+	fwrite(&user1, sizeof(user1), 1, testfile);
+	fwrite(&ind2, sizeof(ind2), 1, testfile);
+	fwrite(&user2, sizeof(user2), 1, testfile);
+	fclose(testfile);
+	int status = system(
+			(caller_path + " safecore refreshEntries " + filename).c_str());
+	testfile = fopen(filename.c_str(), "rb");
+	fread(&ind1, sizeof(ind1), 1, testfile);
+	fread(&user1, sizeof(user1), 1, testfile);
+	fread(&ind2, sizeof(ind2), 1, testfile);
+	fread(&user2, sizeof(user2), 1, testfile);
+	fclose(testfile);
+	testfile = fopen("user.update1", "wb");
+	fwrite(&user1, sizeof(user1), 1, testfile);
+	fclose(testfile);
+	testfile = fopen("user.update2", "wb");
+	fwrite(&user2, sizeof(user1), 1, testfile);
+	fclose(testfile);
+	testfile = fopen("index.update1", "wb");
+	fwrite(&ind1, sizeof(ind1), 1, testfile);
+	fclose(testfile);
+	testfile = fopen("index.update2", "wb");
+	fwrite(&ind2, sizeof(ind2), 1, testfile);
+	fclose(testfile);
+	printf("result=%d\n", WEXITSTATUS(status));
+	printf("\n");
+}
+
+void testShiftToNextKey(){
+	printf("TEST-----shift to next key\n");
+	int status = system(
+			(caller_path + " safecore shiftToNextKey ").c_str());
+	printf("result=%d\n", WEXITSTATUS(status));
+	printf("\n");
+}
+
+void testGetCurrentCounter(){
+	printf("TEST-----get current counter\n");
+	int status = system(
+			(caller_path + " safecore getCurrentCounter counter").c_str());
+	printf("result=%d\n", WEXITSTATUS(status));
+	printf("\n");
+}
+
 int main() {
 	srand(time(0));
 	chdir(run_path.c_str());
-	testMakeSafeCore();
+	//	testMakeSafeCore();
 	testGetPubKey();
-	testCompareIndex();
-	testGetCounter();
-	testMakeNewUser(123, 456, "user.123");
+	//	testCompareIndex();
+	//	testGetCounter();
+
+	//	testMakeNewUser(123, 456, "user.123");
+	//	testMakeNewUser(456, 123, "user.456");
+	//	testMakeNewUser(789, 0, "user.789");
+	//	testGetUpdateEntry("user.123", "user.456");
+
+	testGetUpdateEntry("user.789", "user.123");
+	testGetUpdateEntry("user.123", "user.789");
+
+	testMakeUpdateUserEntry("user.123", 123, 789);
+	testGetUpdateEntry("user.789", "user.123");
+
+	testRefreshEntries(123, "user.123", 456, "user.456");
+	testShiftToNextKey();
+	testMakeNewUser(123, 789, "user.123");
 	testMakeNewUser(456, 123, "user.456");
-	testMakeNewUser(789, 0, "user.789");
-	testGetUpdateEntry("user.123", "user.456");
 }

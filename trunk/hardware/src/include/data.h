@@ -94,7 +94,8 @@ struct UserEntry
 	 */
 	int validSize(){
 		int res = (BYTE*)&symKey-(BYTE*)this;
-		printf("size=%d\n", res);
+		printf("%d %d\n", res, (BYTE*)&valid-(BYTE*)this);
+		//printf("size=%d\n", res);
 		assert(res%16 == 0);//for symmetrically encryption
 		return res;
 	}
