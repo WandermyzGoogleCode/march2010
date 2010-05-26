@@ -50,7 +50,7 @@ if(checkSubmit('registerSubmit'))
 	$entry->name = $env->POST['Name'];
 	$entry->status = $cfg->newUserStatus;
 	
-	virtualRegister($entry);
+	virtualRegister($entry);	//TODO: 错误处理？
 	
 	showMessage("新单向用户({$env->POST['PhoneNumber']})注册成功！", '注册成功', -1);
 }

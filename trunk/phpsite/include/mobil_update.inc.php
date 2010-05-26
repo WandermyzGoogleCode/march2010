@@ -1,6 +1,8 @@
 <?php
 /**
  * 用户更新自己的信息
+ * GET数据：
+ * 		op = 12
  * POST数据：
  * 		encryptedPhoneNumber	加上PADDING并用服务器公钥做加密后得到的EncryptedPhoneNumber，base64编码
  * 		userEntry 先用服务器公钥做加密，再用用户自己的私钥加密后得到的UserEntry，base64编码
@@ -13,5 +15,14 @@ if(!defined('IN_LIVES_CUBE'))
 {
 	exit("Access Denied");
 }
+
+require_once('./library/encrypted.func.php');
+
+$encryptedPhoneNumber = base64_decode($env->POST['encryptedPhoneNumber']);
+$userEntry = base64_decode($env->POST['userEntry']);
+
+$result = encryptedUpdate($encryptedPhoneNumber, $userEntry);
+
+echo $result;
 
 ?>
