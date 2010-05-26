@@ -1,10 +1,11 @@
 <?php
 $fp = fopen('test.txt', 'wb');
-$utf8 = utf8_encode('今天心情很好');
-fwrite($fp, $utf8);
+$input = base64_encode('今天心情很好');
+fwrite($fp, $input);
 fclose($fp);
 
 $fp = fopen('test.txt', 'rb');
-$data = fread($fp, strlen($utf8));
+$output = fread($fp, strlen($input));
 fclose($fp);
-echo utf8_decode($data);
+echo base64_decode($output);
+	
