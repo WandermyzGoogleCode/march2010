@@ -5,6 +5,7 @@ if(!defined('IN_LIVES_CUBE'))
 	exit("Access Denied");
 }
 
+require_once './library/hardwareaux.func.php';
 
 /*
  * 注意，以下用到的EncryptedPhoneNumber, UserEntry, UpdateRequest, UpdatePackage
@@ -20,7 +21,30 @@ if(!defined('IN_LIVES_CUBE'))
  * @return 完成注册的Unix timestamp，0表示失败
  */
 function encryptedRegister($encryptedPhoneNumber, $userEntry){
-	//TODO
+	include './include/hardwarecfg.inc.php';
+	$lockfp = acquireLock($lockFileName);
+	
+	$currentCounter = getCurrentCounter();
+	$counterNeeded = 1;
+	if ($currentCounter+$counterNeeded >= MAX_COUNTER)
+		return 0;
+	
+	$temp = getIndex($encryptedPhoneNumber);
+	if ($temp[1] != 0)
+		return 0;
+	$index = $temp[0];
+	
+	global $db;
+	$result = $db->query("select * from lives3_encryptedinfo where index=?", "b", $index);
+	$hasOld = ($db->num_rows($result) > 0 ? true : false);
+	if ($hasOld){
+		$row = $db->fetch_assoc($result);
+		$oldUserEntry = $row["userEntry"];
+	}
+	else
+		$oldUserEntry = $userEntry;
+	
+	releaseLock($lockfp);
 }
 
 /**
