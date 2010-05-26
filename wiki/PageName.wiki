@@ -8,7 +8,7 @@ They way to add a virtual partition in the file system.
 = Details =
 
 This is a way for you to add a virtual partition to the file system with default size.(The default value should be half of the entire physical memory. I think it's enough.)
- * You just need to add the following line into the /etc/fstab 
+ * You just need to add the following line into the file /etc/fstab, and restart your computer.
 {{{
 tmpfs /media/ramdisk tmpfs defaults,noatime,mode=1777 0 0
 }}}
