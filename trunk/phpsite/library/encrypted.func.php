@@ -123,6 +123,7 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
  * 用户获取自己联系人的最新信息
  * @param $encryptedPhoneNumber 加上PADDING并用服务器公钥做加密后得到的EncryptedPhoneNumber
  * @param $updateRequest 普通的UpdateRequest，其中包含了需要获得哪些联系人的最新信息（加密过的）
+ * @param $threshold 用户最后更新的时间，用于做增量更新。
  * @return 获得的UpdatePackage，包含了更新过的联系人信息（已经做了时间增量处理）
  */
 function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, $threshold){
@@ -152,6 +153,8 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 				continue;
 			$targetIndex = $temp[0];
 			$temp = getUserEntryFromDataBase($targetIndex);
+			
+			$exchangeFile = fopen($exchangeFileName, "wb");
 		}
 	} while (true);
 }
