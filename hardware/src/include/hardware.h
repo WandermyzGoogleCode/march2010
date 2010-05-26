@@ -145,13 +145,7 @@ public:
 	/*
 	 * a leak operation
 	 *
-	 * @return
-	 * 		0 when operations failed, the hardware time when this
-	 * 		operation is successfully done otherwise. The time
-	 * 		is identical to the updateTime inside the outputEntry
-	 * 		(however, outputEntry is encrypted so you don't know it).
-	 * 		The failure is caused by: 1. currentCounter too large
-	 * 		2. the oldEntry is valid.
+	 * @return Successful or not
 	 *
 	 * @param hasOld
 	 * 		whether there is an oldEntry.
@@ -169,19 +163,13 @@ public:
 	 * The updateTime of outputEntry will be set up using the
 	 * clock inside the hardware.(This is for incremental update)
 	 */
-	TimeType makeNewUserEntry(bool hasOld, const UserEntry& oldEntry, const UserEntry& inputEntry,
+	bool makeNewUserEntry(bool hasOld, const UserEntry& oldEntry, const UserEntry& inputEntry,
 			UserEntry& outputEntry);
 
 	/*
 	 * a leak operation
 	 *
-	 * @return
-	 * 		0 when operations failed, the hardware time when this
-	 * 		operation is successfully done otherwise. The time
-	 * 		is identical to the updateTime inside the outputEntry
-	 * 		(however, outputEntry is encrypted so you don't know it).
-	 * 		The failure is caused by: 1. currentCounter too large
-	 * 		2. oldEntry is not valid or the signature is wrong.
+	 * @return Successful or not
 	 *
 	 * @param oldEntry
 	 *		the old userEntry that is encrypted symmetrically by SafeCore's currentKey.
@@ -205,7 +193,7 @@ public:
 	 * The updateTime of outputEntry will be set up using the
 	 * clock inside the hardware.(This is for incremental update)
 	 */
-	TimeType makeUpdateUserEntry(const UserEntry& oldEntry,
+	bool makeUpdateUserEntry(const UserEntry& oldEntry,
 			const UserEntry& inputEntry, UserEntry& outputEntry);
 
 	/*

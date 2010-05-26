@@ -60,8 +60,8 @@ bool SafeCore::getUpdateEntry(const UserEntry& operateUser,
 	symmetricallyDecrypt((BYTE*) &rTargetUser, rTargetUser.validSize(),
 			currentKey);
 
-	hexDump(stdout, "Operate Valid:", (BYTE*)&rOperateUser.valid, 1);
-	hexDump(stdout, "Target Valid:", (BYTE*)&rTargetUser.valid, 1);
+//	hexDump(stdout, "Operate Valid:", (BYTE*)&rOperateUser.valid, 1);
+//	hexDump(stdout, "Target Valid:", (BYTE*)&rTargetUser.valid, 1);
 
 	bool connected = false;
 	if (rTargetUser.nOfConnection >= MAX_CONNECTION)//bad entry
@@ -102,19 +102,19 @@ TimeType SafeCore::makeUserEntry(UserEntry& outputEntry) {
 	symmetricallyEncrypt((BYTE*) &outputEntry, outputEntry.validSize(),
 			currentKey);
 
-	//FIXME TESTING!
-	symmetricallyDecrypt((BYTE*) &outputEntry, outputEntry.validSize(),
-			currentKey);
-	hexDump(stdout, "Valid:", (BYTE*)&outputEntry.valid, 8);
-	symmetricallyEncrypt((BYTE*) &outputEntry, outputEntry.validSize(),
-			currentKey);
+//	//FIXME TESTING!
+//	symmetricallyDecrypt((BYTE*) &outputEntry, outputEntry.validSize(),
+//			currentKey);
+//	hexDump(stdout, "Valid:", (BYTE*)&outputEntry.valid, 8);
+//	symmetricallyEncrypt((BYTE*) &outputEntry, outputEntry.validSize(),
+//			currentKey);
 
 	memset((BYTE*) &outputEntry + outputEntry.validSize(), 0,
 			sizeof(outputEntry) - outputEntry.validSize());
-	return res;
+	return true;
 }
 
-TimeType SafeCore::makeNewUserEntry(bool hasOld, const UserEntry& oldEntry,
+bool SafeCore::makeNewUserEntry(bool hasOld, const UserEntry& oldEntry,
 		const UserEntry& inputEntry, UserEntry& outputEntry) {
 	if (currentCounter >= MAX_COUNT)
 		return 0;
@@ -130,7 +130,7 @@ TimeType SafeCore::makeNewUserEntry(bool hasOld, const UserEntry& oldEntry,
 	return makeUserEntry(outputEntry);
 }
 
-TimeType SafeCore::makeUpdateUserEntry(const UserEntry& oldEntry,
+bool SafeCore::makeUpdateUserEntry(const UserEntry& oldEntry,
 		const UserEntry& inputEntry, UserEntry& outputEntry) {
 	if (currentCounter >= MAX_COUNT)
 		return 0;

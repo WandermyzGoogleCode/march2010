@@ -73,19 +73,19 @@ void testCompareIndex() {
 	printf("\n");
 }
 
-void testGetCounter() {
-	printf("TEST-----get current counter\n");
-	system((caller_path + " safecore getCurrentCounter " + filename).c_str());
-	system(("cp " + filename + " counter").c_str());
-	printf("\n");
-}
+//void testGetCounter() {
+//	printf("TEST-----get current counter\n");
+//	system((caller_path + " safecore getCurrentCounter " + filename).c_str());
+//	system(("cp " + filename + " counter").c_str());
+//	printf("\n");
+//}
 
 UserEntry makeUser(PhoneNumber myNumber, PhoneNumber conNumber,
 		const string& name) {
 	UserEntry user;
 	user.myNumber = myNumber;
 	user.nOfConnection = 1;
-	user.connection[1] = conNumber;
+	user.connection[0] = conNumber;
 	strcpy(user.name, name.c_str());
 	user.pubKey = writePublicKeyToMem(getPublicKey(generatePrivateKey(name)));
 	return user;
@@ -228,21 +228,21 @@ int main() {
 	//	testMakeSafeCore();
 	testGetPubKey();
 	//	testCompareIndex();
-	//	testGetCounter();
+	testGetCurrentCounter();
 
-	//	testMakeNewUser(123, 456, "user.123");
-	//	testMakeNewUser(456, 123, "user.456");
-	//	testMakeNewUser(789, 0, "user.789");
-	//	testGetUpdateEntry("user.123", "user.456");
+//		testMakeNewUser(123, 456, "user.123");
+//		testMakeNewUser(456, 123, "user.456");
+//		testMakeNewUser(789, 0, "user.789");
+//		testGetUpdateEntry("user.123", "user.456");
 
-	testGetUpdateEntry("user.789", "user.123");
-	testGetUpdateEntry("user.123", "user.789");
-
-	testMakeUpdateUserEntry("user.123", 123, 789);
-	testGetUpdateEntry("user.789", "user.123");
-
-	testRefreshEntries(123, "user.123", 456, "user.456");
-	testShiftToNextKey();
-	testMakeNewUser(123, 789, "user.123");
-	testMakeNewUser(456, 123, "user.456");
+//	testGetUpdateEntry("user.789", "user.123");
+//	testGetUpdateEntry("user.123", "user.789");
+//
+//	testMakeUpdateUserEntry("user.123", 123, 789);
+//	testGetUpdateEntry("user.789", "user.123");
+//
+//	testRefreshEntries(123, "user.123", 456, "user.456");
+//	testShiftToNextKey();
+//	testMakeNewUser(123, 789, "user.123");
+//	testMakeNewUser(456, 123, "user.456");
 }
