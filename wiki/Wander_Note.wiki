@@ -3,6 +3,9 @@
 
 <wiki:toc max_depth="3" />
 
+===服务器BUG===
+ * Zend Server不能自动启动
+
 ===一篇安全性参考文献===
  * 方润婷 （99级，现在CMU搞网络安全）
  * Predicate ...
