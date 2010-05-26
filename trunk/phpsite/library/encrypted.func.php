@@ -28,9 +28,11 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 	do{
 		$currentCounter = getCurrentCounter();
 		$counterNeeded = 2;
-		if ($currentCounter+$counterNeeded >= MAX_COUNTER)//TODO SHIFT TO NEXT KEY
-			break;
-		
+		if ($currentCounter+$counterNeeded >= MAX_COUNTER){
+			updateWholeTable(false);
+			continue;
+		}
+				
 		$temp = getIndex($encryptedPhoneNumber);
 		if ($temp[1] != 0)
 			break;
@@ -83,8 +85,10 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
 	do{
 		$currentCounter = getCurrentCounter();
 		$counterNeeded = 2;
-		if ($currentCounter+$counterNeeded >= MAX_COUNTER)//TODO SHIFT TO NEXT KEY
-			break;
+		if ($currentCounter+$counterNeeded >= MAX_COUNTER){
+			updateWholeTable(false);
+			continue;
+		}
 		
 		$temp = getIndex($encryptedPhoneNumber);
 		if ($temp[1] != 0)
@@ -134,8 +138,10 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 	do{
 		$currentCounter = getCurrentCounter();
 		$counterNeeded = 1+count($updateRequest)*2;
-		if ($currentCounter+$counterNeeded >= MAX_COUNTER)//TODO SHIFT TO NEXT KEY
-			break;
+		if ($currentCounter+$counterNeeded >= MAX_COUNTER){
+			updateWholeTable(false);
+			continue;
+		}
 		
 		$temp = getIndex($encryptedPhoneNumber);
 		if ($temp[1] != 0)
@@ -147,16 +153,104 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 		else
 			$operateUser = $temp[1];
 		
+		$binFalse = pack("C", 0);
 		for($i=0; $i<count($updateRequest); $i++){
 			$temp = getIndex($updateRequest[i]);
 			if ($temp[1] != 0)
 				continue;
 			$targetIndex = $temp[0];
 			$temp = getUserEntryFromDataBase($targetIndex);
+			if (!$temp[0])
+				continue;
+			$targetUser = $temp[1];
 			
 			$exchangeFile = fopen($exchangeFileName, "wb");
+			fwrite($exchangeFile, $operateUser, strlen($operateUser));
+			fwrite($exchangeFile, $targetUser, strlen($targetUser));
+			fwrite($exchangeFile, $threshold, strlen($threshold));
+			fclose($exchangeFile);
+			system("$callerName $safeCoreName getUpdateEntry $exchangeFileName", $status);
+			if ($status != 0)
+				continue;
+			$exchangeFile = fopen($exchangeFileName, "rb");
+			fread($exchangeFile, $updateEntry, SIZE_UpdateEntry);
+			fread($exchangeFile, $binUpdated, 1);
+			if (strcmp($binFalse, $binUpdated) != 0)
+				$res[] = $updateEntry;
+			fclose($exchangeFile);
 		}
+		break;
 	} while (true);
+	
+	releaseLock($lockfp);
+	return $res;
+}
+
+function updateWholeTable($needlock = true){
+	include './include/hardwarecfg.inc.php';
+	if ($needlock)
+		$lockfp = acquireLock($lockFileName);
+	
+	$nextTableName = "lives3_next_encryptedinfo";
+	
+	global $db;
+	$db->query("delete * from $nextTableName");
+	$result = $db->query("select * from lives3_encryptedinfo");
+	$n = $db->num_rows($result);
+	for($i=0; $i<(int)$n/2; $i++){
+		$row = array();
+		$row[] = $db->fetch_assoc($result);
+		$row[] = $db->fetch_assoc($result);
+		$index = array();
+		$entry = array();
+		$exchangeFile = fopen($exchangeFileName, "wb");
+		for($j=0; $j<2; $j++){
+			$index[$j] = $row[$j]["index"];
+			$entry[$j] = $row[$j]["userEntry"]; 
+			assert(strlen($index[$j]) == SIZE_Index);
+			assert(strlen($entry[$j]) == SIZE_UserEntry);
+			fwrite($exchangeFile, $index[$j], strlen($index[$j]));
+			fwrite($exchangeFile, $entry[$j], strlen($entry[$j]));
+		}
+		fclose($exchangeFile);
+		system("$callerName $safeCoreName refreshEntries $exchangeFileName", $status);
+		assert($status == 0);
+		$exchangeFile = fopen($exchangeFileName, "rb");
+		for($j=0; $j<2; $j++){
+			fread($exchangeFile, $index[$j], SIZE_Index);
+			fread($exchangeFile, $entry[$j], SIZE_UserEntry);
+			replaceUserEntry($nextTableName, $index[$j], $entry[$j]);
+		}
+		fclose($exchangeFile);
+	}
+	
+	if (n%2 == 1){
+		$row = $db->fetch_assoc($result);
+		$index = $row["index"];
+		$entry = $row["userEntry"];
+		assert(strlen($index) == SIZE_Index);
+		assert(strlen($entry) == SIZE_UserEntry);
+		$exchangeFile = fopen($exchangeFileName, "wb");
+		fwrite($exchangeFile, $index, strlen($index));
+		fwrite($exchangeFile, $entry, strlen($entry));
+		fclose($exchangeFile);
+		system("$callerName $safeCoreName refreshEntry $exchangeFileName", $status);
+		assert($status == 0);
+		$exchangeFile = fopen($exchangeFileName, "rb");
+		fread($exchangeFile, $index, SIZE_Index);
+		fread($exchangeFile, $entry, SIZE_UserEntry);
+		replaceUserEntry($nextTableName, $index, $entry);
+		fclose($exchangeFile);
+	}
+	
+	$oldTableName = "lives3_encryptedinfo";
+	$tempTableName = "lives3_temp_encryptedinfo";
+	rename($oldTableName, $tempTableName);
+	rename($nextTableName, $oldTableName);
+	rename($tempTableName, $nextTableName);
+	
+	if ($needlock)
+		releaseLock($lockfp);
 }
 
 ?>
