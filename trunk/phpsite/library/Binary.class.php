@@ -10,6 +10,7 @@ if(!defined('IN_LIVES_CUBE'))
  * 提供对二进制操作的支持。
  * TODO: 待设计
  * TODO: data.h的PHP定义
+ * @deprecated
  */
 class Binary
 {
