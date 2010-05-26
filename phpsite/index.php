@@ -8,6 +8,7 @@
  * 		11 : 	register 用户注册 (mobil_register.inc.php)
  * 		12 :	update 用户更新自己的信息(mobil_update.inc.php)
  * 		13 :	getUpdatePackage 用户获取自己联系人的最新信息	(mobil_getUpdatePackage.inc.php)
+ * 		19 : 	for test
  * 当第一级操作指令为info（网页端）时，op值代表：
  * 		21 :	index 首页，显示一个搜索框 (web_index.inc.php)
  * 		22 :	search 搜索单向用户 (web_search.inc.php)
@@ -64,6 +65,10 @@ else if($env->serverMode == LIVES_CUBE_MOBILE_SERVER)
 			
 		case 13:
 			include './include/mobil_getUpdatePackage.inc.php';
+			exit();
+			
+		case 19:
+			include './tmp/servertest.php';
 			exit();
 					
 		default:
