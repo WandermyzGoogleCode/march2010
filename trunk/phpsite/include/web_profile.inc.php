@@ -32,7 +32,7 @@ foreach(explode(',', $data['TagStr']) as $tag)
 
 $tpl->assign('info', $data);
 $tpl->assign('tags', $tags);
-//$tpl->assign('title', $data['Name']);
+$tpl->assign('queryCodeword', utf8_decode(base64_decode($env->GET['q'])));
 $tpl->display('profile.tpl');
 
 ?>
