@@ -39,7 +39,7 @@ function getIndex($epn) {
  */
 function getCurrentCounter(){
 	include './include/hardwarecfg.inc.php';
-	system("$callerName $safeCoreName getCurrentCounter $exchangeFile", $status);
+	system("$callerName $safeCoreName getCurrentCounter $exchangeFileName", $status);
 	if ($status != 0)
 		return array(-1, $status);
 	$exchangeFile = fopen($exchangeFileName, "r");
