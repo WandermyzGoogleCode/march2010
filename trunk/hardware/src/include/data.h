@@ -63,7 +63,7 @@ struct Index
 //Size about 5KB-6KB
 struct UserEntry
 {
-	static const int RAND_PADDING_SIZE = 7;
+	static const int RAND_PADDING_SIZE =11;
 
 	PublicKeyToTransfer pubKey;//The public key of this user
 	PhoneNumber myNumber;//The phone number of this user
@@ -95,7 +95,7 @@ struct UserEntry
 	 */
 	int validSize(){
 		int res = (BYTE*)&symKey-(BYTE*)this;
-		//printf("%d %d\n", res, (BYTE*)&valid-(BYTE*)this);
+//		printf("%d %d\n", res, (BYTE*)&valid-(BYTE*)this);
 		//printf("size=%d\n", res);
 		assert(res%16 == 0);//for symmetrically encryption
 		return res;
