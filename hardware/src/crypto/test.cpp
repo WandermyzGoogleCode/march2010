@@ -16,9 +16,9 @@ int main()
 {
 	// test symmetric encryption/decryption
 
-	char msg[] = "Liu Zhifang     ";
+	char msg[] = "ddddddddddddddddlzflzflzf000000";
 		printf("Testing symmetric encryption/decryption...\n");
-		int len = 16;  // data length should be a multiple of 16
+		int len = 32;  // data length should be a multiple of 16
 		fprintf(stdout, "plaintext: %s\n", msg);
 		hexDump(stdout, "plaintext: ", (unsigned char*)msg, len);
 
