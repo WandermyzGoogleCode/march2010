@@ -90,11 +90,11 @@ void testMakeNewUser(PhoneNumber myNumber, PhoneNumber conNumber,
 	strcpy(user.name, name.c_str());
 	user.pubKey = writePublicKeyToMem(getPublicKey(generatePrivateKey(name)));
 	SymmetricKey symKey = generateRandomSymmetricKey();
-	hexDump(stdout, "before transfer: ", symKey.keycode, 32);
+	//hexDump(stdout, "before transfer: ", symKey.keycode, 32);
 	memcpy(&(user.symKey), &symKey, sizeof(symKey));
-	hexDump(stdout, "before transfer: ", user.symKey.b, 32);
+	//hexDump(stdout, "before transfer: ", user.symKey.b, 32);
 	symmetricallyEncrypt((BYTE*) &user, user.validSize(), symKey);
-	hexDump(stdout, "before transfer: ", user.symKey.b, 32);
+	//hexDump(stdout, "before transfer: ", user.symKey.b, 32);
 	encryptByPublicKey(&(user.symKey), pubkey);//FIXME symKey valid 32 bytes or 256 bytes?
 	testfile = fopen(filename.c_str(), "wb");
 	bool hasOld = false;
@@ -104,7 +104,8 @@ void testMakeNewUser(PhoneNumber myNumber, PhoneNumber conNumber,
 	fwrite(&oldEntry, sizeof(oldEntry), 1, testfile);
 	fwrite(&user, sizeof(user), 1, testfile);
 	fclose(testfile);
-	system((caller_path + " safecore makeNewUserEntry " + filename).c_str());
+	int status = system((caller_path + " safecore makeNewUserEntry " + filename).c_str());
+	printf("result=%d\n", WEXITSTATUS(status));
 	system(("cp " + filename + " " + name).c_str());
 	printf("\n");
 }
@@ -135,14 +136,14 @@ void testGetUpdateEntry(const string& name1, const string& name2) {
 }
 
 int main() {
-	//srand(time(0));
+	srand(time(0));
 	chdir(run_path.c_str());
-	//testMakeSafeCore();
+	testMakeSafeCore();
 	testGetPubKey();
-	//testCompareIndex();
-	//testGetCounter();
-	//	testMakeNewUser(123, 456, "user.123");
-	//	testMakeNewUser(456, 123, "user.456");
-	//	testMakeNewUser(789, 0, "user.789");
+	testCompareIndex();
+	testGetCounter();
+	testMakeNewUser(123, 456, "user.123");
+	testMakeNewUser(456, 123, "user.456");
+	testMakeNewUser(789, 0, "user.789");
 	testGetUpdateEntry("user.123", "user.456");
 }
