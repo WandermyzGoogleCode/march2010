@@ -22,7 +22,7 @@ void hexDump(FILE* f, const char* title, const unsigned char* s, int len)
 void selectRandomKeyAES(unsigned char* key, int b)
 {
 	RAND_bytes(key, b);
-	hexDump(stdout, "Random key: ", key, b);
+	//hexDump(stdout, "Random key: ", key, b);
 }
 
 unsigned char *encryptMessageAES(EVP_CIPHER_CTX *ctx, unsigned char* data,
