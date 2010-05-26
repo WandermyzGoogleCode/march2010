@@ -29,6 +29,11 @@ struct PrivateKey
 	// private components, and also big prime p and q which speed up the
 	// calculation. Struct RSA is from OpenSSL.
 	RSA *rsaKey;
+
+	PrivateKey()
+	{
+		rsaKey = RSA_new();
+	}
 };
 
 struct PublicKey
@@ -36,6 +41,27 @@ struct PublicKey
 	// only public components of struct RSA are included here
 	BIGNUM *e;
 	BIGNUM *n;
+
+	PublicKey()
+	{
+		e = BN_new();
+		n = BN_new();
+	}
+
+	PublicKey(const PublicKey& key)
+	{
+		e = BN_new();
+		n = BN_new();
+		BN_copy(e, key.e);
+		BN_copy(n, key.n);
+	}
+
+	PublicKey& operator=(const PublicKey& key)
+	{
+		BN_copy(e, key.e);
+		BN_copy(n, key.n);
+		return *this;
+	}
 };
 
 struct SymmetricKey

@@ -2,7 +2,7 @@ hp=src/hardware
 cp=src/crypto
 ip=src/include
 
-all: hardware_caller test caller_tester define
+all: hardware_caller test caller_tester define vc_caller gen_key_user0
 
 caller_tester: ${hp}/caller_tester.cpp ${cp}/aux.cpp ${cp}/crypto.cpp ${ip}/data.h ${ip}/crypto.h
 	g++ -lcrypto ${hp}/caller_tester.cpp ${cp}/aux.cpp ${cp}/crypto.cpp -o caller_tester -g
@@ -16,5 +16,11 @@ test: ${cp}/test.cpp ${cp}/aux.cpp ${cp}/crypto.cpp ${ip}/data.h ${ip}/crypto.h
 define: ${hp}/define.cpp ${ip}/data.h ${ip}/crypto.h
 	g++ ${hp}/define.cpp -o define -g
 	
+vc_caller: ${cp}/vc_caller.cpp ${cp}/aux.cpp ${cp}/crypto.cpp
+	g++ ${cp}/vc_caller.cpp ${cp}/aux.cpp ${cp}/crypto.cpp -lcrypto -o vc_caller
+	
+gen_key_user0: ${cp}/gen_key_user0.cpp ${cp}/aux.cpp ${cp}/crypto.cpp
+	g++ -lcrypto ${cp}/gen_key_user0.cpp ${cp}/aux.cpp ${cp}/crypto.cpp -o gen_key_user0
+	
 clean:
-	rm hardware_caller test caller_tester define
+	rm hardware_caller test caller_tester define vc_caller gen_key_user0
