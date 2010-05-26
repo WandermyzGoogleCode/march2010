@@ -48,12 +48,15 @@ else
 	$result = $db->query($query.' WHERE'.$where);	//$where一定不为空
 	$dataset = $db->fetch_all_array($result);
 	
+	$queryCodeword = base64_encode(utf8_encode($where));
+	
 	for($i = 0; $i < count($dataset); $i++)
 	{
 		$dataset[$i]['Tags'] = explode(',', $dataset[$i]['TagStr']);
 	}
 	
 	$tpl->assign('dataset', $dataset);
+	$tpl->assign('queryCodeword', $queryCodeword);
 	$tpl->display('search_result.tpl');
 }
 

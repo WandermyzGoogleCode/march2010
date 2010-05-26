@@ -1,5 +1,7 @@
 {include file='web/header.tpl' title=$info.Name}
 
+{$queryCodeword}
+
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <th width="21%" scope="row">用户名称</th>
