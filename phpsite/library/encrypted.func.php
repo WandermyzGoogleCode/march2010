@@ -26,7 +26,10 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 	$res = false;
 	
 	do{
-		$currentCounter = getCurrentCounter();
+		$temp = getCurrentCounter();
+		if ($temp[1] != 0)
+			break;
+		$currentCounter = $temp[0];
 		$counterNeeded = 2;
 		if ($currentCounter+$counterNeeded >= MAX_COUNTER){
 			updateWholeTable(false);
@@ -85,7 +88,10 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
 	$res = false;
 	
 	do{
-		$currentCounter = getCurrentCounter();
+		$temp = getCurrentCounter();
+		if ($temp[1] != 0)
+			break;
+		$currentCounter = $temp[0];
 		$counterNeeded = 2;
 		if ($currentCounter+$counterNeeded >= MAX_COUNTER){
 			updateWholeTable(false);
@@ -140,7 +146,10 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 	$res = array();
 	
 	do{
-		$currentCounter = getCurrentCounter();
+		$temp = getCurrentCounter();
+		if ($temp[1] != 0)
+			break;
+		$currentCounter = $temp[0];
 		$counterNeeded = 1+count($updateRequest)*2;
 		if ($currentCounter+$counterNeeded >= MAX_COUNTER){
 			updateWholeTable(false);
