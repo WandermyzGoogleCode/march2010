@@ -51,7 +51,9 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 			
 		$exchangeFile = fopen($exchangeFileName, "wb");
 		fwrite($exchangeFile, $hasOldBin, 1);
+		assert(strlen($oldUserEntry) == SIZE_UserEntry);
 		fwrite($exchangeFile, $oldUserEntry, strlen($oldUserEntry));
+		assert(strlen($userEntry) == SIZE_UserEntry);
 		fwrite($exchangeFile, $userEntry, strlen($userEntry));
 		fclose($exchangeFile);
 		
@@ -103,7 +105,9 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
 			break;
 			
 		$exchangeFile = fopen($exchangeFileName, "wb");
+		assert(strlen($oldUserEntry) == SIZE_UserEntry);
 		fwrite($exchangeFile, $oldUserEntry, strlen($oldUserEntry));
+		assert(strlen($userEntry) == SIZE_UserEntry);
 		fwrite($exchangeFile, $userEntry, strlen($userEntry));
 		fclose($exchangeFile);
 		
@@ -165,6 +169,9 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 			$targetUser = $temp[1];
 			
 			$exchangeFile = fopen($exchangeFileName, "wb");
+			assert(strlen($operateUser) == SIZE_UserEntry);
+			assert(strlen($targetUser) == SIZE_UserEntry);
+			assert(strlen($threshold) == SIZE_TimeType);
 			fwrite($exchangeFile, $operateUser, strlen($operateUser));
 			fwrite($exchangeFile, $targetUser, strlen($targetUser));
 			fwrite($exchangeFile, $threshold, strlen($threshold));
