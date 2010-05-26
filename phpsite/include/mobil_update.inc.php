@@ -8,7 +8,7 @@
  * 		userEntry 先用服务器公钥做加密，再用用户自己的私钥加密后得到的UserEntry，base64编码
  * 输出：
  * 		MIME类型： text/plain（纯文本）
- * 		内容：完成更新的Unix timestamp，0表示失败
+ * 		内容：1表示成功，0表示失败
  */
 
 if(!defined('IN_LIVES_CUBE'))
