@@ -63,4 +63,14 @@ function getUserEntryFromDataBase($index){
 	return array($hasEntry, $userEntry);
 }
 
+function replaceUserEntry($tablename, $index, $newUserEntry){
+	global $db;
+	$db->query("replace into $tablename values(?, ?)", "bb", $index, $newUserEntry);
+}
+
+function changeTableName($oldname, $newname){
+	global $db;
+	$db->query("alter table $oldname rename $newname");
+}
+
 ?>
