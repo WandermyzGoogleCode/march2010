@@ -18,7 +18,7 @@ require_once './library/hardwareaux.func.php';
  * 用户注册
  * @param $encryptedPhoneNumber 加上PADDING并用服务器公钥做加密后得到的EncryptedPhoneNumber
  * @param $userEntry 用服务器公钥做加密后得到的UserEntry
- * @return 完成注册的Unix timestamp，0表示失败
+ * @return 一个bool表示成功或者失败
  */
 function encryptedRegister($encryptedPhoneNumber, $userEntry){
 	include './include/hardwarecfg.inc.php';
@@ -26,7 +26,7 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 	
 	$currentCounter = getCurrentCounter();
 	$counterNeeded = 1;
-	if ($currentCounter+$counterNeeded >= MAX_COUNTER)
+	if ($currentCounter+$counterNeeded >= MAX_COUNTER)//TODO SHIFT TO NEXT KEY
 		return 0;
 	
 	$temp = getIndex($encryptedPhoneNumber);
@@ -40,9 +40,24 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 	if ($hasOld){
 		$row = $db->fetch_assoc($result);
 		$oldUserEntry = $row["userEntry"];
+		$hasOldBin = pack("C", 1);
 	}
-	else
+	else{
 		$oldUserEntry = $userEntry;
+		$hasOldBin = pack("C", 0);
+	}
+		
+	$exchangeFile = fopen($exchangeFileName, "wb");
+	fwrite($exchangeFile, $hasOldBin, 1);
+	fwrite($exchangeFile, $oldUserEntry, strlen($oldUserEntry));
+	fwrite($exchangeFile, $userEntry, strlen($userEntry));
+	fclose($exchangeFile);
+	
+	system("$callerName $safeCoreName makeNewUserEntry $exchangeFileName", $status);
+	if ($status != 0)
+		return 0;
+	$exchangeFile = fopen($exchangeFileName, "rb");
+	fread($exchangeFile, $newUserEntry, SIZE_UserEntry);
 	
 	releaseLock($lockfp);
 }
@@ -51,7 +66,7 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
  * 用户更新自己的信息
  * @param $encryptedPhoneNumber 加上PADDING并用服务器公钥做加密后得到的EncryptedPhoneNumber
  * @param $userEntry 先用服务器公钥做加密，再用用户自己的私钥加密后得到的UserEntry
- * @return 完成注册的Unix timestamp，0表示失败
+ * @return 一个bool表示成功或者失败
  */
 function encryptedUpdate($encryptedPhoneNumber, $userEntry){
 	//TODO
