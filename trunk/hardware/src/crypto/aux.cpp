@@ -33,15 +33,15 @@ unsigned char *encryptMessageAES(EVP_CIPHER_CTX *ctx, unsigned char* data,
 
 	ol = 0;
 	ret = (unsigned char*) malloc(len + EVP_CIPHER_CTX_block_size(ctx));
-	for (int i = 0; i < len / 100; i++)
+	for (int i = 0; i < len / 128; i++)
 	{
-		if (!EVP_EncryptUpdate(ctx, &ret[ol], &tmp, &data[ol], 100))
+		if (!EVP_EncryptUpdate(ctx, &ret[ol], &tmp, &data[ol], 128))
 			return NULL;
 		ol += tmp;
 	}
-	if (len % 100)
+	if (len % 128)
 	{
-		if (!EVP_EncryptUpdate(ctx, &ret[ol], &tmp, &data[ol], len % 100))
+		if (!EVP_EncryptUpdate(ctx, &ret[ol], &tmp, &data[ol], len % 128))
 			return NULL;
 		ol += tmp;
 	}
@@ -61,6 +61,7 @@ unsigned char* decryptMessageAES(EVP_CIPHER_CTX* ctx, unsigned char* data, int l
 		free(ret);
 		return NULL;
 	}
+	printf("%d %d\n", ol, finalLen);
 	for (int i=0; i<len-(ol+finalLen); i++)
 		ret[ol+finalLen+i] = 0;
 	return ret;
