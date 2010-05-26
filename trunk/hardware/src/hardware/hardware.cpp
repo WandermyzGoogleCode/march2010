@@ -60,8 +60,8 @@ bool SafeCore::getUpdateEntry(const UserEntry& operateUser,
 	symmetricallyDecrypt((BYTE*) &rTargetUser, rTargetUser.validSize(),
 			currentKey);
 
-//	hexDump(stdout, "Operate Valid:", (BYTE*)&rOperateUser.valid, 1);
-//	hexDump(stdout, "Target Valid:", (BYTE*)&rTargetUser.valid, 1);
+	//	hexDump(stdout, "Operate Valid:", (BYTE*)&rOperateUser.valid, 1);
+	//	hexDump(stdout, "Target Valid:", (BYTE*)&rTargetUser.valid, 1);
 
 	bool connected = false;
 	if (rTargetUser.nOfConnection >= MAX_CONNECTION)//bad entry
@@ -98,16 +98,16 @@ TimeType SafeCore::makeUserEntry(UserEntry& outputEntry) {
 	TimeType res = outputEntry.updateTime = getTimeNow();
 	outputEntry.valid = true;
 	fillRandPadding(&(outputEntry.randPadding), outputEntry.RAND_PADDING_SIZE);
-	hexDump(stdout, "Valid:", (BYTE*)&outputEntry.valid, 8);
+	hexDump(stdout, "Valid:", (BYTE*) &outputEntry.valid, 8);
 	symmetricallyEncrypt((BYTE*) &outputEntry, outputEntry.validSize(),
 			currentKey);
 
-//	//FIXME TESTING!
-//	symmetricallyDecrypt((BYTE*) &outputEntry, outputEntry.validSize(),
-//			currentKey);
-//	hexDump(stdout, "Valid:", (BYTE*)&outputEntry.valid, 8);
-//	symmetricallyEncrypt((BYTE*) &outputEntry, outputEntry.validSize(),
-//			currentKey);
+	//	//FIXME TESTING!
+	//	symmetricallyDecrypt((BYTE*) &outputEntry, outputEntry.validSize(),
+	//			currentKey);
+	//	hexDump(stdout, "Valid:", (BYTE*)&outputEntry.valid, 8);
+	//	symmetricallyEncrypt((BYTE*) &outputEntry, outputEntry.validSize(),
+	//			currentKey);
 
 	memset((BYTE*) &outputEntry + outputEntry.validSize(), 0,
 			sizeof(outputEntry) - outputEntry.validSize());
@@ -119,7 +119,7 @@ bool SafeCore::makeNewUserEntry(bool hasOld, const UserEntry& oldEntry,
 	if (currentCounter >= MAX_COUNT)
 		return 0;
 	currentCounter++;
-	if (hasOld){
+	if (hasOld) {
 		UserEntry rOldEntry = oldEntry;
 		symmetricallyDecrypt((BYTE*) &rOldEntry, rOldEntry.validSize(),
 				currentKey);
@@ -144,8 +144,14 @@ bool SafeCore::makeUpdateUserEntry(const UserEntry& oldEntry,
 	return makeUserEntry(outputEntry);
 }
 
-void SafeCore::refreshEntries(Index& firstIndex,
-		UserEntry& firstEntry, Index& secondIndex, UserEntry& secondEntry) {
+bool SafeCore::refreshEntries(Index& firstIndex, UserEntry& firstEntry,
+		Index& secondIndex, UserEntry& secondEntry) {
+	if (firstIndex.compare(lastRefreshIndex) <= 0)
+		return false;
+	if (firstIndex.compare(secondIndex) <= 0)
+		return false;
+	lastRefreshIndex = secondIndex;
+
 	Index rIndex[2] = { firstIndex, secondIndex };
 	UserEntry rEntry[2] = { firstEntry, secondEntry };
 	for (int i = 0; i < 2; i++) {
@@ -161,7 +167,7 @@ void SafeCore::refreshEntries(Index& firstIndex,
 		memset(((BYTE*) (rEntry + i)) + rEntry[i].validSize(), 0,
 				sizeof(rEntry[i]) - rEntry[i].validSize());
 	}
-	if (rIndex[0].compare(rIndex[1]) > 0){
+	if (rIndex[0].compare(rIndex[1]) > 0) {
 		std::swap(rIndex[0], rIndex[1]);
 		std::swap(rEntry[0], rEntry[1]);
 	}
@@ -169,4 +175,24 @@ void SafeCore::refreshEntries(Index& firstIndex,
 	firstEntry = rEntry[0];
 	secondIndex = rIndex[1];
 	secondEntry = rEntry[1];
+
+	return true;
+}
+
+bool SafeCore::refreshEntry(Index& index, UserEntry& entry){
+	if (index.compare(lastRefreshIndex) <= 0)
+		return false;
+	lastRefreshIndex = Index::getLargestIndex();
+	symmetricallyDecrypt((BYTE*) (&index), sizeof(index), currentKey);
+	memset(((BYTE*) (&index)) + sizeof(PhoneNumber), 0, sizeof(Index)
+			- sizeof(PhoneNumber));
+	symmetricallyEncrypt((BYTE*) (&index), sizeof(index), nextKey);
+
+	symmetricallyDecrypt((BYTE*) (&entry), entry.validSize(),
+			currentKey);
+	symmetricallyEncrypt((BYTE*) (&entry), entry.validSize(),
+			nextKey);
+	memset(((BYTE*) (&entry)) + entry.validSize(), 0,
+			sizeof(entry) - entry.validSize());
+	return true;
 }

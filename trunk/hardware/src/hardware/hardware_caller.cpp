@@ -28,8 +28,8 @@ using namespace std;
 
 const int OPN = 9;
 const char* OPS[] = { "makeSafeCore", "getPublicKey", "makeNewUserEntry",
-		"makeUpdateUserEntry", "refreshEntries", "getIndex", "shiftToNextKey",
-		"getUpdateEntry", "getCurrentCounter" };
+		"makeUpdateUserEntry", "refreshEntries", "refreshEntry", "getIndex",
+		"shiftToNextKey", "getUpdateEntry", "getCurrentCounter" };
 
 /**
  * @return
@@ -217,6 +217,25 @@ int main(int argc, char* argv[]) {
 								!= 1 || fwrite(&secondIndex,
 						sizeof(secondIndex), 1, iofile) != 1 || fwrite(
 						&secondEntry, sizeof(secondEntry), 1, iofile) != 1) {
+					printf("Failed to write result.\n");
+					res = 3;
+					break;
+				}
+			} while (false);
+		} else if (op == "refreshEntry") {
+			do {
+				Index index;
+				UserEntry entry;
+				if (fread(&index, sizeof(index), 1, iofile) != 1 || fread(
+						&entry, sizeof(entry), 1, iofile) != 1) {
+					printf("Failed to read parameters.\n");
+					res = 3;
+					break;
+				}
+				core->refreshEntry(index, entry);
+				fseek(iofile, 0, SEEK_SET);
+				if (fwrite(&index, sizeof(index), 1, iofile) != 1 || fwrite(
+						&entry, sizeof(entry), 1, iofile) != 1) {
 					printf("Failed to write result.\n");
 					res = 3;
 					break;
