@@ -31,6 +31,9 @@ bool symmetricallyEncrypt(unsigned char* data, int data_size,
 	unsigned char* ciphertext = encryptMessageAES(encryptCtx, data, data_size
 			- 1, &lenOutput);
 
+	if (ciphertext == NULL)
+		return false;
+
 	if (lenOutput != data_size) // the output length must equals input length
 		return false;
 
@@ -51,6 +54,9 @@ bool symmetricallyDecrypt(unsigned char* data, int data_size,
 
 	// decrypt
 	unsigned char* decrypted = decryptMessageAES(decryptCtx, data, data_size);
+
+	if (decrypted == NULL)
+		return false;
 
 	memcpy(data, decrypted, data_size);
 	free(decrypted);
@@ -212,15 +218,15 @@ PrivateKey generatePrivateKey(const std::string& codeword)
 	res.rsaKey = rsaKey;
 
 	char* str = BN_bn2dec(p);
-	printf("p: %s\n", str);
+//	printf("p: %s\n", str);
 	str = BN_bn2dec(q);
-	printf("q: %s\n", str);
+//	printf("q: %s\n", str);
 	str = BN_bn2dec(n);
-	printf("n: %s\n", str);
+//	printf("n: %s\n", str);
 	str = BN_bn2dec(e);
-	printf("e: %s\n", str);
+//	printf("e: %s\n", str);
 	str = BN_bn2dec(d);
-	printf("d: %s\n", str);
+//	printf("d: %s\n", str);
 
 	BN_free(tmp2);
 	BN_free(tmp1);
