@@ -84,7 +84,7 @@ function checkLength($binstr, $expectedLength, $varname = '', $showMessage = fal
 		}
 		else
 		{
-			die(utf8_encode($msg));
+			die($msg);
 		}
 	}
 }
