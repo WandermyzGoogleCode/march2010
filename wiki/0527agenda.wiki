@@ -1,4 +1,5 @@
 #summary 5月27日会议议程
+#labels Type-Agenda
 
  * 社会工程学——宣传策略与问卷调查
  * 测试分工
