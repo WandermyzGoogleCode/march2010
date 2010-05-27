@@ -80,10 +80,7 @@ function virtualRegister(PlainUserEntry $plainUserEntry)
 	$userEntry = fread($fd, SIZE_ValidUserEntry);
 	
 	system("rm ".$cfg->tmpDir."virtual_client_c_return.tmp");
-	encryptedRegister($encryptedPhoneNum, $userEntry);
-	
-	return true;
-	
+	return encryptedRegister($encryptedPhoneNum, $userEntry);
 }
 
 /**
