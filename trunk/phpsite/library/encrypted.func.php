@@ -164,12 +164,12 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 			echo "Bad input for encryptedRegister</br>";
 			break;
 		}
-		
-				$temp = getCurrentCounter();
+	
+		$temp = getCurrentCounter();
 		if ($temp[1] != 0)
 			break;
 		$currentCounter = $temp[0];
-		$counterNeeded = 1+count($updateRequest)*2;
+		$counterNeeded = 2+count($updateRequest)*2;
 		if ($currentCounter+$counterNeeded >= MAX_COUNTER){
 			updateWholeTable(false);
 			continue;
@@ -188,6 +188,8 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 		$binFalse = pack("C", 0);
 		for($i=0; $i<count($updateRequest); $i++){
 			$temp = getIndex($updateRequest[i]);
+			if (strlen($temp) != SIZE_EncryptedPhoneNumber)
+				continue;
 			if ($temp[1] != 0)
 				continue;
 			$targetIndex = $temp[0];
