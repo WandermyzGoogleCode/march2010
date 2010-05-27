@@ -20,11 +20,17 @@ if(!defined('IN_LIVES_CUBE'))
 require_once('./library/encrypted.func.php');
 
 $encryptedPhoneNumber = base64_decode($env->POST['encryptedPhoneNumber']);
+checkLength($encryptedPhoneNumber, SIZE_EncryptedPhoneNumber, 'encryptedPhoneNumber');
+
 $threshold = base64_decode($env->POST['threshold']);
+checkLength($threshold, SIZE_TimeType, 'threshold');
+
 $updateRequest = array();
 foreach($env->POST['updateEntry'] as $entry)
 {
-	$updateRequest[] = base64_decode($entry);
+	$data = base64_decode($entry);
+	checkLength($data, SIZE_UpdateEntry, 'updateEntry');
+	$updateRequest[] = $data;
 }
 
 $updatePackage = getEncryptedUpdatePackage($encryptedPhoneNumber, $updateRequest, $threshold);

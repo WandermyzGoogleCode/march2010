@@ -21,6 +21,9 @@ require_once('./library/encrypted.func.php');
 $encryptedPhoneNumber = base64_decode($env->POST['encryptedPhoneNumber']);
 $userEntry = base64_decode($env->POST['userEntry']);
 
+checkLength($encryptedPhoneNumber, SIZE_EncryptedPhoneNumber, 'encryptedPhoneNumber');
+checkLength($userEntry, SIZE_UserEntry, 'userEntry');
+
 $result = encryptedRegister($encryptedPhoneNumber, $userEntry);
 
 echo $result;
