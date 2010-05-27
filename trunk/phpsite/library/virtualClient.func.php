@@ -71,7 +71,7 @@ function virtualRegister(PlainUserEntry $plainUserEntry)
 	
 	fclose($fd);
 	
-	/*
+	
 	system($cfg->binDir."vc_caller");
 	system("rm ".$cfg->tmpDir."virtual_client.tmp");
 	
@@ -81,7 +81,8 @@ function virtualRegister(PlainUserEntry $plainUserEntry)
 	
 	system("rm ".$cfg->tmpDir."virtual_client_c_return.tmp");
 	encryptedRegister($encryptedPhoneNum, $userEntry);
-	*/
+	
+	return true;
 }
 
 /**
