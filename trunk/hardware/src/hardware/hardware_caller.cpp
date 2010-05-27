@@ -26,7 +26,7 @@ using namespace std;
 //\nSee doc/file.format to see detailed input and output format.\n\
 //";
 
-const int OPN = 9;
+const int OPN = 10;
 const char* OPS[] = { "makeSafeCore", "getPublicKey", "makeNewUserEntry",
 		"makeUpdateUserEntry", "refreshEntries", "refreshEntry", "getIndex",
 		"shiftToNextKey", "getUpdateEntry", "getCurrentCounter" };
@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
 		return 0;
 	} else if (op == "shiftToNextKey") {
 		int fd = getExclusiveFd(argv[1]);
-		FILE* file = fdopen(fd, "wb");
+		FILE* file = fdopen(fd, "rb+");
 		if (file == NULL) {
 			printf("Failed to open file: %s\n", argv[1]);
 			res = 3;
@@ -209,8 +209,11 @@ int main(int argc, char* argv[]) {
 					res = 3;
 					break;
 				}
-				core->refreshEntries(firstIndex, firstEntry, secondIndex,
-						secondEntry);
+				if (!core->refreshEntries(firstIndex, firstEntry, secondIndex,
+						secondEntry)){
+					res = 3;
+					break;
+				}
 				fseek(iofile, 0, SEEK_SET);
 				if (fwrite(&firstIndex, sizeof(firstIndex), 1, iofile) != 1
 						|| fwrite(&firstEntry, sizeof(firstEntry), 1, iofile)

@@ -73,6 +73,22 @@ void testCompareIndex() {
 	printf("\n");
 }
 
+void testCompareIndex(PhoneNumber pn1, PhoneNumber pn2) {
+	printf("TEST-----compare index\n");
+	Index ind1, ind2;
+
+	ind1 = getIndex(EncryptedPhoneNumber::getEncryptedPhoneNumber(pn1, pubkey),
+			"ind1.in");
+	system(("cp " + filename + " ind1").c_str());
+
+	ind2 = getIndex(EncryptedPhoneNumber::getEncryptedPhoneNumber(pn2, pubkey),
+			"ind2.in");
+	system(("cp " + filename + " ind2").c_str());
+
+	printf("ind1 vs ind2 = %d\n", ind1.compare(ind2));
+	printf("\n");
+}
+
 //void testGetCounter() {
 //	printf("TEST-----get current counter\n");
 //	system((caller_path + " safecore getCurrentCounter " + filename).c_str());
@@ -147,19 +163,21 @@ void testMakeUpdateUserEntry(const string& name, PhoneNumber myNumber,
 	printf("TEST-----make update userEntry\n");
 	UserEntry user = getUser(name);
 	UserEntry newUser = makeUser(myNumber, conNumber, name);
-	;
 	SymmetricKey symKey = generateRandomSymmetricKey();
-	memcpy(&(user.symKey), &symKey, sizeof(symKey));
-	symmetricallyEncrypt((BYTE*) &user, user.validSize(), symKey);
-	encryptByPublicKey(&(user.symKey), pubkey);
-	memcpy(&(user.siganture), &(user.symKey), sizeof(user.symKey));
-	signByPrivateKey(&(user.siganture), generatePrivateKey(name));
+	memcpy(&(newUser.symKey), &symKey, sizeof(symKey));
+	//hexDump(stdout, "PUBKEY: ", (BYTE*)&newUser.pubKey, 16);
+	symmetricallyEncrypt((BYTE*) &newUser, newUser.validSize(), symKey);
+	encryptByPublicKey(&(newUser.symKey), pubkey);
+	memcpy(&(newUser.siganture), &(newUser.symKey), sizeof(newUser.symKey));
+	signByPrivateKey(&(newUser.siganture), generatePrivateKey(name));
+	//hexDump(stdout, "SIGNATURE: ", (BYTE*)&newUser.siganture, 16);
 	testfile = fopen(filename.c_str(), "wb");
 	fwrite(&user, sizeof(user), 1, testfile);
 	fwrite(&newUser, sizeof(newUser), 1, testfile);
 	fclose(testfile);
 	int status = system((caller_path + " safecore makeUpdateUserEntry "
 			+ filename).c_str());
+	system(("cp "+filename+" "+name).c_str());
 	printf("result=%d\n", WEXITSTATUS(status));
 	printf("\n");
 }
@@ -170,12 +188,10 @@ void testRefreshEntries(PhoneNumber pn1, const string& name1, PhoneNumber pn2,
 	UserEntry user1, user2;
 	user1 = getUser(name1);
 	user2 = getUser(name2);
-	PublicKey pubkey1 = getPublicKey(generatePrivateKey(name1));
-	PublicKey pubkey2 = getPublicKey(generatePrivateKey(name2));
 	Index ind1 = getIndex(EncryptedPhoneNumber::getEncryptedPhoneNumber(pn1,
-			pubkey1), "tInd");
+			pubkey), "tInd");
 	Index ind2 = getIndex(EncryptedPhoneNumber::getEncryptedPhoneNumber(pn2,
-			pubkey2), "tInd");
+			pubkey), "tInd");
 	testfile = fopen(filename.c_str(), "wb");
 	fwrite(&ind1, sizeof(ind1), 1, testfile);
 	fwrite(&user1, sizeof(user1), 1, testfile);
@@ -206,15 +222,14 @@ void testRefreshEntries(PhoneNumber pn1, const string& name1, PhoneNumber pn2,
 	printf("\n");
 }
 
-void testShiftToNextKey(){
+void testShiftToNextKey() {
 	printf("TEST-----shift to next key\n");
-	int status = system(
-			(caller_path + " safecore shiftToNextKey ").c_str());
+	int status = system((caller_path + " safecore shiftToNextKey ").c_str());
 	printf("result=%d\n", WEXITSTATUS(status));
 	printf("\n");
 }
 
-void testGetCurrentCounter(){
+void testGetCurrentCounter() {
 	printf("TEST-----get current counter\n");
 	int status = system(
 			(caller_path + " safecore getCurrentCounter counter").c_str());
@@ -222,29 +237,26 @@ void testGetCurrentCounter(){
 	printf("\n");
 }
 
-//TODO TEST refreshEntry
-
 int main() {
 	srand(time(0));
 	chdir(run_path.c_str());
 	//	testMakeSafeCore();
 	testGetPubKey();
-	//	testCompareIndex();
+	testCompareIndex();
 	testGetCurrentCounter();
 
-		testMakeNewUser(123, 456, "user.123");
-//		testMakeNewUser(456, 123, "user.456");
-//		testMakeNewUser(789, 0, "user.789");
-//		testGetUpdateEntry("user.123", "user.456");
+	testMakeNewUser(123, 456, "user.123");
+	testMakeNewUser(456, 123, "user.456");
+	testMakeNewUser(789, 0, "user.789");
+	testGetUpdateEntry("user.123", "user.456");
 
-//	testGetUpdateEntry("user.789", "user.123");
-//	testGetUpdateEntry("user.123", "user.789");
-//
-//	testMakeUpdateUserEntry("user.123", 123, 789);
-//	testGetUpdateEntry("user.789", "user.123");
-//
-//	testRefreshEntries(123, "user.123", 456, "user.456");
-//	testShiftToNextKey();
-//	testMakeNewUser(123, 789, "user.123");
-//	testMakeNewUser(456, 123, "user.456");
+	testGetUpdateEntry("user.789", "user.123");
+	testGetUpdateEntry("user.123", "user.789");
+
+	testMakeUpdateUserEntry("user.123", 123, 789);
+	testGetUpdateEntry("user.789", "user.123");
+
+	testRefreshEntries(123, "user.123", 456, "user.456");
+	testShiftToNextKey();
+	testCompareIndex(123, 456);
 }

@@ -70,7 +70,7 @@ struct Index
 //Size about 5KB-6KB
 struct UserEntry
 {
-	static const int RAND_PADDING_SIZE =11;
+	static const int RAND_PADDING_SIZE = 7;
 
 	PublicKeyToTransfer pubKey;//The public key of this user
 	PhoneNumber myNumber;//The phone number of this user
