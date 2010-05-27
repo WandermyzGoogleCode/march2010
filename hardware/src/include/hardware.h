@@ -13,6 +13,7 @@
 #include <assert.h>
 #include <stdio.h>
 
+//TODO add getGeneration interface
 /*
  * All private things can only be
  * accessed by hard ways, i.e. open the hardware.
