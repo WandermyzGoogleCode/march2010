@@ -15,9 +15,9 @@
 using namespace std;
 
 const string caller_path =
-		"/home/spaceflyer/programming/eclipse_workspace/hardware/hardware_caller";
+		"../hardware_caller";
 const string run_path =
-		"/home/spaceflyer/programming/eclipse_workspace/hardware/run/";
+		"./run/";
 const string filename = "test";
 
 FILE* testfile;
