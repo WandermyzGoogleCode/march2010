@@ -24,7 +24,13 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 	$res = false;
 	
 	do{
-		//TODO 输入参数的有效性检查
+		if (strlen($encryptedPhoneNumber) != SIZE_EncryptedPhoneNumber ||
+			strlen($userEntry) != SIZE_UserEntry)
+		{
+			echo "Bad input for encryptedRegister</br>";
+			break;
+		}
+		
 		$temp = getCurrentCounter();
 		if ($temp[1] != 0)
 			break;
@@ -88,8 +94,14 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
 	$res = false;
 	
 	do{
-		//TODO 输入参数的有效性检查
-		$temp = getCurrentCounter();
+		if (strlen($encryptedPhoneNumber) != SIZE_EncryptedPhoneNumber ||
+			strlen($userEntry) != SIZE_UserEntry)
+		{
+			echo "Bad input for encryptedRegister</br>";
+			break;
+		}
+		
+				$temp = getCurrentCounter();
 		if ($temp[1] != 0)
 			break;
 		$currentCounter = $temp[0];
@@ -147,8 +159,13 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 	$res = array();
 	
 	do{
-		//TODO 输入参数的有效性检查
-		$temp = getCurrentCounter();
+		if (strlen($encryptedPhoneNumber) != SIZE_EncryptedPhoneNumber || strlen($threshold) != Size_TimeType)
+		{
+			echo "Bad input for encryptedRegister</br>";
+			break;
+		}
+		
+				$temp = getCurrentCounter();
 		if ($temp[1] != 0)
 			break;
 		$currentCounter = $temp[0];
