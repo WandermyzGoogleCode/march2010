@@ -8,16 +8,14 @@ if(!defined('IN_LIVES_CUBE'))
 require_once './library/hardwareaux.func.php';
 
 /*
- * 注意，以下用到的EncryptedPhoneNumber, UserEntry, UpdateRequest, UpdatePackage
+ * 注意，以下用到的EncryptedPhoneNumber, UserEntry, UpdateEntry等
  * 全部是用C语言定义的struct，具体见data.h。
- * 
- * 不知道如何让php中也可以处理这种纯2进制数据？
  */
 
 /**
  * 用户注册
  * @param $encryptedPhoneNumber 加上PADDING并用服务器公钥做加密后得到的EncryptedPhoneNumber
- * @param $userEntry 用服务器公钥做加密后得到的UserEntry
+ * @param $userEntry 用随即密钥对称加密，然后用服务器公钥做加密对称密钥后得到的UserEntry
  * @return 一个bool表示成功或者失败
  */
 function encryptedRegister($encryptedPhoneNumber, $userEntry){
@@ -26,6 +24,7 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 	$res = false;
 	
 	do{
+		//TODO 输入参数的有效性检查
 		$temp = getCurrentCounter();
 		if ($temp[1] != 0)
 			break;
@@ -79,7 +78,8 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 /**
  * 用户更新自己的信息
  * @param $encryptedPhoneNumber 加上PADDING并用服务器公钥做加密后得到的EncryptedPhoneNumber
- * @param $userEntry 先用服务器公钥做加密，再用用户自己的私钥加密后得到的UserEntry
+ * @param $userEntry 用随即密钥对称加密，然后用服务器公钥做加密对称密钥后得到的UserEntry，
+ * 			并且用户会用原来的私钥对加密后的对称密钥做签名。
  * @return 一个bool表示成功或者失败
  */
 function encryptedUpdate($encryptedPhoneNumber, $userEntry){
@@ -88,6 +88,7 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
 	$res = false;
 	
 	do{
+		//TODO 输入参数的有效性检查
 		$temp = getCurrentCounter();
 		if ($temp[1] != 0)
 			break;
@@ -136,9 +137,9 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
 /**
  * 用户获取自己联系人的最新信息
  * @param $encryptedPhoneNumber 加上PADDING并用服务器公钥做加密后得到的EncryptedPhoneNumber
- * @param $updateRequest 普通的UpdateRequest，其中包含了需要获得哪些联系人的最新信息（加密过的）
+ * @param $updateRequest EncryptedPhoneNumber数组，其中包含了需要获得哪些联系人的最新信息（加密过的）
  * @param $threshold 用户最后更新的时间，用于做增量更新。
- * @return 获得的UpdatePackage，包含了更新过的联系人信息（已经做了时间增量处理）
+ * @return 获得的UpdateEntry数组，包含了更新过的联系人信息（已经做了时间增量处理）
  */
 function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, $threshold){
 	include './include/hardwarecfg.inc.php';
@@ -146,6 +147,7 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 	$res = array();
 	
 	do{
+		//TODO 输入参数的有效性检查
 		$temp = getCurrentCounter();
 		if ($temp[1] != 0)
 			break;
