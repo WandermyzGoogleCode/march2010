@@ -29,6 +29,8 @@ int main()
 	defineSize("UpdatePackage", sizeof(UpdatePackage));
 	defineSize("PhoneNumber", sizeof(PhoneNumber));
 	defineSize("TimeType", sizeof(TimeType));
+	UserEntry user;
+	defineSize("ValidUserEntry", user.validSize());
 	define("MAX_COUNTER", SafeCore::MAX_COUNT);
 	define("MAX_NAME_LENGTH", MAX_NAME_LENGTH);
 	define("MAX_STATUS_LENGTH", MAX_STATUS_LENGTH);
