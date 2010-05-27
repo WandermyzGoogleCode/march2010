@@ -66,4 +66,30 @@ function showMessage($message, $title = '', $redirect = '')
 	exit();
 }
 
+/**
+ * 检查$binstr的长度是否正确。若不正确，且$showMessage为true，则调用showMessage输出错误信息；若不正确，且$showMessage为false，则调用die输出错误信息
+ * @param unknown_type $binstr
+ * @param unknown_type $expectedLength
+ * @param unknown_type $showMessage
+ */
+function checkLength($binstr, $expectedLength, $varname = '', $showMessage = false)
+{
+	if(strlen($binstr) != $expectedLength)
+	{
+		$msg = $varname."长度错误，接收的长度为".strlen($binstr);
+		
+		if($showMessage)
+		{
+			showMessage($msg, '长度错误');
+		}
+		else
+		{
+			die(utf8_encode($msg));
+		}
+	}
+}
+
+
+
+
 ?>

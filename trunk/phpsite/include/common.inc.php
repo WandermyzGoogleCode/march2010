@@ -11,6 +11,7 @@ if(!defined('IN_LIVES_CUBE'))
 }
 
 require_once('./configuration/global.config.php');
+require_once('./configuration/define.config.php');
 require_once('./library/global.func.php');
 require_once('./library/MySqlImproved.class.php');
 require_once('./library/Environment.class.php');
