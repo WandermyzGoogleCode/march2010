@@ -29,6 +29,15 @@ if(checkSubmit('registerSubmit'))
 		showMessage("手机号{$env->POST['PhoneNumber']}已存在", '手机号重复', '-1');
 	}
 	
+	
+	$virtual =  virtualRegister($entry);	
+	
+	if(!$virtual)
+	{
+		showMessage("virtualRegister模块出错");
+	}
+	
+	
 	$db->query('INSERT INTO lives3_openinfo(PhoneNumber, Name, Status, MemberInfo, TagStr) VALUES(?, ?, ?, ?, ?)', 'sssss',
 			$env->POST['PhoneNumber'],
 			$env->POST['Name'],
@@ -49,13 +58,6 @@ if(checkSubmit('registerSubmit'))
 	$entry->phoneNumber = $env->POST['PhoneNumber'];
 	$entry->name = $env->POST['Name'];
 	$entry->status = $cfg->newUserStatus;
-	
-	$virtual =  virtualRegister($entry);	//TODO: 错误处理？
-	
-	if(!$virtual)
-	{
-		showMessage("virtualRegister模块出错");
-	}
 	
 	showMessage("新单向用户({$env->POST['PhoneNumber']})注册成功！", '注册成功', -1);
 }
