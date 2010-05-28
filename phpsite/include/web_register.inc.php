@@ -34,6 +34,9 @@ if(checkSubmit('registerSubmit'))
 	$entry->phoneNumber = $env->POST['PhoneNumber'];
 	$entry->name = $env->POST['Name'];
 	$entry->status = $cfg->newUserStatus;
+	
+	print_r($entry);
+	
 	$virtual =  virtualRegister($entry);	
 	
 	if(!$virtual)
