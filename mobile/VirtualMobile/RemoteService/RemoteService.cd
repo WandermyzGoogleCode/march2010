@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="RemoteService.ServerCaller">
+    <Position X="0.5" Y="0.5" Width="2.5" />
+    <Members>
+      <Field Name="errorCallback" Hidden="true" />
+      <Method Name="getResponse" Hidden="true" />
+      <Field Name="MAX_UPDATE_REQUEST_NUMBER" Hidden="true" />
+      <Method Name="sendWebRequest" Hidden="true" />
+      <Field Name="SERVER_URL" Hidden="true" />
+      <Method Name="ServerCaller" Hidden="true" />
+      <Field Name="SIZE_UPDATE_ENTRY" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="RemoteService.ServerCaller.ServerOperation">
+        <Members>
+          <Field Name="Test" Hidden="true" />
+        </Members>
+        <TypeIdentifier>
+          <NewMemberFileName>ServerCaller.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAACAAIAAAAAAAGCAAAAAAAAABAAAIgAAAAA=</HashCode>
+      <FileName>ServerCaller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Microsoft YaHei" Size="9" />
+</ClassDiagram>
