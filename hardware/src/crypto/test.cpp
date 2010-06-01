@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <string>
-#include "../include/aux.h"
+#include "../include/auxi.h"
 
 int main()
 {

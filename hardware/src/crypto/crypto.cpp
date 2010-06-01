@@ -10,7 +10,7 @@
  */
 
 #include "../include/crypto.h"
-#include "../include/aux.h"
+#include "../include/auxi.h"
 #include <openssl/sha.h>
 #include <openssl/ssl.h>
 #include <stdlib.h>
