@@ -1,5 +1,5 @@
 /*
- * aux.h
+ * auxi.h
  *
  * The auxiliary functions for crypto
  *

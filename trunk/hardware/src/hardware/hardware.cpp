@@ -9,7 +9,7 @@
 #include "../include/hardware.h"
 #include "../include/crypto.h"
 #include "../include/lock.h"
-#include "../include/aux.h"
+#include "../include/auxi.h"
 #include <sys/time.h>
 #include <string.h>
 #include <stdlib.h>

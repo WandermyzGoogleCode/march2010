@@ -11,7 +11,7 @@
 #include <cstring>
 #include "../include/data.h"
 #include "../include/crypto.h"
-#include "../include/aux.h"
+#include "../include/auxi.h"
 using namespace std;
 
 const string caller_path =

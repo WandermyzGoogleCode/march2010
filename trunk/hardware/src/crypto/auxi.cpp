@@ -1,5 +1,5 @@
 /*
- * aux.cpp
+ * auxi.cpp
  *
  *  Created on: 2010-5-16
  *      Author: skywalker
