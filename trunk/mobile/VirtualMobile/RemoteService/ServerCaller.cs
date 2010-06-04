@@ -44,8 +44,14 @@ namespace RemoteService
             if (request == null)
                 return false;
 
+            string response = getResponse(request);
+            if (response != "1")
+            {
+                errorCallback("Server return: " + response, new Exception());
+                return false;
+            }
 
-            return getResponse(request) == "1";
+            return true;
         }
 
         /// <summary>
@@ -64,7 +70,14 @@ namespace RemoteService
             if (request == null)
                 return false;
 
-            return getResponse(request) == "1";
+            string response = getResponse(request);
+            if (response != "1")
+            {
+                errorCallback("Server return: " + response, new Exception());
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
