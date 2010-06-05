@@ -47,7 +47,7 @@ namespace RemoteService
             string response = getResponse(request);
             if (response != "1")
             {
-                errorCallback("Server return: " + response, new Exception());
+                errorCallback("服务器返回错误信息：\n" + response, new Exception());
                 return false;
             }
 
@@ -73,7 +73,7 @@ namespace RemoteService
             string response = getResponse(request);
             if (response != "1")
             {
-                errorCallback("Server return: " + response, new Exception());
+                errorCallback("服务器返回错误信息：\n" + response, new Exception());
                 return false;
             }
 
@@ -97,7 +97,7 @@ namespace RemoteService
             {
                 throw new ArgumentException("updateRequest条目的最大数量为" + MAX_UPDATE_REQUEST_NUMBER.ToString());
             }
-
+            
             Dictionary<string, string> postData = new Dictionary<string, string>();
             postData.Add("encryptedPhoneNumber", Convert.ToBase64String(encryptedPhoneNumber));
             postData.Add("threshold", Convert.ToBase64String(BitConverter.GetBytes(threshold)));
@@ -106,15 +106,22 @@ namespace RemoteService
             foreach (byte[] data in updateRequest)
             {
                 postData.Add(string.Format("updateEntry[{0}]", counter), Convert.ToBase64String(data));
+                counter++;
             }
 
-            WebRequest request = sendWebRequest(ServerOperation.Update, postData);
+            WebRequest request = sendWebRequest(ServerOperation.GetUpdatePackage, postData);
 
             List<byte[]> result = new List<byte[]>();
             BinaryReader br = null;
             try
             {
                 WebResponse response = request.GetResponse();
+                if (response.ContentType != "application/octet-stream")
+                {
+                    errorCallback("服务器没有返回二进制数据，返回的数据为：\n" 
+                        + new StreamReader(response.GetResponseStream()).ReadToEnd(), new Exception());
+                }
+
                 br = new BinaryReader(response.GetResponseStream());
 
                 int nOfEntry = br.ReadInt32();
