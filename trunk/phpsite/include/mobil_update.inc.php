@@ -24,7 +24,9 @@ $userEntry = base64_decode($env->POST['userEntry']);
 checkLength($encryptedPhoneNumber, SIZE_EncryptedPhoneNumber, 'encryptedPhoneNumber');
 checkLength($userEntry, SIZE_UserEntry, 'userEntry');
 
+//echo "before calling.\n";
 $result = encryptedUpdate($encryptedPhoneNumber, $userEntry);
+//echo "end calling.\n";
 
 if($result)
 {
