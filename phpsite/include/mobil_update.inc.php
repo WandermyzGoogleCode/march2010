@@ -26,6 +26,13 @@ checkLength($userEntry, SIZE_UserEntry, 'userEntry');
 
 $result = encryptedUpdate($encryptedPhoneNumber, $userEntry);
 
-echo $result;
+if($result)
+{
+	echo "1";
+}
+else
+{
+	echo "0";
+}
 
 ?>
