@@ -27,7 +27,13 @@ function getIndex($epn) {
 	$exchangeFile = fopen($exchangeFileName, "wb");
 	fwrite($exchangeFile, $epn, strlen($epn));
 	fclose($exchangeFile); 
-	exec("$callerName $safeCoreName getIndex $exchangeFile", $stdout, $status);
+	$cmd = "$callerName $safeCoreName getIndex $exchangeFile";
+	exec($cmd, $stdout, $status);
+	if ($status != 0){
+		if ($status == 1)
+			echo "bad command: $cmd\n";
+		printStdout($stdout);
+	}
 	$exchangeFile = fopen($exchangeFileName, "rb");
 	$index = fread($exchangeFile, SIZE_Index);
 	fclose($exchangeFile);
@@ -39,9 +45,14 @@ function getIndex($epn) {
  */
 function getCurrentCounter(){
 	include './include/hardwarecfg.inc.php';
-	exec("$callerName $safeCoreName getCurrentCounter $exchangeFileName", $stdout, $status);
-	if ($status != 0)
+	$cmd = "$callerName $safeCoreName getCurrentCounter $exchangeFileName";
+	exec($cmd, $stdout, $status);
+	if ($status != 0){
+		if ($status == 1)
+			echo "bad command: $cmd\n";
+		printStdout($stdout);
 		return array(-1, $status);
+	}
 	$exchangeFile = fopen($exchangeFileName, "r");
 	fscanf($exchangeFile, "%d", $count);
 	return array($count, $status);

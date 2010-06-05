@@ -27,7 +27,7 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 		if (strlen($encryptedPhoneNumber) != SIZE_EncryptedPhoneNumber ||
 			strlen($userEntry) != SIZE_UserEntry)
 		{
-			echo "Bad input for encryptedRegister</br>";
+			echo "Bad input for encryptedRegister\n";
 			break;
 		}
 		
@@ -73,7 +73,7 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 		
 		if ($status != 0){
 			if ($status == 1)
-				echo "bad command: $cmd";
+				echo "bad command: $cmd\n";
 			printStdout($stdout);
 			break;
 		}
@@ -106,7 +106,7 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
 		if (strlen($encryptedPhoneNumber) != SIZE_EncryptedPhoneNumber ||
 			strlen($userEntry) != SIZE_UserEntry)
 		{
-			echo "Bad input for encryptedRegister</br>";
+			echo "Bad input for encryptedRegister\n";
 			break;
 		}
 		
@@ -143,7 +143,7 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
 		exec($cmd, $stdout, $status);
 		if ($status != 0){
 			if ($status == 1)
-				echo "bad command: $cmd";
+				echo "bad command: $cmd\n";
 			printStdout($stdout);
 			break;
 		}
@@ -175,7 +175,7 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 	do{
 		if (strlen($encryptedPhoneNumber) != SIZE_EncryptedPhoneNumber || strlen($threshold) != Size_TimeType)
 		{
-			echo "Bad input for encryptedRegister</br>";
+			echo "Bad input for encryptedRegister\n";
 			break;
 		}
 	
@@ -224,7 +224,7 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 			exec($cmd, $stdout, $status);
 			if ($status != 0){
 				if ($status == 1)
-					echo "bad command: $cmd";
+					echo "bad command: $cmd\n";
 				printStdout($stdout);
 				continue;
 			}
