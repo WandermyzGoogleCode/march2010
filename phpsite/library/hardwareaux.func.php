@@ -73,4 +73,9 @@ function changeTableName($oldname, $newname){
 	$db->query("alter table $oldname rename $newname");
 }
 
+function printStdout($stdout){
+	foreach($stdout as $line)
+		echo "$line\n";
+}
+
 ?>

@@ -70,6 +70,7 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 		if ($status != 0){
 			if ($status == 1)
 				echo "bad command: $cmd";
+			printStdout($stdout);
 			break;
 		}
 		$exchangeFile = fopen($exchangeFileName, "rb");
@@ -139,6 +140,7 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
 		if ($status != 0){
 			if ($status == 1)
 				echo "bad command: $cmd";
+			printStdout($stdout);
 			break;
 		}
 		$exchangeFile = fopen($exchangeFileName, "rb");
@@ -219,6 +221,7 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 			if ($status != 0){
 				if ($status == 1)
 					echo "bad command: $cmd";
+				printStdout($stdout);
 				continue;
 			}
 			$exchangeFile = fopen($exchangeFileName, "rb");
