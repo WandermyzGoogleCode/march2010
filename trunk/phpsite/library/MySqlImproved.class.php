@@ -77,12 +77,12 @@ class MySqlImproved
 		$argsArray = func_get_args();
 	 	if($types == '' || $numargs <= 2)
 	 	{
-	 		die("Normal query");
+	 		echo ("Normal query");
 	 		$result = $this->mysqli->query($query);
 	 	}
 	 	else
 	 	{
-	 		die("param query");
+	 		echo ("param query");
 	 		$stmt = $this->mysqli->prepare($query);
 	 		$this->issue_error();
 	 		
