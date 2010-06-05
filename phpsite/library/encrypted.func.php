@@ -65,9 +65,13 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 		fwrite($exchangeFile, $userEntry, strlen($userEntry));
 		fclose($exchangeFile);
 		
-		system("$callerName $safeCoreName makeNewUserEntry $exchangeFileName", $status);
-		if ($status != 0)
+		$cmd = "$callerName $safeCoreName makeNewUserEntry $exchangeFileName";
+		exec($cmd, $stdout, $status);
+		if ($status != 0){
+			if ($status == 1)
+				echo "bad command: $cmd";
 			break;
+		}
 		$exchangeFile = fopen($exchangeFileName, "rb");
 		fread($exchangeFile, $newUserEntry, SIZE_UserEntry);
 		fclose($exchangeFile);
@@ -129,10 +133,14 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
 		assert(strlen($userEntry) == SIZE_UserEntry);
 		fwrite($exchangeFile, $userEntry, strlen($userEntry));
 		fclose($exchangeFile);
-		
-		system("$callerName $safeCoreName makeUpdateUserEntry $exchangeFileName", $status);
-		if ($status != 0)
+
+		$cmd = "$callerName $safeCoreName makeUpdateUserEntry $exchangeFileName";
+		exec($cmd, $stdout, $status);
+		if ($status != 0){
+			if ($status == 1)
+				echo "bad command: $cmd";
 			break;
+		}
 		$exchangeFile = fopen($exchangeFileName, "rb");
 		fread($exchangeFile, $newUserEntry, SIZE_UserEntry);
 		fclose($exchangeFile);
@@ -206,9 +214,13 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 			fwrite($exchangeFile, $targetUser, strlen($targetUser));
 			fwrite($exchangeFile, $threshold, strlen($threshold));
 			fclose($exchangeFile);
-			system("$callerName $safeCoreName getUpdateEntry $exchangeFileName", $status);
-			if ($status != 0)
+			$cmd = "$callerName $safeCoreName getUpdateEntry $exchangeFileName";
+			exec($cmd, $stdout, $status);
+			if ($status != 0){
+				if ($status == 1)
+					echo "bad command: $cmd";
 				continue;
+			}
 			$exchangeFile = fopen($exchangeFileName, "rb");
 			fread($exchangeFile, $updateEntry, SIZE_UpdateEntry);
 			fread($exchangeFile, $binUpdated, 1);
@@ -250,7 +262,7 @@ function updateWholeTable($needlock = true){
 			fwrite($exchangeFile, $entry[$j], strlen($entry[$j]));
 		}
 		fclose($exchangeFile);
-		system("$callerName $safeCoreName refreshEntries $exchangeFileName", $status);
+		exec("$callerName $safeCoreName refreshEntries $exchangeFileName", $stdout, $status);
 		assert($status == 0);
 		$exchangeFile = fopen($exchangeFileName, "rb");
 		for($j=0; $j<2; $j++){
@@ -271,7 +283,7 @@ function updateWholeTable($needlock = true){
 		fwrite($exchangeFile, $index, strlen($index));
 		fwrite($exchangeFile, $entry, strlen($entry));
 		fclose($exchangeFile);
-		system("$callerName $safeCoreName refreshEntry $exchangeFileName", $status);
+		exec("$callerName $safeCoreName refreshEntry $exchangeFileName", $stdout, $status);
 		assert($status == 0);
 		$exchangeFile = fopen($exchangeFileName, "rb");
 		fread($exchangeFile, $index, SIZE_Index);
