@@ -55,6 +55,8 @@ else
 	}
 }
 
+echo "test: $result";
+
 header('Content-Description: File Transfer');
 header('Content-Type: application/octet-stream');
 header('Content-Disposition: attachment; filename=data.bin');
