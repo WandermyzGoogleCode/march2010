@@ -9,7 +9,7 @@ namespace RemoteService
 {
     public class ServerCaller
     {
-        private const string SERVER_URL = "http://server.lives3.net/PDTws/lives3/";
+        private const string SERVER_URL = "http://server.lives3.net/";
         private const int MAX_UPDATE_REQUEST_NUMBER = 16;
         private const int SIZE_UPDATE_ENTRY = 1328;
 
