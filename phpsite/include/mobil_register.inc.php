@@ -24,6 +24,8 @@ $userEntry = base64_decode($env->POST['userEntry']);
 checkLength($encryptedPhoneNumber, SIZE_EncryptedPhoneNumber, 'encryptedPhoneNumber');
 checkLength($userEntry, SIZE_UserEntry, 'userEntry');
 
+echo "testing...";
+
 $result = encryptedRegister($encryptedPhoneNumber, $userEntry);
 
 if($result)
