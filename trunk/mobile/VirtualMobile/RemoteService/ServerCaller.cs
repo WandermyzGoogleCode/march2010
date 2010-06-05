@@ -11,7 +11,7 @@ namespace RemoteService
     {
         private const string SERVER_URL = "http://server.lives3.net/";
         private const int MAX_UPDATE_REQUEST_NUMBER = 16;
-        private const int SIZE_UPDATE_ENTRY = 1328;
+        private const int SIZE_UPDATE_ENTRY = 1344;
 
         private enum ServerOperation
         {
