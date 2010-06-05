@@ -31,11 +31,16 @@ namespace VirtualMobile
          
             System.Diagnostics.Process p = new System.Diagnostics.Process();
 #if DEBUG
-            p.StartInfo.FileName = "C:/Users/skywalker/Documents/Visual Studio 2008/Projects/VirtualMobile/VirtualMobile/bin/Debug/cbin/register_converter.exe";
-            p.StartInfo.WorkingDirectory = "C:/Users/skywalker/Documents/Visual Studio 2008/Projects/VirtualMobile/VirtualMobile/bin/Debug/cbin";
+            try
+            {
+                p.StartInfo.FileName = Directory.GetCurrentDirectory() + "/cbin/register_converter.exe";
+                p.StartInfo.WorkingDirectory = Directory.GetCurrentDirectory() + "/cbin";
+            }
+            catch (Exception)
+            { }
 #else
-            p.StartInfo.FileName = "C:/Users/skywalker/Documents/Visual Studio 2008/Projects/VirtualMobile/VirtualMobile/bin/Release/cbin/register_converter.exe";
-            p.StartInfo.WorkingDirectory = "C:/Users/skywalker/Documents/Visual Studio 2008/Projects/VirtualMobile/VirtualMobile/bin/Release/cbin";
+            p.StartInfo.FileName = Directory.GetCurrentDirectory() + "/cbin/register_converter.exe";
+            p.StartInfo.WorkingDirectory = Directory.GetCurrentDirectory() + "/cbin";
 #endif
             p.StartInfo.CreateNoWindow = true;
             p.Start();
@@ -72,19 +77,18 @@ namespace VirtualMobile
             }
             else
                 writer.Write((int)0);
-            writer.Write(u.UserPrivateKeyMem, 0, Constants.SIZE_PRIVATEKEY_MEM);
-            writer.Write((int)u.Connections.Count);
+            writer.Write(u.UserPrivateKeyMem, 0, Constants.SIZE_PRIVATEKEY_MEM);            writer.Write((int)u.Connections.Count);
             foreach (Contact c in u.Connections)
                 writeStringToFile(writer, c.PhoneNum, Constants.NUMBER_STR_LEN);
             writer.Close();
 
             System.Diagnostics.Process p = new System.Diagnostics.Process();
 #if DEBUG
-            p.StartInfo.FileName = "C:/Users/skywalker/Documents/Visual Studio 2008/Projects/VirtualMobile/VirtualMobile/bin/Debug/cbin/update_converter.exe";
-            p.StartInfo.WorkingDirectory = "C:/Users/skywalker/Documents/Visual Studio 2008/Projects/VirtualMobile/VirtualMobile/bin/Debug/cbin";
+            p.StartInfo.FileName = Directory.GetCurrentDirectory() + "/cbin/update_converter.exe";
+            p.StartInfo.WorkingDirectory = Directory.GetCurrentDirectory() + "/cbin";
 #else
-            p.StartInfo.FileName = "C:/Users/skywalker/Documents/Visual Studio 2008/Projects/VirtualMobile/VirtualMobile/bin/Release/cbin/update_converter.exe";
-            p.StartInfo.WorkingDirectory = "C:/Users/skywalker/Documents/Visual Studio 2008/Projects/VirtualMobile/VirtualMobile/bin/Release/cbin";
+            p.StartInfo.FileName = Directory.GetCurrentDirectory() + "/cbin/update_converter.exe";
+            p.StartInfo.WorkingDirectory = Directory.GetCurrentDirectory() + "/cbin";
 #endif
             p.Start();
             p.WaitForExit();
@@ -120,11 +124,11 @@ namespace VirtualMobile
 
             System.Diagnostics.Process p = new System.Diagnostics.Process();
 #if DEBUG
-            p.StartInfo.FileName = "C:/Users/skywalker/Documents/Visual Studio 2008/Projects/VirtualMobile/VirtualMobile/bin/Debug/cbin/getinfo_converter_1.exe";
-            p.StartInfo.WorkingDirectory = "C:/Users/skywalker/Documents/Visual Studio 2008/Projects/VirtualMobile/VirtualMobile/bin/Debug/cbin";
+            p.StartInfo.FileName = Directory.GetCurrentDirectory() + "/cbin/getinfo_converter_1.exe";
+            p.StartInfo.WorkingDirectory = Directory.GetCurrentDirectory() + "/cbin";
 #else
-            p.StartInfo.FileName = "C:/Users/skywalker/Documents/Visual Studio 2008/Projects/VirtualMobile/VirtualMobile/bin/Release/cbin/getinfo_converter_1.exe";
-            p.StartInfo.WorkingDirectory = "C:/Users/skywalker/Documents/Visual Studio 2008/Projects/VirtualMobile/VirtualMobile/bin/Release/cbin";
+            p.StartInfo.FileName = Directory.GetCurrentDirectory() + "/cbin/getinfo_converter_1.exe";
+            p.StartInfo.WorkingDirectory = Directory.GetCurrentDirectory() + "/cbin";
 #endif
             p.Start();
             p.WaitForExit();
@@ -164,11 +168,11 @@ namespace VirtualMobile
 
             p = new System.Diagnostics.Process();
 #if DEBUG
-            p.StartInfo.FileName = "C:/Users/skywalker/Documents/Visual Studio 2008/Projects/VirtualMobile/VirtualMobile/bin/Debug/cbin/getinfo_converter_2.exe";
-            p.StartInfo.WorkingDirectory = "C:/Users/skywalker/Documents/Visual Studio 2008/Projects/VirtualMobile/VirtualMobile/bin/Debug/cbin";
+            p.StartInfo.FileName = Directory.GetCurrentDirectory() + "/cbin/getinfo_converter_2.exe";
+            p.StartInfo.WorkingDirectory = Directory.GetCurrentDirectory() + "/cbin";
 #else
-            p.StartInfo.FileName = "C:/Users/skywalker/Documents/Visual Studio 2008/Projects/VirtualMobile/VirtualMobile/bin/Release/cbin/getinfo_converter_2.exe";
-            p.StartInfo.WorkingDirectory = "C:/Users/skywalker/Documents/Visual Studio 2008/Projects/VirtualMobile/VirtualMobile/bin/Release/cbin";
+            p.StartInfo.FileName = Directory.GetCurrentDirectory() + "/cbin/getinfo_converter_2.exe";
+            p.StartInfo.WorkingDirectory = Directory.GetCurrentDirectory() + "/cbin";
 #endif
             p.Start();
             p.WaitForExit();
