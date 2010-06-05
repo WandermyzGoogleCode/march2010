@@ -178,7 +178,7 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 	$res = array();
 	
 	do{
-		if (strlen($encryptedPhoneNumber) != SIZE_EncryptedPhoneNumber || strlen($threshold) != Size_TimeType)
+		if (strlen($encryptedPhoneNumber) != SIZE_EncryptedPhoneNumber || strlen($threshold) != SIZE_TimeType)
 		{
 			echo "Bad input for getEncryptedUpdatePackage\n";
 			break;
