@@ -1,4 +1,5 @@
 #summary 手机端测试问题列表
+#labels Deprecated
 
  # 更改密码好像不行
  # 更新BUG
