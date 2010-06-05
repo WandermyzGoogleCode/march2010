@@ -31,6 +31,8 @@ int main()
 	defineSize("TimeType", sizeof(TimeType));
 	UserEntry user;
 	defineSize("ValidUserEntry", user.validSize());
+	UpdateEntry ue;
+	defineSize("ValidUpdateEntry", ue.validSize());
 	define("MAX_COUNTER", SafeCore::MAX_COUNT);
 	define("MAX_NAME_LENGTH", MAX_NAME_LENGTH);
 	define("MAX_STATUS_LENGTH", MAX_STATUS_LENGTH);
