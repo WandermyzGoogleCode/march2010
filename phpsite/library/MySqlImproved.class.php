@@ -77,12 +77,12 @@ class MySqlImproved
 		$argsArray = func_get_args();
 	 	if($types == '' || $numargs <= 2)
 	 	{
-	 		echo "Normal query: " + $query + "\n";
+	 		echo "Normal query: ".$query."\n";
 	 		$result = $this->mysqli->query($query);
 	 	}
 	 	else
 	 	{
-	 		echo "Param query: " + $query + "\n";
+	 		echo "Param query: ".$query."\n";
 	 		$stmt = $this->mysqli->prepare($query);
 	 		$this->issue_error();
 	 		
@@ -340,7 +340,7 @@ class MySqlImproved
 				echo $query + "<br/>";
 			}
 			*/
-			die('MySQL Error (' . $this->errno() . ') ' . $this->error() + ".\nQuery: " + $query +"\n");	
+			die('MySQL Error (' . $this->errno() . ') ' . $this->error() . ".\nQuery: " . $query . "\n");	
 		}
 	}
 	
