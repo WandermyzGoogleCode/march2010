@@ -37,6 +37,12 @@ function getIndex($epn) {
 	$exchangeFile = fopen($exchangeFileName, "rb");
 	$index = fread($exchangeFile, SIZE_Index);
 	fclose($exchangeFile);
+	
+	//TEST
+	$hexEPN = bin2hex($epn);
+	$hexIndex = bin2hex($index);
+	echo "getIndex(epn=$epn) = $hexIndex\n";
+	
 	return array($index, $status);
 }
 
