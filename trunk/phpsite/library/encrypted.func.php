@@ -68,9 +68,6 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 		$cmd = "$callerName $safeCoreName makeNewUserEntry $exchangeFileName";
 		exec($cmd, $stdout, $status);
 		
-		echo "testing\n";
-		printStdout($stdout);
-		
 		if ($status != 0){
 			if ($status == 1)
 				echo "bad command: $cmd\n";
