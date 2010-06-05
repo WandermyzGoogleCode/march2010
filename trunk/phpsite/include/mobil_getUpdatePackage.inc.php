@@ -36,7 +36,7 @@ else
 	foreach($env->POST['updateEntry'] as $entry)
 	{
 		$data = base64_decode($entry);
-		checkLength($data, SIZE_UpdateEntry, 'updateEntry');
+		checkLength($data, SIZE_EncryptedPhoneNumber, 'updateRequest');
 		$updateRequest[] = $data;
 	}
 	
