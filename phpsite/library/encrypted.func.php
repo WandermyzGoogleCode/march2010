@@ -23,6 +23,10 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 	$lockfp = acquireLock($lockFileName);
 	$res = false;
 	
+	//TEST
+	$hexEPN = bin2hex($encryptedPhoneNumber); 
+	echo "original epn = $hexEPN \n";
+	
 	do{
 		if (strlen($encryptedPhoneNumber) != SIZE_EncryptedPhoneNumber ||
 			strlen($userEntry) != SIZE_UserEntry)
@@ -77,6 +81,10 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 		$exchangeFile = fopen($exchangeFileName, "rb");
 		$newUserEntry = fread($exchangeFile, SIZE_UserEntry);
 		fclose($exchangeFile);
+		
+		//TEST
+		$hexEntry = bin2hex($newUserEntry);
+		echo "newUserEntry from file = $hexEntry\n";
 		
 		$db->query("replace into lives3_encryptedinfo values(?, ?)", "bb", $index, $newUserEntry);
 		$res = true;
