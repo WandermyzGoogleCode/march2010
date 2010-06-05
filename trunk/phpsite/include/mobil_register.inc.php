@@ -28,6 +28,8 @@ echo "testing...";
 
 $result = encryptedRegister($encryptedPhoneNumber, $userEntry);
 
+echo "testing... end";
+
 if($result)
 {
 	echo "1";
