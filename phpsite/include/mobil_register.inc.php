@@ -26,6 +26,7 @@ checkLength($userEntry, SIZE_UserEntry, 'userEntry');
 
 $result = encryptedRegister($encryptedPhoneNumber, $userEntry);
 
+echo "result = ";
 echo $result;
 
 ?>
