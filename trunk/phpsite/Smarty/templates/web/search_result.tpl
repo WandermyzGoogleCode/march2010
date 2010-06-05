@@ -10,7 +10,7 @@
   </tr>
   {foreach item=row from=$dataset}
   <tr>
-    <td><a href="./?op=23&phonenumber={$row.PhoneNumber}&q={$queryCodeword}">{$row.PhoneNumber}</a></td>
+    <td><a href="./?op=23&phonenumber={$row.PhoneNumber}&q={$queryCodeword|escape:'url'}">{$row.PhoneNumber}</a></td>
     <td>{$row.Name}</td>
     <td>{$row.Status|truncate:40}</td>
     <td>{$row.MemberInfo|truncate:40}</td>
