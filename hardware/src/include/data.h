@@ -77,6 +77,7 @@ struct UserEntry
 
 	TimeType updateTime;
 	int nOfConnection;
+	int padding;//meaningless padding
 	PhoneNumber connection[MAX_CONNECTION];
 	char name[MAX_NAME_LENGTH];
 	char status[MAX_STATUS_LENGTH];
@@ -114,8 +115,9 @@ struct UserEntry
 //Size: 1KB+40BYTE
 struct UpdateEntry
 {
-	static const int RAND_PADDING_SIZE = 8;
+	static const int RAND_PADDING_SIZE = 16;
 
+	TimeType updateTime;
 	PhoneNumber phone;
 	char name[MAX_NAME_LENGTH];
 	char status[MAX_STATUS_LENGTH];

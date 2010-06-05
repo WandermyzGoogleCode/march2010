@@ -78,7 +78,10 @@ bool SafeCore::getUpdateEntry(const UserEntry& operateUser,
 		return false;
 	updated = (threshold < rTargetUser.updateTime);
 
-	memcpy(&res, &rTargetUser, res.validSize());
+	strcpy(res.name, rTargetUser.name);
+	strcpy(res.status, rTargetUser.status);
+	res.phone = rTargetUser.myNumber;
+	res.updateTime = rTargetUser.updateTime;
 	fillRandPadding(&(res.randPadding), res.RAND_PADDING_SIZE);
 	SymmetricKey key = generateRandomSymmetricKey();
 	symmetricallyEncrypt((BYTE*) &res, res.validSize(), key);
