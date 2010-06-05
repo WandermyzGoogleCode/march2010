@@ -111,7 +111,7 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
 		if (strlen($encryptedPhoneNumber) != SIZE_EncryptedPhoneNumber ||
 			strlen($userEntry) != SIZE_UserEntry)
 		{
-			echo "Bad input for encryptedRegister\n";
+			echo "Bad input for encryptedUpdate\n";
 			break;
 		}
 		
@@ -180,7 +180,7 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 	do{
 		if (strlen($encryptedPhoneNumber) != SIZE_EncryptedPhoneNumber || strlen($threshold) != Size_TimeType)
 		{
-			echo "Bad input for encryptedRegister\n";
+			echo "Bad input for getEncryptedUpdatePackage\n";
 			break;
 		}
 	
