@@ -48,6 +48,7 @@ else
 	}
 	
 	$result = pack('V', count($updatePackage));
+	die($updatePackage);
 	foreach($updatePackage as $entry)
 	{
 		$result .= $entry;
