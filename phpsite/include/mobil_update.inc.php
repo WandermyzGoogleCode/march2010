@@ -26,7 +26,7 @@ checkLength($userEntry, SIZE_UserEntry, 'userEntry');
 
 //echo "before calling.\n";
 $result = encryptedUpdate($encryptedPhoneNumber, $userEntry);
-//echo "end calling.\n";
+//echo "end calling.\n"; 
 
 if($result)
 {
