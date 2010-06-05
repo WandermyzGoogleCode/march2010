@@ -1,1 +1,4 @@
-<a href="untitled.php">asdffasd</a>
+<?php 
+	echo "abc";
+	die("def");
+?>
