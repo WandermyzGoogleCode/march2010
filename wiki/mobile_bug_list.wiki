@@ -5,6 +5,5 @@
   * 用任意手机号和个人信息，`"test"`为密钥注册；更新为任意信息或任意密钥，正常
   * 用任意手机号和个人信息，非`"test"`为密钥注册；更新为任意信息或任意密钥，服务器返回：
 {{{
-Call completed, core counter = 2380
+Call completed, core counter = （不定数值）
 }}}
-counter后面的数值每次不定
