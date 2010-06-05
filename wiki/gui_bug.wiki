@@ -1,5 +1,5 @@
 #summary GUI的问题列表
-#labels Type-Note,Phase-Test
+#labels Type-Note,Phase-Test,Deprecated
 
  # 注册失败也返回成功，而且会修改数据，导致以前数据丢失，悲惨。
  # 状态太长显示不下。
