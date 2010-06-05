@@ -23,9 +23,9 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 	$lockfp = acquireLock($lockFileName);
 	$res = false;
 	
-	//TEST
-	$hexEPN = bin2hex($encryptedPhoneNumber); 
-	echo "original epn = $hexEPN \n";
+	//TEST OVER
+	//$hexEPN = bin2hex($encryptedPhoneNumber); 
+	//echo "original epn = $hexEPN \n";
 	
 	do{
 		if (strlen($encryptedPhoneNumber) != SIZE_EncryptedPhoneNumber ||
@@ -82,11 +82,11 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 		$newUserEntry = fread($exchangeFile, SIZE_UserEntry);
 		fclose($exchangeFile);
 		
-		//TEST
-		$hexEntry = bin2hex($newUserEntry);
-		echo "newUserEntry from file = $hexEntry\n";
+		//TEST OVER
+		//$hexEntry = bin2hex($newUserEntry);
+		//echo "newUserEntry from file = $hexEntry\n";
 		
-		$db->query("replace into lives3_encryptedinfo values(?, ?)", "bb", $index, $newUserEntry);
+		$db->query("replace into lives3_encryptedinfo values(?, ?)", "ss", $index, $newUserEntry);
 		$res = true;
 		break;
 	} while (true);
@@ -156,7 +156,7 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
 		$newUserEntry = fread($exchangeFile, SIZE_UserEntry);
 		fclose($exchangeFile);
 		
-		$db->query("replace into lives3_encryptedinfo values(?, ?)", "bb", $index, $newUserEntry);
+		$db->query("replace into lives3_encryptedinfo values(?, ?)", "ss", $index, $newUserEntry);
 		$res = true;
 		break;
 	} while (true);
