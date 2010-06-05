@@ -38,10 +38,10 @@ function getIndex($epn) {
 	$index = fread($exchangeFile, SIZE_Index);
 	fclose($exchangeFile);
 	
-	//TEST
-	$hexEPN = bin2hex($epn);
-	$hexIndex = bin2hex($index);
-	echo "getIndex(epn=$hexEpn) = $hexIndex\n";
+	//TEST OVER
+	//$hexEPN = bin2hex($epn);
+	//$hexIndex = bin2hex($index);
+	//echo "getIndex(epn=$hexEpn) = $hexIndex\n";
 	
 	return array($index, $status);
 }
@@ -70,7 +70,7 @@ function getCurrentCounter(){
  */
 function getUserEntryFromDataBase($index){
 	global $db;
-	$result = $db->query("select * from lives3_encryptedinfo where `index` = ?", "b", $index);
+	$result = $db->query("select * from lives3_encryptedinfo where `index` = ?", "s", $index);
 	$hasEntry = ($db->num_rows($result) > 0 ? true : false);
 	$userEntry = NULL;
 	if ($hasEntry){
@@ -82,7 +82,7 @@ function getUserEntryFromDataBase($index){
 
 function replaceUserEntry($tablename, $index, $newUserEntry){
 	global $db;
-	$db->query("replace into $tablename values(?, ?)", "bb", $index, $newUserEntry);
+	$db->query("replace into $tablename values(?, ?)", "ss", $index, $newUserEntry);
 }
 
 function changeTableName($oldname, $newname){
