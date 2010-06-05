@@ -101,9 +101,12 @@ class MySqlImproved
 	 		$result = $stmt;
 	 	}
 	 	
+	 	echo ("before issue error");
 	 	$this->issue_error($query);
 	 	
 	 	$this->queryCounter++;
+	 	
+	 	echo ("param query end");
 	 	
 	 	return $result;
 	}	
