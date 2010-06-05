@@ -115,7 +115,7 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
 			break;
 		}
 		
-				$temp = getCurrentCounter();
+		$temp = getCurrentCounter();
 		if ($temp[1] != 0)
 			break;
 		$currentCounter = $temp[0];
@@ -134,8 +134,10 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
 		$temp = getUserEntryFromDataBase($index);
 		$hasOld = $temp[0];
 		$oldUserEntry = $temp[1];
-		if (!$hasOld)
+		if (!$hasOld){
+			echo "User does not exist\n";
 			break;
+		}
 			
 		$exchangeFile = fopen($exchangeFileName, "wb");
 		assert(strlen($oldUserEntry) == SIZE_UserEntry);
