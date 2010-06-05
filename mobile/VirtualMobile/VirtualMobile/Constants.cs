@@ -14,7 +14,7 @@ namespace VirtualMobile
         public const int SIZE_USERENTRY = 4048;
         public const int SIZE_PRIVATEKEY_MEM = 1500;
         public const int SIZE_PUBLICKEY_MEM = 400;
-        public const int SIZE_UPDATE_ENTRY = 1328;
+        public const int SIZE_UPDATE_ENTRY = 1344;
 
         public const string USER_INFO_DIR = "userinfo/";
         public const string BIN_DIR = "cbin/";
