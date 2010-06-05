@@ -27,7 +27,7 @@ function getIndex($epn) {
 	$exchangeFile = fopen($exchangeFileName, "wb");
 	fwrite($exchangeFile, $epn, strlen($epn));
 	fclose($exchangeFile); 
-	$cmd = "$callerName $safeCoreName getIndex $exchangeFile";
+	$cmd = "$callerName $safeCoreName getIndex $exchangeFileName";
 	exec($cmd, $stdout, $status);
 	if ($status != 0){
 		if ($status == 1)
