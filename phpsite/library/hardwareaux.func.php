@@ -41,7 +41,7 @@ function getIndex($epn) {
 	//TEST
 	$hexEPN = bin2hex($epn);
 	$hexIndex = bin2hex($index);
-	echo "getIndex(epn=$epn) = $hexIndex\n";
+	echo "getIndex(epn=$hexEpn) = $hexIndex\n";
 	
 	return array($index, $status);
 }
