@@ -48,15 +48,15 @@ else
 	}
 	
 	$result = pack('V', count($updatePackage));
-	die($updatePackage);
+	//die($updatePackage);
 	foreach($updatePackage as $entry)
 	{
 		$result .= $entry;
 	}
 }
 
-echo "test: $result";
-/*
+
+
 header('Content-Description: File Transfer');
 header('Content-Type: application/octet-stream');
 header('Content-Disposition: attachment; filename=data.bin');
@@ -68,5 +68,5 @@ ob_clean();
 flush();
 
 echo $result;
-*/
+
 ?>
