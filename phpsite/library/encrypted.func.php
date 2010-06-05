@@ -78,7 +78,7 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 			break;
 		}
 		$exchangeFile = fopen($exchangeFileName, "rb");
-		fread($exchangeFile, $newUserEntry, SIZE_UserEntry);
+		$newUserEntry = fread($exchangeFile, SIZE_UserEntry);
 		fclose($exchangeFile);
 		
 		$db->query("replace into lives3_encryptedinfo values(?, ?)", "bb", $index, $newUserEntry);
@@ -148,7 +148,7 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
 			break;
 		}
 		$exchangeFile = fopen($exchangeFileName, "rb");
-		fread($exchangeFile, $newUserEntry, SIZE_UserEntry);
+		$newUserEntry = fread($exchangeFile, SIZE_UserEntry);
 		fclose($exchangeFile);
 		
 		$db->query("replace into lives3_encryptedinfo values(?, ?)", "bb", $index, $newUserEntry);
@@ -229,8 +229,8 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 				continue;
 			}
 			$exchangeFile = fopen($exchangeFileName, "rb");
-			fread($exchangeFile, $updateEntry, SIZE_UpdateEntry);
-			fread($exchangeFile, $binUpdated, 1);
+			$updateEntry = fread($exchangeFile, SIZE_UpdateEntry);
+			$binUpdated = fread($exchangeFile, 1);
 			if (strcmp($binFalse, $binUpdated) != 0)
 				$res[] = $updateEntry;
 			fclose($exchangeFile);
@@ -273,8 +273,8 @@ function updateWholeTable($needlock = true){
 		assert($status == 0);
 		$exchangeFile = fopen($exchangeFileName, "rb");
 		for($j=0; $j<2; $j++){
-			fread($exchangeFile, $index[$j], SIZE_Index);
-			fread($exchangeFile, $entry[$j], SIZE_UserEntry);
+			$index[$j] = fread($exchangeFile, SIZE_Index);
+			$entry[$j] = fread($exchangeFile, SIZE_UserEntry);
 			replaceUserEntry($nextTableName, $index[$j], $entry[$j]);
 		}
 		fclose($exchangeFile);
@@ -293,8 +293,8 @@ function updateWholeTable($needlock = true){
 		exec("$callerName $safeCoreName refreshEntry $exchangeFileName", $stdout, $status);
 		assert($status == 0);
 		$exchangeFile = fopen($exchangeFileName, "rb");
-		fread($exchangeFile, $index, SIZE_Index);
-		fread($exchangeFile, $entry, SIZE_UserEntry);
+		$index = fread($exchangeFile, SIZE_Index);
+		$entry = fread($exchangeFile, SIZE_UserEntry);
 		replaceUserEntry($nextTableName, $index, $entry);
 		fclose($exchangeFile);
 	}
