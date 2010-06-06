@@ -9,7 +9,7 @@
     </tr>
     <tr>
       <th scope="row"><label for="Name">姓名</label></th>
-      <td><input name="Name" type="text" id="Name" size="11" maxlength="255"/></td>
+      <td><input name="Name" type="text" id="Name" size="11" maxlength="8"/></td>
     </tr>
     <tr>
       <th scope="row"><label for="MemberInfo">用户资料</label></th>
