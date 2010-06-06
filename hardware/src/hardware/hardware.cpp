@@ -64,18 +64,30 @@ bool SafeCore::getUpdateEntry(const UserEntry& operateUser,
 	//	hexDump(stdout, "Target Valid:", (BYTE*)&rTargetUser.valid, 1);
 
 	bool connected = false;
-	if (rTargetUser.nOfConnection >= MAX_CONNECTION)//bad entry
+	if (rTargetUser.nOfConnection >= MAX_CONNECTION){//bad entry
+		//TESTING
+		printf("Get updateEntry failed: bad target entry!\n");
+
 		return false;
-	if (!rTargetUser.valid)
+	}
+	if (!rTargetUser.valid){
+		//TESTING
+		printf("Get updateEntry failed: target entry invalid!\n");
+
 		return false;
+	}
 	for (int i = 0; i < rTargetUser.nOfConnection; i++)
 		if (rTargetUser.connection[i] == 0 || rTargetUser.connection[i]
 				== rOperateUser.myNumber) {//0 for unidirectional entry
 			connected = true;
 			break;
 		}
-	if (!connected)
+	if (!connected){
+		//TESTING
+		printf("Get updateEntry failed: not connected!\n");
+
 		return false;
+	}
 	updated = (threshold < rTargetUser.updateTime);
 
 	strcpy(res.name, rTargetUser.name);
@@ -98,8 +110,8 @@ TimeType SafeCore::makeUserEntry(UserEntry& outputEntry) {
 	memcpy(&symKey, &outputEntry.symKey, sizeof(symKey));
 	symmetricallyDecrypt((BYTE*) &outputEntry, outputEntry.validSize(), symKey);
 
-	//TESTING
-	hexDump(stdout, "makeUserEntry pubkey: ", (BYTE*)&(outputEntry.pubKey), 32);
+	//TEST OVER
+	//hexDump(stdout, "makeUserEntry pubkey: ", (BYTE*)&(outputEntry.pubKey), 32);
 
 	TimeType res = outputEntry.updateTime = getTimeNow();
 	outputEntry.valid = true;
