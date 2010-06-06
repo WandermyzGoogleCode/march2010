@@ -35,7 +35,7 @@ const char* OPS[] = { "makeSafeCore", "getPublicKey", "makeNewUserEntry",
  * @return
  * 		0: success
  * 		1: bad input
- * 		2: currentCounter too large
+ * 		[2: currentCounter too large](obsolete)
  * 		3: failed
  */
 int main(int argc, char* argv[]) {
@@ -100,8 +100,8 @@ int main(int argc, char* argv[]) {
 	SafeCore *core = 0;
 	if (res == 0) {
 		core = SafeCore::loadSafeCore(file);
-		if (core->getCurrentCounter() >= core->MAX_COUNT)
-			res = 2;
+		//if (core->getCurrentCounter() >= core->MAX_COUNT)
+		//	res = 2;
 	}
 
 	int iofd = getExclusiveFd(argv[3]);
