@@ -297,7 +297,7 @@ function updateWholeTable($needlock = true){
 	$db->query("delete from $nextTableName");
 	$result = $db->query("select * from lives3_encryptedinfo");
 	$n = $db->num_rows($result);
-	for($i=0; $i<(int)$n/2; $i++){
+	for($i=0; $i*2<$n; $i++){
 		$row = array();
 		$row[] = $db->fetch_assoc($result);
 		$row[] = $db->fetch_assoc($result);
@@ -311,7 +311,6 @@ function updateWholeTable($needlock = true){
 				if ($needlock)
 					releaseLock($lockfp);
 				echo "updateWholeTable error: bad size for index or userEntry\n";
-				printStdout($stdout);
 				return false;										
 			}
 			fwrite($exchangeFile, $index[$j], strlen($index[$j]));
