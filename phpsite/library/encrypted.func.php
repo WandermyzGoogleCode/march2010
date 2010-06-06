@@ -340,7 +340,7 @@ function updateWholeTable($needlock = true){
 		fclose($exchangeFile);
 	}
 	
-	if (n%2 == 1){
+	if ($n%2 == 1){
 		$row = $db->fetch_assoc($result);
 		$index = $row["index"];
 		$entry = $row["userEntry"];
