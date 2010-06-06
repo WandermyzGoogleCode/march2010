@@ -7,7 +7,7 @@
       <td width="88%"><input name="phoneNumber" type="text" id="phoneNumber" size="11" maxlength="11" /></td>
     </tr>
     <tr>
-      <th scope="row"><label for="name">姓名包含</label></th>
+      <th scope="row"><label for="name">名称包含</label></th>
       <td><input name="name" type="text" id="name" size="11" maxlength="255"/></td>
     </tr>
     <tr>
