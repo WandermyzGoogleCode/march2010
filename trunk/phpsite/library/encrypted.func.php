@@ -91,10 +91,10 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 		break;
 	} while (true);
 	
-	//TESTING
-	echo "stdout:\n";
-	printStdout($stdout);
-	echo "\n";
+	//TEST OVER
+	//echo "stdout:\n";
+	//printStdout($stdout);
+	//echo "\n";
 	
 	releaseLock($lockfp);
 	return $res;
@@ -168,10 +168,10 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
 		break;
 	} while (true);
 	
-	//TESTING
-	echo "stdout:\n";
-	printStdout($stdout);
-	echo "\n";
+	//TEST OVER
+	//echo "stdout:\n";
+	//printStdout($stdout);
+	//echo "\n";
 	
 	releaseLock($lockfp);
 	return $res;
@@ -188,6 +188,10 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 	include './include/hardwarecfg.inc.php';
 	$lockfp = acquireLock($lockFileName);
 	$res = array();
+	
+	//TESTING
+	$arrayLen = count($updateRequest);
+	echo "arrayLen=$arrayLen\n";
 	
 	do{
 		if (strlen($encryptedPhoneNumber) != SIZE_EncryptedPhoneNumber || strlen($threshold) != SIZE_TimeType)
