@@ -169,7 +169,7 @@ bool SafeCore::refreshEntries(Index& firstIndex, UserEntry& firstEntry,
 
 		return false;
 	}
-	if (firstIndex.compare(secondIndex) <= 0){
+	if (firstIndex.compare(secondIndex) >= 0){
 		//TESTING
 		printf("firstIndex should be smaller than secondIndex\n");
 		hexDump(stdout, "firstIndex: ", (BYTE*)&firstIndex, 32);
