@@ -161,10 +161,18 @@ bool SafeCore::makeUpdateUserEntry(const UserEntry& oldEntry,
 
 bool SafeCore::refreshEntries(Index& firstIndex, UserEntry& firstEntry,
 		Index& secondIndex, UserEntry& secondEntry) {
-	if (firstIndex.compare(lastRefreshIndex) <= 0)
+	if (firstIndex.compare(lastRefreshIndex) <= 0){
+		//TESTING
+		printf("firstIndex should be greater than lastIndex\n");
+
 		return false;
-	if (firstIndex.compare(secondIndex) <= 0)
+	}
+	if (firstIndex.compare(secondIndex) <= 0){
+		//TESTING
+		printf("firstIndex should be smaller than lastIndex\n");
+
 		return false;
+	}
 	lastRefreshIndex = secondIndex;
 
 	Index rIndex[2] = { firstIndex, secondIndex };
