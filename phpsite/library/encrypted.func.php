@@ -311,6 +311,7 @@ function updateWholeTable($needlock = true){
 				if ($needlock)
 					releaseLock($lockfp);
 				echo "updateWholeTable error: bad size for index or userEntry\n";
+				printStdout($stdout);
 				return false;										
 			}
 			fwrite($exchangeFile, $index[$j], strlen($index[$j]));
@@ -322,6 +323,7 @@ function updateWholeTable($needlock = true){
 			if ($needlock)
 				releaseLock($lockfp);
 			echo "updateWholeTable error: refreshEntries failed, status=$status\n";
+			printStdout($stdout);
 			for($j=0; $j<2; $j++)
 				echo "index[$j] = ".bin2hex($index[$j])."\n";
 			return false;										
@@ -347,6 +349,7 @@ function updateWholeTable($needlock = true){
 			if ($needlock)
 				releaseLock($lockfp);
 			echo "updateWholeTable error: bad size for index or userEntry\n";
+			printStdout($stdout);
 			return false;										
 		}
 		$exchangeFile = fopen($exchangeFileName, "wb");
@@ -358,6 +361,7 @@ function updateWholeTable($needlock = true){
 			if ($needlock)
 				releaseLock($lockfp);
 			echo "updateWholeTable error: refreshEntries failed, status=$status\n";
+			printStdout($stdout);
 			return false;										
 		}			
 		$exchangeFile = fopen($exchangeFileName, "rb");
