@@ -284,93 +284,89 @@ function updateWholeTable($needlock = true){
 		$lockfp = acquireLock($lockFileName);
 	
 	$nextTableName = "lives3_next_encryptedinfo";
-	
-	do{
-		
-		global $db;
-		$db->query("delete from $nextTableName");
-		$result = $db->query("select * from lives3_encryptedinfo");
-		$n = $db->num_rows($result);
-		for($i=0; $i<(int)$n/2; $i++){
-			$row = array();
-			$row[] = $db->fetch_assoc($result);
-			$row[] = $db->fetch_assoc($result);
-			$index = array();
-			$entry = array();
-			$exchangeFile = fopen($exchangeFileName, "wb");
-			for($j=0; $j<2; $j++){
-				$index[$j] = $row[$j]["index"];
-				$entry[$j] = $row[$j]["userEntry"]; 
-				if (strlen($index[$j]) != SIZE_Index || strlen($entry[$j]) != SIZE_UserEntry){
-					if ($needlock)
-						releaseLock($lockfp);
-					echo "updateWholeTable error: bad size for index or userEntry\n";
-					return;										
-				}
-				fwrite($exchangeFile, $index[$j], strlen($index[$j]));
-				fwrite($exchangeFile, $entry[$j], strlen($entry[$j]));
-			}
-			fclose($exchangeFile);
-			exec("$callerName $safeCoreName refreshEntries $exchangeFileName", $stdout, $status);
-			if ($status != 0){
-				if ($needlock)
-					releaseLock($lockfp);
-				echo "updateWholeTable error: refreshEntries failed, status=$status\n";
-				return;										
-			}			
-			$exchangeFile = fopen($exchangeFileName, "rb");
-			for($j=0; $j<2; $j++){
-				$index[$j] = fread($exchangeFile, SIZE_Index);
-				$entry[$j] = fread($exchangeFile, SIZE_UserEntry);
-				replaceUserEntry($nextTableName, $index[$j], $entry[$j]);
-			}
-			fclose($exchangeFile);
-		}
-		
-		if (n%2 == 1){
-			$row = $db->fetch_assoc($result);
-			$index = $row["index"];
-			$entry = $row["userEntry"];
-			if (strlen($index) != SIZE_Index || strlen($entry) != SIZE_UserEntry){
+
+	global $db;
+	$db->query("delete from $nextTableName");
+	$result = $db->query("select * from lives3_encryptedinfo");
+	$n = $db->num_rows($result);
+	for($i=0; $i<(int)$n/2; $i++){
+		$row = array();
+		$row[] = $db->fetch_assoc($result);
+		$row[] = $db->fetch_assoc($result);
+		$index = array();
+		$entry = array();
+		$exchangeFile = fopen($exchangeFileName, "wb");
+		for($j=0; $j<2; $j++){
+			$index[$j] = $row[$j]["index"];
+			$entry[$j] = $row[$j]["userEntry"]; 
+			if (strlen($index[$j]) != SIZE_Index || strlen($entry[$j]) != SIZE_UserEntry){
 				if ($needlock)
 					releaseLock($lockfp);
 				echo "updateWholeTable error: bad size for index or userEntry\n";
 				return;										
 			}
-			$exchangeFile = fopen($exchangeFileName, "wb");
-			fwrite($exchangeFile, $index, strlen($index));
-			fwrite($exchangeFile, $entry, strlen($entry));
-			fclose($exchangeFile);
-			exec("$callerName $safeCoreName refreshEntry $exchangeFileName", $stdout, $status);
-			if ($status != 0){
-				if ($needlock)
-					releaseLock($lockfp);
-				echo "updateWholeTable error: refreshEntries failed, status=$status\n";
-				return;										
-			}			
-			$exchangeFile = fopen($exchangeFileName, "rb");
-			$index = fread($exchangeFile, SIZE_Index);
-			$entry = fread($exchangeFile, SIZE_UserEntry);
-			replaceUserEntry($nextTableName, $index, $entry);
-			fclose($exchangeFile);
+			fwrite($exchangeFile, $index[$j], strlen($index[$j]));
+			fwrite($exchangeFile, $entry[$j], strlen($entry[$j]));
 		}
-		
-		$oldTableName = "lives3_encryptedinfo";
-		$tempTableName = "lives3_temp_encryptedinfo";
-		rename($oldTableName, $tempTableName);
-		rename($nextTableName, $oldTableName);
-		rename($tempTableName, $nextTableName);
-		
-		$cmd = "$callerName $safeCoreName shiftToNextKey";
-		exec($cmd, $stdout, $status);
+		fclose($exchangeFile);
+		exec("$callerName $safeCoreName refreshEntries $exchangeFileName", $stdout, $status);
 		if ($status != 0){
 			if ($needlock)
 				releaseLock($lockfp);
 			echo "updateWholeTable error: refreshEntries failed, status=$status\n";
 			return;										
 		}			
-				
-	} while (false);
+		$exchangeFile = fopen($exchangeFileName, "rb");
+		for($j=0; $j<2; $j++){
+			$index[$j] = fread($exchangeFile, SIZE_Index);
+			$entry[$j] = fread($exchangeFile, SIZE_UserEntry);
+			replaceUserEntry($nextTableName, $index[$j], $entry[$j]);
+		}
+		fclose($exchangeFile);
+	}
+	
+	if (n%2 == 1){
+		$row = $db->fetch_assoc($result);
+		$index = $row["index"];
+		$entry = $row["userEntry"];
+		if (strlen($index) != SIZE_Index || strlen($entry) != SIZE_UserEntry){
+			if ($needlock)
+				releaseLock($lockfp);
+			echo "updateWholeTable error: bad size for index or userEntry\n";
+			return;										
+		}
+		$exchangeFile = fopen($exchangeFileName, "wb");
+		fwrite($exchangeFile, $index, strlen($index));
+		fwrite($exchangeFile, $entry, strlen($entry));
+		fclose($exchangeFile);
+		exec("$callerName $safeCoreName refreshEntry $exchangeFileName", $stdout, $status);
+		if ($status != 0){
+			if ($needlock)
+				releaseLock($lockfp);
+			echo "updateWholeTable error: refreshEntries failed, status=$status\n";
+			return;										
+		}			
+		$exchangeFile = fopen($exchangeFileName, "rb");
+		$index = fread($exchangeFile, SIZE_Index);
+		$entry = fread($exchangeFile, SIZE_UserEntry);
+		replaceUserEntry($nextTableName, $index, $entry);
+		fclose($exchangeFile);
+	}
+	
+	$oldTableName = "lives3_encryptedinfo";
+	$tempTableName = "lives3_temp_encryptedinfo";
+	rename($oldTableName, $tempTableName);
+	rename($nextTableName, $oldTableName);
+	rename($tempTableName, $nextTableName);
+	
+	$cmd = "$callerName $safeCoreName shiftToNextKey";
+	exec($cmd, $stdout, $status);
+	if ($status != 0){
+		if ($needlock)
+			releaseLock($lockfp);
+		echo "updateWholeTable error: refreshEntries failed, status=$status\n";
+		return;										
+	}			
 	
 	if ($needlock)
 		releaseLock($lockfp);
