@@ -285,6 +285,9 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 }
 
 function updateWholeTable($needlock = true){
+	//TESTING
+	echo "updateWholeTable\n";
+	
 	include './include/hardwarecfg.inc.php';
 	if ($needlock)
 		$lockfp = acquireLock($lockFileName);
