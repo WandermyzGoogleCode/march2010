@@ -91,6 +91,11 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 		break;
 	} while (true);
 	
+	//TESTING
+	echo "stdout:\n";
+	printStdout($stdout);
+	echo "\n";
+	
 	releaseLock($lockfp);
 	return $res;
 }
@@ -162,6 +167,11 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
 		$res = true;
 		break;
 	} while (true);
+	
+	//TESTING
+	echo "stdout:\n";
+	printStdout($stdout);
+	echo "\n";
 	
 	releaseLock($lockfp);
 	return $res;
