@@ -222,9 +222,13 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 		
 		$binFalse = pack("C", 0);
 		for($i=0; $i<count($updateRequest); $i++){
-			$temp = getIndex($updateRequest[i]);
-			if (strlen($temp) != SIZE_EncryptedPhoneNumber)
+			if (strlen($updateRequest[$i]) != SIZE_EncryptedPhoneNumber){
+				//TESTING
+				echo "Bad updateRequest[$i]";
+				
 				continue;
+			}
+			$temp = getIndex($updateRequest[$i]);
 			if ($temp[1] != 0)
 				continue;
 			$targetIndex = $temp[0];
