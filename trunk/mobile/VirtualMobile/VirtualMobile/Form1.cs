@@ -50,10 +50,14 @@ namespace VirtualMobile
             newUser.Codeword = textRegisterCodeword.Text;
             newUser.Connections = new List<Contact>();
 
-            oper.Register(newUser);
-            registerGuiChange(newUser);
+            if (!oper.Register(newUser))
+            {
+                MessageBox.Show("注册失败！");
+                return;
+            }
 
-            MessageBox.Show("注册成功！");            
+            registerGuiChange(newUser);
+            MessageBox.Show("注册成功！");
         }
 
         private void loginGuiChange(ref User u)
@@ -62,22 +66,24 @@ namespace VirtualMobile
 
             string number = textLoginPhoneNum.Text;
 
-            FileStream stream = new FileStream(Constants.USER_INFO_DIR + number + ".inf", FileMode.Open, FileAccess.Read);
+            
             try
             {
+                FileStream stream = new FileStream(Constants.USER_INFO_DIR + number + ".inf", FileMode.Open, FileAccess.Read);
                 BinaryFormatter f = new BinaryFormatter();
                 u = (User)f.Deserialize(stream);
+                stream.Close();
             }
             catch (IOException)
-            {
+            {   
+                MessageBox.Show("本地没有该用户！");
+                return;
             }
             finally
             {
-                stream.Close();
             }
 
-            labelCurrentPhoneNum.Text = u.PhoneNum + "   " + u.Name + "   " + u.Status;
-            labelCurrentCodeword.Text = u.Codeword;
+            labelCurrentPhoneNum.Text = u.PhoneNum;
 
             for (int i = 0; i < u.Connections.Count; i++)
             {
@@ -115,16 +121,18 @@ namespace VirtualMobile
             string newStatus = textUpdateStatus.Text;
             string newCodeword = textUpdateCodeword.Text;
 
-            bool codewordChanged = (!newCodeword.Equals(currentUser.Codeword));
+            bool codewordChanged = ((newCodeword != "") && (!newCodeword.Equals(currentUser.Codeword)));
             
-            currentUser.Name = newName;
-            currentUser.Status = newStatus;
-            currentUser.Codeword = newCodeword;
+            if (newName != "")
+                currentUser.Name = newName;
+            if (newStatus != "")
+                currentUser.Status = newStatus;
+            if (newCodeword != "")
+                currentUser.Codeword = newCodeword;
 
             oper.Update(currentUser, codewordChanged);
 
-            labelCurrentPhoneNum.Text = currentUser.PhoneNum + "   " + currentUser.Name + "   " + currentUser.Status;
-            labelCurrentCodeword.Text = currentUser.Codeword;
+            labelCurrentPhoneNum.Text = currentUser.PhoneNum;
         }
 
         private void refreshConnections()
@@ -150,6 +158,8 @@ namespace VirtualMobile
         private void formClosed(object sender, FormClosedEventArgs e)
         {
             refreshConnections();
+            if (currentUser == null)
+                return;
             FileStream stream = new FileStream(Constants.USER_INFO_DIR + currentUser.PhoneNum + ".inf", FileMode.OpenOrCreate, FileAccess.Write);
             try
             {
@@ -190,6 +200,14 @@ namespace VirtualMobile
             oper.Getinfo(currentUser, requests, threshold);
 
             refreshConnections();
+        }
+
+        private void buttonCurrentUserInfo_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("手机号：      " + currentUser.PhoneNum + "\n" + 
+                "名字：          " + currentUser.Name + "\n" +
+                "状态：          " + currentUser.Status + "\n" +
+                "Codeword：" + currentUser.Codeword);
         }
     }
 }

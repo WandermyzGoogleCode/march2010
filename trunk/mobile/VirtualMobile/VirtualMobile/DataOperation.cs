@@ -19,7 +19,7 @@ namespace VirtualMobile
             caller = new ServerCaller(errorCallback);
         }
 
-        public void Register(User u)
+        public bool Register(User u)
         {
             BinaryWriter writer = new BinaryWriter(new FileStream(Constants.TMP_DIR + "to_c.tmp", FileMode.OpenOrCreate, FileAccess.Write));
             writeStringToFile(writer, u.PhoneNum, Constants.NUMBER_STR_LEN);
@@ -60,8 +60,12 @@ namespace VirtualMobile
             System.IO.File.Delete(Constants.TMP_DIR + "from_c.tmp");
 
             if (!caller.EncryptedRegister(encryptedPhoneNum, userEntry))
+            {
                 MessageBox.Show("ServerCaller failed!");
+                return false;
+            }
             u.UserPrivateKeyMem = privateKeyMem;
+            return true;
         }
 
         public void Update(User u, bool codewordChanged)
@@ -153,7 +157,10 @@ namespace VirtualMobile
 
             List<byte[]> updatePackage = caller.GetEncryptedUpdatePackage(encryptedPhoneNum, updateRequest, threshold);
             if (updateRequest == null)
+            {
                 MessageBox.Show("Server caller failed!");
+                return;
+            }
 
             int numOfUpdateEntry = updatePackage.Count;
             writer = new BinaryWriter(new FileStream(Constants.TMP_DIR + "to_c.tmp", FileMode.OpenOrCreate, FileAccess.Write));
@@ -187,12 +194,17 @@ namespace VirtualMobile
                 byte[] bStatus = reader.ReadBytes(Constants.MAX_STATUS_LENGTH);
                 string name = Encoding.UTF8.GetString(bName);
                 string status = Encoding.UTF8.GetString(bStatus);
+                int pos1 = name.IndexOf('\0');
+                int pos2 = status.IndexOf('\0');
+                name = name.Substring(0, pos1);
+                status = status.Substring(0, pos2);
                 for (int j = 0; j < dt.Rows.Count; j++)
                 {
                     if (long.Parse((string)dt.Rows[j][0]) == phone)
                     {
-                        dt.Rows[j][1] = bName;
-                        dt.Rows[j][2] = bStatus;
+                        dt.Rows[j][1] = name;
+                        dt.Rows[j][2] = status;
+                        dt.Rows[j].AcceptChanges();
                     }
                 }
             }
