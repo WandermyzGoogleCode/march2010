@@ -97,6 +97,10 @@ TimeType SafeCore::makeUserEntry(UserEntry& outputEntry) {
 	SymmetricKey symKey;
 	memcpy(&symKey, &outputEntry.symKey, sizeof(symKey));
 	symmetricallyDecrypt((BYTE*) &outputEntry, outputEntry.validSize(), symKey);
+
+	//TESTING
+	hexDump(stdout, "makeUserEntry pubkey: ", (BYTE*)&(outputEntry.pubKey), 32);
+
 	TimeType res = outputEntry.updateTime = getTimeNow();
 	outputEntry.valid = true;
 	fillRandPadding(&(outputEntry.randPadding), outputEntry.RAND_PADDING_SIZE);
