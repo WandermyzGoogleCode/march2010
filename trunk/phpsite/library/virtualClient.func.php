@@ -17,9 +17,15 @@ function virtualRegister(PlainUserEntry $plainUserEntry)
 {
 	global $cfg;
 	
+	/*
 	$name_len = strlen(utf8_encode($plainUserEntry->name));
 	$phone_num_len = strlen(utf8_encode($plainUserEntry->phoneNumber));
 	$status_len = strlen(utf8_encode($plainUserEntry->status));
+	*/
+	
+	$name_len = strlen(($plainUserEntry->name));
+	$phone_num_len = strlen(($plainUserEntry->phoneNumber));
+	$status_len = strlen(($plainUserEntry->status));
 	
 	if ($name_len > MAX_NAME_LENGTH)
 	{
@@ -55,7 +61,8 @@ function virtualRegister(PlainUserEntry $plainUserEntry)
 		$padding .= "0";
 		$name_len++;
 	}
-	fwrite($fd, utf8_encode($plainUserEntry->name));
+	//fwrite($fd, utf8_encode($plainUserEntry->name));
+	fwrite($fd, ($plainUserEntry->name));
 	fwrite($fd, "\0", 1);
 	fwrite($fd, $padding);
 	
@@ -65,7 +72,8 @@ function virtualRegister(PlainUserEntry $plainUserEntry)
 		$padding .= "0";
 		$status_len++;
 	}
-	fwrite($fd, utf8_encode($plainUserEntry->status));
+	//fwrite($fd, utf8_encode($plainUserEntry->status));	
+	fwrite($fd, ($plainUserEntry->status));
 	fwrite($fd, "\0", 1);
 	fwrite($fd, $padding);
 	
