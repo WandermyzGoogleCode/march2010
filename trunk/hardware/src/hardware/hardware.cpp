@@ -162,18 +162,18 @@ bool SafeCore::makeUpdateUserEntry(const UserEntry& oldEntry,
 bool SafeCore::refreshEntries(Index& firstIndex, UserEntry& firstEntry,
 		Index& secondIndex, UserEntry& secondEntry) {
 	if (firstIndex.compare(lastRefreshIndex) <= 0){
-		//TESTING
-		printf("firstIndex should be greater than lastIndex\n");
-		hexDump(stdout, "firstIndex: ", (BYTE*)&firstIndex, 32);
-		hexDump(stdout, "lastIndex: ", (BYTE*)&lastRefreshIndex, 32);
+		////TEST OVER
+		//printf("firstIndex should be greater than lastIndex\n");
+		//hexDump(stdout, "firstIndex: ", (BYTE*)&firstIndex, 32);
+		//hexDump(stdout, "lastIndex: ", (BYTE*)&lastRefreshIndex, 32);
 
 		return false;
 	}
 	if (firstIndex.compare(secondIndex) >= 0){
-		//TESTING
-		printf("firstIndex should be smaller than secondIndex\n");
-		hexDump(stdout, "firstIndex: ", (BYTE*)&firstIndex, 32);
-		hexDump(stdout, "secondIndex: ", (BYTE*)&secondIndex, 32);
+		//TEST OVER
+		//printf("firstIndex should be smaller than secondIndex\n");
+		//hexDump(stdout, "firstIndex: ", (BYTE*)&firstIndex, 32);
+		//hexDump(stdout, "secondIndex: ", (BYTE*)&secondIndex, 32);
 
 		return false;
 	}
