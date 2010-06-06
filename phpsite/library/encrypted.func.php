@@ -286,7 +286,7 @@ function updateWholeTable($needlock = true){
 	$nextTableName = "lives3_next_encryptedinfo";
 	
 	global $db;
-	$db->query("delete * from $nextTableName");
+	$db->query("delete from $nextTableName");
 	$result = $db->query("select * from lives3_encryptedinfo");
 	$n = $db->num_rows($result);
 	for($i=0; $i<(int)$n/2; $i++){
