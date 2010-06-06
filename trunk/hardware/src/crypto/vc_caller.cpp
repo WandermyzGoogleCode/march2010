@@ -6,13 +6,12 @@
 #include "../include/crypto.h"
 using namespace std;
 
-#define UserEntry_VALID_SIZE 3536
-
 int main()
 {
-	const string tmpDir = "/usr/local/lives3/tmp/";
-	const string privateKeyFile = "/usr/local/lives3/data/usr0_prikey.dat";
-	const string publicKeyFile = "/usr/local/lives3/data/usr0_pubkey.dat";
+	const string tmpDir = "../tmp/";
+	const string privateKeyFile = "../usr0_prikey.dat";
+	const string publicKeyFile = "../usr0_pubkey.dat";
+	const string serverPublicKeyFile = "../server_pubkey.dat";
 
 	PublicKeyToTransfer publicMem;
 	FILE* fd_publickey = fopen(publicKeyFile.c_str(), "rb");
@@ -34,6 +33,12 @@ int main()
 	fread(privateMem.block, 1500, 1, fd_privatekey);
 	fclose(fd_privatekey);
 
+	PublicKeyToTransfer serverPubMem;
+	FILE* fd = fopen(serverPublicKeyFile.c_str(), "rb");
+	fread(&serverPubMem, 400, 1, fd);
+	PublicKey serverPublicKey = getPublicKeyFromMem(serverPubMem);
+	fclose(fd);
+
 	PublicKey pubKey = getPublicKeyFromMem(publicMem);
 	PrivateKey priKey = getPrivateKeyFromMem(privateMem);
 
@@ -42,7 +47,7 @@ int main()
 	unsigned char strStatus[MAX_STATUS_LENGTH];
 
 	string tmpFileName = tmpDir + "virtual_client.tmp";
-	FILE* fd = fopen(tmpFileName.c_str(), "rb");
+	fd = fopen(tmpFileName.c_str(), "rb");
 	fread(strPhoneNum, 1, 30, fd);
 	fread(strName, 1, MAX_NAME_LENGTH, fd);
 	fread(strStatus, 1, MAX_STATUS_LENGTH, fd);
@@ -61,7 +66,7 @@ int main()
 
 	PhoneNumber iPhoneNum;
 	sscanf((const char*)strPhoneNum, "%lld", &iPhoneNum);
-	EncryptedPhoneNumber encryptedPhoneNum = EncryptedPhoneNumber::getEncryptedPhoneNumber(iPhoneNum, pubKey);
+	EncryptedPhoneNumber encryptedPhoneNum = EncryptedPhoneNumber::getEncryptedPhoneNumber(iPhoneNum, serverPublicKey);
 
 	UserEntry entry;
 	entry.pubKey = writePublicKeyToMem(pubKey);
@@ -73,6 +78,10 @@ int main()
 	entry.valid = true;
 	fillRandPadding(entry.randPadding, UserEntry::RAND_PADDING_SIZE);
 
+	SymmetricKey sk = generateRandomSymmetricKey();
+	symmetricallyEncrypt((unsigned char*)&entry, entry.validSize(), sk);
+	encryptByPublicKey(&entry.symKey, serverPublicKey);
+
 	tmpFileName = tmpDir + "virtual_client_c_return.tmp";
 	fd = fopen(tmpFileName.c_str(), "wb");
 	if (!fd)
@@ -81,6 +90,6 @@ int main()
 		return 1;
 	}
 	fwrite(&encryptedPhoneNum, ENCRYPTED_PHONENUMBER_LENGTH, 1, fd);
-	fwrite(&entry, entry.validSize(), 1, fd);
+	fwrite(&entry, sizeof(entry), 1, fd);
 	fclose(fd);
 }
