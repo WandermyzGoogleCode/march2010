@@ -44,8 +44,12 @@ else
 	
 	if(!is_array($updatePackage))
 	{
-		$updatePackage = array();
+		die('getEncryptedUpdatePackage返回的不是数组');
+		//$updatePackage = array();
 	}
+	
+	//print_r($updatePackage);
+	//return;
 	
 	$result = pack('V', count($updatePackage));
 	//die($updatePackage);
@@ -53,9 +57,8 @@ else
 	{
 		$result .= $entry;
 	}
+	
 }
-
-
 
 header('Content-Description: File Transfer');
 header('Content-Type: application/octet-stream');
