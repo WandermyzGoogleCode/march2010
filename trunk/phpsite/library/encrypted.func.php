@@ -189,20 +189,24 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 	$lockfp = acquireLock($lockFileName);
 	$res = array();
 	
-	//TESTING
-	$arrayLen = count($updateRequest);
-	echo "arrayLen=$arrayLen\n";
+	//TEST OVER
+	//$arrayLen = count($updateRequest);
+	//echo "arrayLen=$arrayLen\n";
 	
 	do{
 		if (strlen($encryptedPhoneNumber) != SIZE_EncryptedPhoneNumber || strlen($threshold) != SIZE_TimeType)
 		{
 			echo "Bad input for getEncryptedUpdatePackage\n";
+			$res = false;
 			break;
 		}
 	
 		$temp = getCurrentCounter();
-		if ($temp[1] != 0)
+		if ($temp[1] != 0){
+			echo "Failed to get current counter\n";
+			$res = false;
 			break;
+		}
 		$currentCounter = $temp[0];
 		$counterNeeded = 2+count($updateRequest)*2;
 		if ($currentCounter+$counterNeeded >= MAX_COUNTER){
@@ -211,20 +215,26 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 		}
 		
 		$temp = getIndex($encryptedPhoneNumber);
-		if ($temp[1] != 0)
+		if ($temp[1] != 0){
+			$res = false;
+			echo "Failed to get operator's index\n";
 			break;
+		}
 		$operateIndex = $temp[0];
 		$temp = getUserEntryFromDataBase($operateIndex);
-		if (!$temp[0])
+		if (!$temp[0]){
+			$res = false;
+			echo "Failed to get operator's userEntry\n";
 			break;
+		}
 		else
 			$operateUser = $temp[1];
 		
 		$binFalse = pack("C", 0);
 		for($i=0; $i<count($updateRequest); $i++){
 			if (strlen($updateRequest[$i]) != SIZE_EncryptedPhoneNumber){
-				//TESTING
-				echo "Bad updateRequest[$i]";
+				//TEST OVER
+				//echo "Bad updateRequest[$i]";
 				
 				continue;
 			}
@@ -248,9 +258,10 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 			$cmd = "$callerName $safeCoreName getUpdateEntry $exchangeFileName";
 			exec($cmd, $stdout, $status);
 			if ($status != 0){
-				if ($status == 1)
-					echo "bad command: $cmd\n";
-				printStdout($stdout);
+				//TEST OVER
+				//if ($status == 1)
+				//	echo "bad command: $cmd\n";
+				//printStdout($stdout);
 				continue;
 			}
 			$exchangeFile = fopen($exchangeFileName, "rb");
