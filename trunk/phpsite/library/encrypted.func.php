@@ -287,9 +287,6 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 }
 
 function updateWholeTable($needlock = true){
-	//TESTING
-	echo "updateWholeTable\n";
-	
 	include './include/hardwarecfg.inc.php';
 	if ($needlock)
 		$lockfp = acquireLock($lockFileName);
@@ -325,8 +322,14 @@ function updateWholeTable($needlock = true){
 			if ($needlock)
 				releaseLock($lockfp);
 			echo "updateWholeTable error: refreshEntries failed, status=$status\n";
+			for($j=0; $j<2; $j++)
+				echo "index[$j] = ".bin2hex($index[$j])."\n";
 			return false;										
-		}			
+		}
+
+		//TESTING
+		echo "Successfully refreshes 2 entries\n";
+		
 		$exchangeFile = fopen($exchangeFileName, "rb");
 		for($j=0; $j<2; $j++){
 			$index[$j] = fread($exchangeFile, SIZE_Index);
