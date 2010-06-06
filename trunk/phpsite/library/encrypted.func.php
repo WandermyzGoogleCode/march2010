@@ -214,8 +214,10 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 		$currentCounter = $temp[0];
 		$counterNeeded = 2+count($updateRequest)*2;
 		if ($currentCounter+$counterNeeded >= MAX_COUNTER){
-			if (!updateWholeTable(false))
+			if (!updateWholeTable(false)){
+				$res = false;
 				break;
+			}
 			else
 				continue;
 		}
