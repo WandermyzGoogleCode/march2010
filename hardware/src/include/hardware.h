@@ -75,7 +75,7 @@ public:
 	 * Once currentCounter is greater than or equal to this,
 	 * key update is enforced to do further leak operations.
 	 */
-	static const int MAX_COUNT = 10;//TESTING
+	static const int MAX_COUNT = 100;//TESTING
 
 	int getCurrentCounter() {
 		return currentCounter;
