@@ -341,6 +341,10 @@ function updateWholeTable($needlock = true){
 	rename($nextTableName, $oldTableName);
 	rename($tempTableName, $nextTableName);
 	
+	$cmd = "$callerName $safeCoreName shiftToNextKey";
+	exec($cmd, $stdout, $status);
+	assert($status == 0);
+	
 	if ($needlock)
 		releaseLock($lockfp);
 }
