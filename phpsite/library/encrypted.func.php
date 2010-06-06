@@ -373,9 +373,9 @@ function updateWholeTable($needlock = true){
 	
 	$oldTableName = "lives3_encryptedinfo";
 	$tempTableName = "lives3_temp_encryptedinfo";
-	rename($oldTableName, $tempTableName);
-	rename($nextTableName, $oldTableName);
-	rename($tempTableName, $nextTableName);
+	changeTableName($oldTableName, $tempTableName);
+	changeTableName($nextTableName, $oldTableName);
+	changeTableName($tempTableName, $nextTableName);
 	
 	$cmd = "$callerName $safeCoreName shiftToNextKey";
 	exec($cmd, $stdout, $status);
