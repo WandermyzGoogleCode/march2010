@@ -328,8 +328,8 @@ function updateWholeTable($needlock = true){
 			return false;										
 		}
 
-		//TESTING
-		echo "Successfully refreshes 2 entries\n";
+		//TEST OVER
+		//echo "Successfully refreshes 2 entries\n";
 		
 		$exchangeFile = fopen($exchangeFileName, "rb");
 		for($j=0; $j<2; $j++){
