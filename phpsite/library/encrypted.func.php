@@ -351,7 +351,6 @@ function updateWholeTable($needlock = true){
 			echo "updateWholeTable error: bad size for index or userEntry\n";
 			echo "index size=".strlen($index)."\n";
 			echo "userEntry size=".strlen($entry)."\n";
-			printStdout($stdout);
 			return false;										
 		}
 		$exchangeFile = fopen($exchangeFileName, "wb");
