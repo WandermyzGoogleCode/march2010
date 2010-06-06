@@ -223,12 +223,14 @@ class MySqlImproved
 	{
 		if(is_a($result,'mysqli_result'))
 		{
-			return $result->num_rows();
+			return $result->num_rows;
+			//return $result->num_rows();
 		}
 		else if(is_a($result,'mysqli_stmt'))
 		{
 			$result->store_result();		//TODO: 效率！！！！
-			return $result->num_rows();
+			//return $result->num_rows();
+			return $result->num_rows;
 			$result->free_result();
 		}
 		else
