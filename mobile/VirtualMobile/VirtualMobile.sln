@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteService", "RemoteServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteServiceTester", "RemoteServiceTester\RemoteServiceTester.csproj", "{CC244542-E878-4773-8B2C-855DF69BED06}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectionGenerator", "ConnectionGenerator\ConnectionGenerator.csproj", "{77966FAB-71BB-462E-AA1F-AF2F219329D8}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -29,6 +31,10 @@ Global
 		{CC244542-E878-4773-8B2C-855DF69BED06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC244542-E878-4773-8B2C-855DF69BED06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC244542-E878-4773-8B2C-855DF69BED06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77966FAB-71BB-462E-AA1F-AF2F219329D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77966FAB-71BB-462E-AA1F-AF2F219329D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77966FAB-71BB-462E-AA1F-AF2F219329D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77966FAB-71BB-462E-AA1F-AF2F219329D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
