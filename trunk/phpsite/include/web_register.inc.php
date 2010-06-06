@@ -23,6 +23,11 @@ if(checkSubmit('registerSubmit'))
 		showMessage('姓名不能为空', '错误', -1);
 	}
 	
+	if(strlen($env->POST['Name']) > MAX_NAME_LENGTH)
+	{
+		showMessage("姓名长度不能超过32字节（8个中文字符）", -1);
+	}
+	
 	$checkExist = $db->query('SELECT NULL FROM lives3_openinfo WHERE PhoneNumber = ?', 's', $env->POST['PhoneNumber']);
 	if($db->num_rows($checkExist) > 0)
 	{
