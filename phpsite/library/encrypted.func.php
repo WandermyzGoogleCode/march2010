@@ -41,8 +41,10 @@ function encryptedRegister($encryptedPhoneNumber, $userEntry){
 		$currentCounter = $temp[0];
 		$counterNeeded = 2;
 		if ($currentCounter+$counterNeeded >= MAX_COUNTER){
-			updateWholeTable(false);
-			continue;
+			if (!updateWholeTable(false))
+				break;
+			else
+				continue;
 		}
 				
 		$temp = getIndex($encryptedPhoneNumber);
@@ -126,8 +128,10 @@ function encryptedUpdate($encryptedPhoneNumber, $userEntry){
 		$currentCounter = $temp[0];
 		$counterNeeded = 2;
 		if ($currentCounter+$counterNeeded >= MAX_COUNTER){
-			updateWholeTable(false);
-			continue;
+			if (!updateWholeTable(false))
+				break;
+			else
+				continue;
 		}
 		
 		$temp = getIndex($encryptedPhoneNumber);
@@ -210,8 +214,10 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 		$currentCounter = $temp[0];
 		$counterNeeded = 2+count($updateRequest)*2;
 		if ($currentCounter+$counterNeeded >= MAX_COUNTER){
-			updateWholeTable(false);
-			continue;
+			if (!updateWholeTable(false))
+				break;
+			else
+				continue;
 		}
 		
 		$temp = getIndex($encryptedPhoneNumber);
@@ -303,7 +309,7 @@ function updateWholeTable($needlock = true){
 				if ($needlock)
 					releaseLock($lockfp);
 				echo "updateWholeTable error: bad size for index or userEntry\n";
-				return;										
+				return false;										
 			}
 			fwrite($exchangeFile, $index[$j], strlen($index[$j]));
 			fwrite($exchangeFile, $entry[$j], strlen($entry[$j]));
@@ -314,7 +320,7 @@ function updateWholeTable($needlock = true){
 			if ($needlock)
 				releaseLock($lockfp);
 			echo "updateWholeTable error: refreshEntries failed, status=$status\n";
-			return;										
+			return false;										
 		}			
 		$exchangeFile = fopen($exchangeFileName, "rb");
 		for($j=0; $j<2; $j++){
@@ -333,7 +339,7 @@ function updateWholeTable($needlock = true){
 			if ($needlock)
 				releaseLock($lockfp);
 			echo "updateWholeTable error: bad size for index or userEntry\n";
-			return;										
+			return false;										
 		}
 		$exchangeFile = fopen($exchangeFileName, "wb");
 		fwrite($exchangeFile, $index, strlen($index));
@@ -344,7 +350,7 @@ function updateWholeTable($needlock = true){
 			if ($needlock)
 				releaseLock($lockfp);
 			echo "updateWholeTable error: refreshEntries failed, status=$status\n";
-			return;										
+			return false;										
 		}			
 		$exchangeFile = fopen($exchangeFileName, "rb");
 		$index = fread($exchangeFile, SIZE_Index);
@@ -365,11 +371,12 @@ function updateWholeTable($needlock = true){
 		if ($needlock)
 			releaseLock($lockfp);
 		echo "updateWholeTable error: refreshEntries failed, status=$status\n";
-		return;										
+		return false;										
 	}			
 	
 	if ($needlock)
 		releaseLock($lockfp);
+	return true;
 }
 
 ?>
