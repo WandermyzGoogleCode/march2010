@@ -79,6 +79,7 @@ int main()
 	fillRandPadding(entry.randPadding, UserEntry::RAND_PADDING_SIZE);
 
 	SymmetricKey sk = generateRandomSymmetricKey();
+	memcpy(&(entry.symKey), &sk, sizeof(sk));
 	symmetricallyEncrypt((unsigned char*)&entry, entry.validSize(), sk);
 	encryptByPublicKey(&entry.symKey, serverPublicKey);
 
