@@ -9,7 +9,7 @@
 	define('SIZE_TimeType', 8);
 	define('SIZE_ValidUserEntry', 3536);
 	define('SIZE_ValidUpdateEntry', 1088);
-	define('MAX_COUNTER', 10);
+	define('MAX_COUNTER', 1000000);
 	define('MAX_NAME_LENGTH', 32);
 	define('MAX_STATUS_LENGTH', 1024);
 	define('MAX_CONNECTION', 256);
