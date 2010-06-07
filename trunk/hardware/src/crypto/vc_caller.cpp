@@ -8,10 +8,10 @@ using namespace std;
 
 int main()
 {
-	const string tmpDir = "../tmp/";
-	const string privateKeyFile = "../data/usr0_prikey.dat";
-	const string publicKeyFile = "../data/usr0_pubkey.dat";
-	const string serverPublicKeyFile = "../data/server_pubkey.dat";
+	const string tmpDir = "/usr/local/lives3/tmp/";
+	const string privateKeyFile = "/usr/local/lives3/data/usr0_prikey.dat";
+	const string publicKeyFile = "/usr/local/lives3/data/usr0_pubkey.dat";
+	const string serverPublicKeyFile = "/usr/local/lives3/data/server_pubkey.dat";
 
 	PublicKeyToTransfer publicMem;
 	FILE* fd_publickey = fopen(publicKeyFile.c_str(), "rb");
