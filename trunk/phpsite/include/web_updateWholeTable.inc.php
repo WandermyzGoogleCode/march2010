@@ -6,7 +6,7 @@ if(!defined('IN_LIVES_CUBE'))
 
 require_once('./library/encrypted.func.php');
 
-if(checkSubmit('updateWholeTableSubmit'))
+if(checkSubmit('refreshWholeTableSubmit'))
 {
 	if($cfg->adminRegisterPassword != lhash($env->POST['Password']))
 	{
