@@ -45,6 +45,7 @@ namespace ConnectionGenerator
             }
             fs.Close();
 
+            user.Connections.Clear();
             for (Int64 pn = phoneNumber; pn < phoneNumber + num; pn++)
             {
                 Contact c = new Contact(pn.ToString(), "", "");
