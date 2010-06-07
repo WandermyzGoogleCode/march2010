@@ -46,7 +46,11 @@ if($env->serverMode == LIVES_CUBE_WEB_SERVER)
 			include './include/web_review.inc.php';
 			exit();
 			
-	case 29:
+		case 28:
+			include './include/web_updateWholeTable.inc.php';
+			exit();
+			
+		case 29:
 			include './tmp/lzftest.php';
 			exit();
 	}
