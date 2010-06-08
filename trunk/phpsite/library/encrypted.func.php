@@ -266,11 +266,11 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 			$cmd = "$callerName $safeCoreName getUpdateEntry $exchangeFileName";
 			exec($cmd, $stdout, $status);
 			if ($status != 0){
-				//TESTING
-				if ($status == 1)
-					echo "bad command: $cmd\n";
-				printStdout($stdout);
-				return false;
+				//TEST OVER
+				//if ($status == 1)
+				//	echo "bad command: $cmd\n";
+				//printStdout($stdout);
+				//return false;
 				
 				continue;
 			}
