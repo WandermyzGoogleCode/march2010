@@ -270,6 +270,7 @@ function getEncryptedUpdatePackage($encryptedPhoneNumber, array $updateRequest, 
 				if ($status == 1)
 					echo "bad command: $cmd\n";
 				printStdout($stdout);
+				return false;
 				
 				continue;
 			}
