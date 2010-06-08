@@ -77,8 +77,8 @@ bool SafeCore::getUpdateEntry(const UserEntry& operateUser,
 		return false;
 	}
 	for (int i = 0; i < rTargetUser.nOfConnection; i++){
-		//TEST OVER
-		//printf("connection[%d]=%lld\n", i, rTargetUser.connection[i]);
+		//TESTING
+		printf("connection[%d]=%lld\n", i, rTargetUser.connection[i]);
 
 		if (rTargetUser.connection[i] == 0 || rTargetUser.connection[i]
 				== rOperateUser.myNumber) {//0 for unidirectional entry
