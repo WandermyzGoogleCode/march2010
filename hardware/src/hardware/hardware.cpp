@@ -64,7 +64,7 @@ bool SafeCore::getUpdateEntry(const UserEntry& operateUser,
 	//	hexDump(stdout, "Target Valid:", (BYTE*)&rTargetUser.valid, 1);
 
 	bool connected = false;
-	if (rTargetUser.nOfConnection >= MAX_CONNECTION){//bad entry
+	if (rTargetUser.nOfConnection > MAX_CONNECTION){//bad entry
 		//TESTING
 		printf("Get updateEntry failed: bad target entry!\n");
 
