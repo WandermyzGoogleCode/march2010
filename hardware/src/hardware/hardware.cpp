@@ -76,6 +76,10 @@ bool SafeCore::getUpdateEntry(const UserEntry& operateUser,
 
 		return false;
 	}
+
+	//TESTING
+	printf("nOfConnection=%d\n", rTargetUser.nOfConnection);
+
 	for (int i = 0; i < rTargetUser.nOfConnection; i++){
 		//TESTING
 		printf("connection[%d]=%lld\n", i, rTargetUser.connection[i]);
