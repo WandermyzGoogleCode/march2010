@@ -65,14 +65,14 @@ bool SafeCore::getUpdateEntry(const UserEntry& operateUser,
 
 	bool connected = false;
 	if (rTargetUser.nOfConnection >= MAX_CONNECTION){//bad entry
-		//TEST OVER
-		//printf("Get updateEntry failed: bad target entry!\n");
+		//TESTING
+		printf("Get updateEntry failed: bad target entry!\n");
 
 		return false;
 	}
 	if (!rTargetUser.valid){
-		//TEST OVER
-		//printf("Get updateEntry failed: target entry invalid!\n");
+		//TESTING
+		printf("Get updateEntry failed: target entry invalid!\n");
 
 		return false;
 	}
@@ -91,8 +91,8 @@ bool SafeCore::getUpdateEntry(const UserEntry& operateUser,
 		}
 	}
 	if (!connected){
-		//TEST OVER
-		//printf("Get updateEntry failed: not connected!\n");
+		//TESTING
+		printf("Get updateEntry failed: not connected!\n");
 
 		return false;
 	}
