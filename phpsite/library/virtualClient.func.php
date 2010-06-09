@@ -87,8 +87,8 @@ function virtualRegister(PlainUserEntry $plainUserEntry)
 	$encryptedPhoneNum = fread($fd, SIZE_EncryptedPhoneNumber);
 	$userEntry = fread($fd, SIZE_UserEntry);
 	
-	echo "<br/>test1: ".strlen($encryptedPhoneNum)."<br/>";
-	echo "<br/>test2: ".strlen($userEntry)."<br/>";
+	//echo "<br/>test1: ".strlen($encryptedPhoneNum)."<br/>";
+	//echo "<br/>test2: ".strlen($userEntry)."<br/>";
 	
 	system("rm ".$cfg->tmpDir."virtual_client_c_return.tmp");
 	return encryptedRegister($encryptedPhoneNum, $userEntry);
