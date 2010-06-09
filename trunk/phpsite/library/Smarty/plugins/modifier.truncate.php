@@ -36,10 +36,33 @@ function smarty_modifier_truncate($string, $length = 80, $etc = '...',
             $string = preg_replace('/\s+?(\S+)?$/', '', substr($string, 0, $length+1));
         }
         if(!$middle) {
-            return substr($string, 0, $length) . $etc;
+            //return substr($string, 0, $length) . $etc;
+            $result = substr($string, 0, $length) . $etc;
         } else {
-            return substr($string, 0, $length/2) . $etc . substr($string, -$length/2);
+            //return substr($string, 0, $length/2) . $etc . substr($string, -$length/2);
+            $result = substr($string, 0, $length/2) . $etc . substr($string, -$length/2);
         }
+        
+        //TODO SpaceFlyer: 处理$result
+        //以下是GBK的
+        /*
+        //Added by SpaceFlyer, to avoid ? in the title
+						$good = true;
+						for($i=0; $i<strlen($result); $i++)
+						{
+							if (!$good)
+							{
+								$good = true;
+								continue;
+							}
+							if (ord($result[$i]) >= 128)
+								$good = false;
+						}
+						if (!$good)
+							$result = substr($result, 0, strlen($result)-1);
+		//End
+        */
+        return $result;
     } else {
         return $string;
     }
