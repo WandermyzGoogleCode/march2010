@@ -59,6 +59,7 @@ int main()
 	memcpy(data, sk.keycode, 32);
 
 	B256* b1 = (B256*) data;
+
 	encryptByPublicKey(b1, serverPublicKey);
 	decryptByPrivateKey(b1, serverPrivateKey);
 

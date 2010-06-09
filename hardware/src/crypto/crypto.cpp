@@ -69,7 +69,7 @@ bool encryptByPublicKey(B256* block, const PublicKey& key)
 	int data_size = 256;
 	unsigned char* data = (unsigned char*)block->b;
 
-	RSA * publicKey = RSA_generate_key(2048, RSA_F4, NULL, NULL);
+	RSA * publicKey = RSA_new();
 	publicKey->e = key.e;
 	publicKey->n = key.n;
 	publicKey->p = NULL;
@@ -135,7 +135,7 @@ bool verifyByPublicKey(B256* block, B256* sig, const PublicKey& key)
 	unsigned char* data = (unsigned char*)block->b;
 	unsigned char* sig_buf = (unsigned char*)sig->b;
 
-	RSA * publicKey = RSA_generate_key(2048, RSA_F4, NULL, NULL);
+	RSA * publicKey = RSA_new();
 	publicKey->e = key.e;
 	publicKey->n = key.n;
 	publicKey->p = NULL;
@@ -207,7 +207,7 @@ PrivateKey generatePrivateKey(const std::string& codeword)
 	BN_mul(tmp1, tmp1, tmp2, ctx);
 	BN_mod_inverse(d, e, tmp1,ctx);
 
-	RSA* rsaKey = RSA_generate_key(2048, RSA_F4, NULL, NULL);
+	RSA* rsaKey = RSA_new();
 	BN_copy(rsaKey->p, p);
 	BN_copy(rsaKey->q, q);
 	BN_copy(rsaKey->n, n);
@@ -289,7 +289,7 @@ PublicKeyToTransfer writePublicKeyToMem(const PublicKey& key)
 {
 	PublicKeyToTransfer transfer;
 
-	RSA* publicKey = RSA_generate_key(2048, RSA_F4, NULL, NULL);
+	RSA* publicKey = RSA_new();
 	BN_copy(publicKey->e, key.e);
 	BN_copy(publicKey->n, key.n);
 
