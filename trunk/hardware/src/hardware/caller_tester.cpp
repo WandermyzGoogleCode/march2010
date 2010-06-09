@@ -259,4 +259,10 @@ int main() {
 	testRefreshEntries(123, "user.123", 456, "user.456");
 	testShiftToNextKey();
 	testCompareIndex(123, 456);
+
+//	for(int i=0; i<1000; i++){
+//		printf("i=%d\n", i);
+//		EncryptedPhoneNumber::getEncryptedPhoneNumber(0, pubkey);
+//		//testCompareIndex();
+//	}
 }

@@ -11,7 +11,7 @@ hardware_caller: ${hp}/hardware_caller.cpp ${hp}/hardware.cpp ${cp}/crypto.cpp $
 	g++ -lcrypto ${hp}/hardware_caller.cpp ${hp}/hardware.cpp ${cp}/crypto.cpp ${cp}/auxi.cpp -o hardware_caller -g
 	
 test: ${cp}/test.cpp ${cp}/auxi.cpp ${cp}/crypto.cpp ${ip}/data.h ${ip}/crypto.h
-	g++ -lcrypto ${cp}/test.cpp ${cp}/auxi.cpp ${cp}/crypto.cpp -o test
+	g++ -lcrypto ${cp}/test.cpp ${cp}/auxi.cpp ${cp}/crypto.cpp -o test -g
 	
 define: ${hp}/define.cpp ${ip}/data.h ${ip}/crypto.h ${ip}/hardware.h
 	g++ ${hp}/define.cpp -o define -g
