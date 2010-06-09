@@ -2,12 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- TODO 去掉注释
+
 {if $redirect != ''}
 <meta http-equiv="refresh" content="2;url={$redirect}">
 {/if}
--->
+
 
 <title>{$title} {if $title != ''}-{/if} Live'S Cube</title>
 </head>
 <body>
+<center>LiveS Cube网页端演示</center>
