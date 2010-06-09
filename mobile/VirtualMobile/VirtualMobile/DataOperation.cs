@@ -156,7 +156,7 @@ namespace VirtualMobile
             System.IO.File.Delete(Constants.TMP_DIR + "from_c.tmp");
 
             List<byte[]> updatePackage = caller.GetEncryptedUpdatePackage(encryptedPhoneNum, updateRequest, threshold);
-            if (updateRequest == null)
+            if (updateRequest == null || updateRequest.Count == 0)
             {
                 MessageBox.Show("Server caller failed!");
                 return;

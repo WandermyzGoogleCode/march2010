@@ -115,7 +115,16 @@ namespace VirtualMobile
 
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
+            if (currentUser == null)
+            {
+                MessageBox.Show("请先登录！");
+                return;
+            }
+
             refreshConnections();
+
+            if (currentUser.Connections.Count > 256)
+                return;
 
             string newName = textUpdateName.Text;
             string newStatus = textUpdateStatus.Text;
@@ -158,7 +167,7 @@ namespace VirtualMobile
         private void formClosed(object sender, FormClosedEventArgs e)
         {
             refreshConnections();
-            if (currentUser == null)
+            if (currentUser == null || currentUser.PhoneNum == null)
                 return;
             FileStream stream = new FileStream(Constants.USER_INFO_DIR + currentUser.PhoneNum + ".inf", FileMode.OpenOrCreate, FileAccess.Write);
             try
@@ -177,10 +186,21 @@ namespace VirtualMobile
 
         private void buttonGetinfo_Click(object sender, EventArgs e)
         {
+            if (currentUser == null)
+            {
+                MessageBox.Show("请先登录！");
+                return;
+            }
+
             refreshConnections();
 
             int timestamp_now = (int)(DateTime.Now - new DateTime(1970, 1, 1)).TotalSeconds;
 
+            if (textGetinfoTimestamp.Text == "")
+            {
+                MessageBox.Show("请输入时间戳！");
+                return;
+            }
             Int64 threshold = Int64.Parse(textGetinfoTimestamp.Text);
 
             List<Contact> requests = new List<Contact>();
@@ -204,6 +224,12 @@ namespace VirtualMobile
 
         private void buttonCurrentUserInfo_Click(object sender, EventArgs e)
         {
+            if (currentUser == null)
+            {
+                MessageBox.Show("请先登录！");
+                return;
+            }
+
             MessageBox.Show("手机号：      " + currentUser.PhoneNum + "\n" + 
                 "名字：          " + currentUser.Name + "\n" +
                 "状态：          " + currentUser.Status + "\n" +
