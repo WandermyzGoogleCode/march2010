@@ -208,6 +208,7 @@ namespace VirtualMobile
                     }
                 }
             }
+            reader.Close();
         }
 
         static void errorCallback(string errMsg, Exception e)
