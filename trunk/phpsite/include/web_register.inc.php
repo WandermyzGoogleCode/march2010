@@ -40,7 +40,7 @@ if(checkSubmit('registerSubmit'))
 	$entry->name = $env->POST['Name'];
 	$entry->status = $cfg->newUserStatus;
 	
-	//print_r($entry);
+	print_r($entry);
 	
 	$virtual =  virtualRegister($entry);	
 	
