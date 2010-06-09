@@ -46,7 +46,7 @@ if(checkSubmit('registerSubmit'))
 	
 	if(!$virtual)
 	{
-		showMessage("virtualRegister模块出错");
+		showMessage("virtualRegister模块出错", -1);
 	}
 	
 	
