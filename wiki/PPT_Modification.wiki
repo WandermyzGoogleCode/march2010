@@ -1,0 +1,10 @@
+* 加页码
+* 功能演示-更新：Digital Envelope
+* 功能演示-同步：Safecore中symmetric key和private key改红色
+* -/->符号……
+* 防御In=0改为I0=0
+* “系统实现”改为“防御系统实现”
+* System Overview：删去SMS Platform
+* “奸商”改为。。。
+* 不用演示客户端的获取单向用户信息
+* System Overview的Technique加上OpenSSL
