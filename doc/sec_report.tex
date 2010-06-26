@@ -1,0 +1,238 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\author{Yuqian Li}
+\title{Defender System and its Security Analysis}
+\date{}
+
+\newtheorem{mydef}{Definition}
+
+
+\begin{document}
+\maketitle
+%\paragraph*{Abstract}{
+\begin{abstract}
+	Some information has a very small input set. For example
+	cellphone numbers has only $2^{36}$ possible values. In that case, any
+	determinant encryption could only
+	achieve a very low entropy bounded by the size of input set.
+	Again, for example, the entropy can't exceed $36$ for an input set
+	of size $2^{36}$. However, the determinant encryption is required
+	in situations such as hashing or generating an index or identity for a
+	given information. To ensure the security in a theoretical aspect
+	for such cases, conditional entropy is used instead of mere entropy.
+	The conditional entropy measures the difficulty for an adversary to
+	derive the information considering all related information 
+	that adversary has already achieved.
+	The defender system in this paper is designed to ensure a relatively high lower
+	bound for conditional entropy even with a computationally-unbounded adversary.
+	In this paper, a very easy proof is given to show that lower bound.
+\end{abstract}
+%}
+
+\section{Introduction}
+	Determinant encryption for an information from
+	a very small input set is important for some social
+	network systems such as LiveS Cube[ref]. However, the security
+	of such encryption is hard to be guaranteed. For example, an
+	adversary might enumerate all possible values from the
+	input set and establish a table maps any encrypted
+	information to its plain information as long as the encryption
+	does not change. In such case, the conditional entropy
+	is $0$ since there's no randomness for the adversary with that table.
+	Even for a large input set which has a quite high entropy, a
+	computationally-unbounded adversary could establish that table
+	fast and the conditional entropy drops to $0$, which means that the
+	adversary knowns everything. So it's not the mere entropy that
+	determines the security, but the conditional entropy. Consider
+	that if we can ensure a lower bound for conditional entropy such as $10$,
+	then we can ensure that the adversary can't have a possibility
+	higher than $2^{-10}$ to know the exact plain information for
+	an encrypted information and won't have a chance
+	higher than $2^{-10}$ to guess the correct plain information 
+	for one encrypted information in average.\footnote{These conclusions will
+	be proved in the following sections[ref].}
+	
+	Therefore, even for the very small input set that has a very low
+	higher bound for entropy, there is still possibility to ensure the
+	theoretical security by given a lower bound for conditional entropy.
+	The defender model is an easy model based on a simple idea to achieve that goal.
+	This model is used in LiveS Cube system so a defender system is made.
+	The analysis in the following sections is mainly based on that system.
+	The result shows that the system could ensure a lower bound higher than 
+	$10$ in an very efficient way. Since the analysis is quite simple, the
+	bound estimated is believed not to be so tight. 
+	Considering the result derived by some other
+	more complex, however not accurate, only approximate ways, it is believed
+	that the tight lower bound for this system is much higher than $10$.
+	
+	In the following sections, firstly the defender model and system will be
+	introduced. Then a simple proof for the lower bound of conditional entropy
+	is given. Finally there's some more discussions about the meaning of
+	conditional entropy and other approximate ways to estimate the conditional
+	entropy.
+	
+\section{Defender Model and System}
+	\subsection{Defender Model}
+		Defender model is a very simple model that
+		is not based on formal information theory.
+		The adversary is called attacker in this model.
+		The attacker can launch some attacks and after
+		each attack, the attacker gains some useful information.
+		Once the attacker gains enough information, the security
+		is compromised.
+		
+		Initially, the attacker knows nothing. After
+		each attack, the information attacker gains
+		is described as a function $f_A$, so we define:
+		\begin{align}
+			I_0 &= 0\\
+			I_n &= f_A(I_{n-1})\label{AONLY}
+		\end{align}
+		Here $I_i \in [0, 1]$ describes the amount of information
+		to compromise the security after $i$
+		rounds of attack: $0$ for nothing, $1$ for enough
+		information to compromise the security.
+		
+		For a simple attacker who enumerates all possibilities, the
+		function $f_A$ is quite simple:
+		\begin{align}
+			I_n = f_A(I_{n-1}) = I_{n-1}+c\label{AONLYE}
+		\end{align}
+		Here $c$ is a constant depend on how many possibilities the
+		attacker has to enumerate. For example, if there are
+		$m$ possibilities, $c = 1/m$. In normal situations, $m$ is more
+		than $2^{128}$, so such a simple attacker just needs too many rounds
+		of attack to compromise the security. Therefore, the system with
+		a large $m$ is safe if the attacker is computationally-bounded.
+		
+		However, in some situations, the $m$ is very small. In such cases,
+		we must introduce a defender against that attacker to ensure the
+		security. The defender's action is also described as a function $f_D$
+		so the equation(\ref{AONLY}) above becomes:
+		\begin{align}
+			I_n = f_A(f_D(I_{n-1}))
+		\end{align}
+		
+		For simple attacker who enumerate all possibilities,
+		there is a simple but effective defender 
+		who periodically reduces the information 
+		attacker has in a constant rate, so
+		the equation(\ref{AONLYE}) becomes
+		\begin{align}
+			I_n = f_D(I_{n-1})+c = I_{n-1}/d+c
+		\end{align}
+		Here $d > 1$ is the rate to reduce the information.
+		It can be easily conducted that:
+		\begin{align*}
+			\lim_{n \rightarrow \infty} I_n &= \lim_{n \rightarrow \infty} \sum_{0 \leq i < n} \frac{c}{d^i}\\
+				&= \frac{c}{d-1}
+		\end{align*}
+		
+		This means that for a small $d$ such as $2$, even $c$ is as large as
+		$0.1$ and the attacker is computationally-unbounded, the attacker
+		could never compromise the security.
+		
+	\subsection{Defender System}
+		Inspired by the simple defender model, the defender system is implemented
+		in LiveS Cube[ref] system which has to generate an index
+		from a given cellphone number. The defender system is to prevent attackers
+		from knowing the corresponding cellphone number from its index.
+		
+		Define the set of cellphone number as $X = \{x | \text{$x$ is a cellphone number}\}$.
+		There's a function $f: X \rightarrow I$ to generate index $h = f(x) \in F$ for
+		a given $x$. As described before, the cellphone number set $X$ has a very small
+		size about $2^{36} \approx 10^{11}$. For a given index $h^*$, a simple attacker
+		can enumerate all possible $x$ to see whether $f(x) = h^*$. Therefore, in defender
+		model:
+		\begin{align*}
+			f_A(I_{n-1}) = I_{n-1}+c = I_{n-1}+2^{-36}
+		\end{align*}
+		
+		So the security will be compromised after $2^{36}$ rounds of attack if there's
+		no defender. The defender system is going to fullfil the defender
+		function $f_D(I_{n-1}) = I_{n-1}/2$ by generating new indexes.
+		In LiveS Cube system, the indexes and corresponding data entries are stored
+		in database which we think attacker may have an access to. To generate
+		new indexes, the system has to send indexes and data entries to a 
+		secured module
+		and get new indexes and data entries from that module. If attacker
+		could track each new index and its old index, there's no loss of information 
+		for attacker. Therefore, we have to make sure that the attacker couldn't track
+		the procedure to update the indexes.
+		To do that, the module is implemented in a special hardware that nobody
+		could see what's going on inside the hardware without damaging it in real world.
+		The best strategy againt the attacker 
+		is to send all indexes and data entries to that hardware and then
+		retrieve all new indexes and data entries together. By doing that, the attacker
+		loses all information, which means $f_D(I_{n-1}) = 0$. However, the entries
+		in database may be too many for that hardware to store. Therefore, the system
+		sends two indexes and data entries from the database to hardware in one time and
+		then retrieve their new indexes and data entries. After that, the attacker can
+		only guess which new index is from which old index and there are $2$ possibilites.
+		Thus, the defender system fullfils the equation $f_D(I_{n-1}) = I_{n-1}/2$.
+		
+		In short, in defender system,
+		there's a function $g: F \rightarrow F'$ regenerating 
+		new indexes $F'$ from old indexes $F$. The defender system
+		will randomly choose $f_1, f_2 \in F$ that have
+		not been regenerated yet in each time and generate
+		$f_1', f_2' \in F'$ in a way that attacker can't tell whether
+		$f_1' = g(f_1), f_2' = g(f_2)$ or $f_2' = g(f_1), f_1' = g(f_2)$.
+		By doing that, the information like $f(x) = h$ becomes
+		information that there's $1/2$ chance $f'(x) = h_1'$ and $1/2$ chance $f'(x) = h_2'$.
+		Thus $f_D(I_{n-1}) = I_{n-1}/2$ is achieved.
+		
+		Of course, the conclusion above is not mathematically
+		proved because defender model itself
+		is not well defined in theoretical aspect. 
+		However this is a comprehensive explanation to show how and why
+		defender system works. In the following section, a mathematical proof
+		will be given based on information theory to demonstrate that
+		the defender system can truly ensure the security even for
+		a computationally-unbounded attacker, just as the same as
+		defender model says.
+		
+\section{Analysis of Conditional Entropy}
+	\subsection{Definition and Examples}
+		In this subsection, a brief definition for entropy and conditional
+		entropy is given. Besides, the formal definition of defender system
+		and its behaviour is given.
+		Some additional examples are taken to further
+		demonstrate the relation between conditional entropy and
+		the security. Feel free to skip the content about
+		the definition of entropy and conditional entropy if you are familiar
+		with them.		
+		
+		\begin{mydef}[Entropy]
+			The entropy of a discrete random variable $X$ with
+			possible values $\{x_1, x_2, \ldots, x_n\}$ is
+			\begin{align}
+				H(X) = -\sum_{i=1}^n p(x_i)\log p(x_i)
+			\end{align}
+			where $\log$ refers to $\log_2$ in our context.
+		\end{mydef}
+		
+		Correspondingly, in defender system, define
+		\begin{mydef}
+			$\mathbb{X} = \{x_1, x_2, \ldots, x_n\}$ is the set of all possible 
+			primary images\footnote{the primary images are cellphone numbers
+			in LiveS Cube system} that index $h_i = f(x_i)$ can be calculated.
+			Suppose $h^*$ is the index that attacker wants to
+			get its primary image $x^* \in \mathbb{X}$ satisfying $f(x^*) = h^*$.
+			The discrete random variable $X$ is the
+			primary image guessed by the attacker. For convenience,
+			suppose $n = 2^D$.
+		\end{mydef}
+		
+		In ideal situation, the attacker has no related information, so $X$ should
+		be uniformly distributed. In such case, the entropy is simply:
+		\begin{align}
+			H(X) &= -\sum_{i=1}^{2^D} 2^{-D} \log 2^{-D}\\
+				&= D
+		\end{align}
+		
+\end{document}
