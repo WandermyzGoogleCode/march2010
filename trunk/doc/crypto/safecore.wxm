@@ -1,0 +1,78 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.4 ] */
+
+/* [wxMaxima: input   start ] */
+kill(n, m);
+log2(x) := log(x)/log(2);
+H0(n, m) := log2(n-m);
+H1(n, m) := 1+1/2*log2(n-m);
+H2(n, m) := 1;
+p0(n, m) := (n-m)/n*(n-m-1)/(n-1);
+p1(n, m) := (2*(n-m)*m/(n*(n-1)));
+p2(n, m) := m*(m-1)/(n*(n-1));
+Hn(n, m) := p0(n, m)*H0(n, m)+p1(n, m)*H1(n, m)+p2(n, m)*H2(n, m);
+fullratsimp(Hn(n, m));
+Hnn(n, m) := p0(n, m)*H0(n, m)+p1(n, m)*(H1(n, m)-1/2)+p2(n, m)*H2(n, m);
+fullratsimp(Hnn(n, m));
+Ho(n, m) := (n-m)/n*log2(n-m);
+H(n) := log2(n);
+n : 2^6;
+plot2d([p0(n, m)+p1(n, m)+p2(n, m), Hn(n, m)-Ho(n, m), Hnn(n, m)-Ho(n, m)], [m, 0, n-1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(n, m, k);
+H(n, m, k) := (n-m)/m-((n-m)/n)^k*(n/m+k-1)+((n-m)/n)^(k-1)*(n-k*m)/n*log2(n-k*m);
+plot2d(H(2^30, 2^20, k), [k, 1, 30]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+float(H(2^20, 2^6, 30));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d(H(2^30, 2^20, k), [k, 1, 80]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D : 30;
+d : 2;
+H(n, m, k) := log2(d)*((n-m)/m-((n-m)/n)^D*(n/m+D-1)+D*((n-m)/n)^D*(1-((n-m)/n)^(k-D)))+((n-m)/n)^(k-1)*((n-m)/n)^k*log2(n-k*m);
+plot2d(H(2^30, 2^20, k), [k, 31, 40]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d(H(2^30, 2^20, k), [k, 31, 200]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+lowerBound(n, m) := log2(d)*((n-m)/m-((n-m)/n)^D*(n/m+D-1));
+float(lowerBound(2^30, 2^20));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+float(H(2^30, 2^20, 31));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f(n, m, k) := (n-m)/m-((n-m)/n)^D*(n/m+D-1);
+float(f(2^30, 2^20, 31));
+float(D);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+H1(n, m, k) := log2(d)*((n-m)/m-((n-m)/n)^D*(n/m+D-1)+D*((n-m)/n)^D*(1-((n-m)/n)^(k-D)))+((n-m)/n)^k*log2(n-k*m);
+H0(n, m, k) := H1(n, m, k)+((n-m)/n)^k*k*log2(n/(n-m));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([1-0.001*x, 0.999^x], [x, 0, 1000]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+log2(d)*((n-m)/m-((n-m)/n)^D*(n/m+D-1)+D*((n-m)/n)^D*(1-((n-m)/n)^(k-D)))+
+		+(n-k*m)/n*log2(n);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
