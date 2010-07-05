@@ -70,3 +70,11 @@ B2C平台：
 
 = 用户安全 =
 为了保证用户不被伪造，可以利用手机序列号和短信验证码的帮定。另外传输时SSL之类的东西还是必要的，防止中间窃听和伪造信息。
+
+= REFERENCE NOTE =
+ # C.E. Shannon, "A Mathematical Theory of Communication", Bell System Technical Journal, vol. 27, pp. 379-423, 623-656, July, October, 1948
+ # Theresa M. Korn; Korn, Granino Arthur. Mathematical Handbook for Scientists and Engineers: Definitions, Theorems, and Formulas for Reference and Review. New York: Dover Publications. pp. 613–614. ISBN 0-486-41147-8. (Conditional Entropy)
+ # C. Arndt (2001). Information Measures: Information and its description in Science and Engineering). Berlin: Springer. pp. 370–373. ISBN 3-540-41633-1. (Conditional Entropy)
+ # Entropic Security and the Encryption of High Entropy Messages 
+ # Entropy measures and unconditional security in cryptography 
+ # Secure applications of low-entropy keys 
