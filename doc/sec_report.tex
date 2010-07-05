@@ -6,7 +6,7 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \author{Yuqian Li}
-\title{Analysis of Defender System in LiveS Cube}
+\title{Analysis of a Secured System for Low Entropy Index}
 \date{}
 
 \newtheorem{mydef}{Definition}
@@ -19,22 +19,26 @@
 \maketitle
 %\paragraph*{Abstract}{
 \begin{abstract}
-	Some information has a very small input set. For example
-	cellphone numbers has only $2^{32}$ possible values. In that case, any
+	Some information has a very small domain set such as
+	cellphone numbers which has only $2^{32}$ possible values. In that case, any
 	determinant encryption could only
 	achieve a very low entropy bounded by the size of input set.
-	Again, for example, the entropy can't exceed $32$ for an input set
+	For example, the entropy can't exceed $32$ for an input set
 	of size $2^{32}$. However, the determinant encryption is required
 	in situations such as hashing or generating an index or identity for a
 	given information. To ensure the security in a theoretical aspect
 	for such cases, conditional entropy is used instead of mere entropy.
 	The conditional entropy measures the difficulty for an adversary to
 	derive the information considering all related information 
-	that adversary has already achieved.
-	The defender system is a subsystem in LiveS Cube system
-	designed to ensure a relatively high lower
-	bound for conditional entropy even with a computationally-unbounded adversary.
-	In this paper, a very easy proof is given to show the lower bound.
+	that adversary has already achieved. A secured system
+	is implemented in LiveS Cube to protect indexes generated from cellphone numbers.
+	That secured system is called defender system for the reason that it's based
+	on a simple idea called defender model by us.
+	A relatively high lower
+	bound for conditional entropy can be guaranteed even with a computationally-unbounded adversary
+	in defender system.
+	In this paper, a very easy proof and some other approximation
+	and experiment are given to show the lower bound.
 \end{abstract}
 %}
 
@@ -430,8 +434,8 @@
 		The final lower bound of $H(X | Y)$ will be achieved by putting
 		them together.
 		
-		\begin{mylemma}\label{lem1}\footnote{See definition\ref{def2} for $D$}
-			$H(X|Y_d = \alpha) \geq d \cdot (1-\frac{m^2}{2^D-dm+1})$
+		\begin{mylemma}\label{lem1}\footnote{See definition \ref{def2} for $D$}
+			$H(X|Y_d = \alpha) \geq d \cdot (1-\frac{dm^2}{2^D-m+1})$
 		\end{mylemma}
 		
 		\begin{proof}
@@ -467,17 +471,17 @@
 			For $p(B = false)$, use simple counting method:
 			\begin{align*}
 				p(B = false) &= \frac{\binom{n-dm}{m}}{\binom{n}{m}}\\
-					&= \frac{(n-m)(n-m-1)\ldots(n-dm-m+1)}{n(n-1)\ldots(n-dm+1)}\\
-					&\geq (\frac{n-dm-m+1}{n-dm+1})^m\\
-					&= (1-\frac{m}{n-dm+1})^m\\
-					&\geq 1-\frac{m^2}{n-dm+1}
+					&= \frac{(n-dm)(n-dm-1)\ldots(n-dm-m+1)}{n(n-1)\ldots(n-m+1)}\\
+					&\geq (\frac{n-dm-m+1}{n-m+1})^m\\
+					&= (1-\frac{dm}{n-m+1})^m\\
+					&\geq 1-\frac{dm^2}{n-m+1}
 			\end{align*}
 			
 			So finally:
 			\begin{align*}
 				H(X | Y_d = \alpha) &\geq p(B = false) \cdot H(A | B = false)\\
-					&\geq d \cdot (1-\frac{m^2}{n-dm+1})\\
-					&= d \cdot (1-\frac{m^2}{2^D-dm+1})
+					&\geq d \cdot (1-\frac{dm^2}{n-m+1})\\
+					&= d \cdot (1-\frac{dm^2}{2^D-m+1})
 			\end{align*}
 		\end{proof}
 		
@@ -557,8 +561,8 @@
 				&p(|K_i| = 0	\; (0 \leq i < d) \; \backslash \; |C_d| = 2^d) \\\
 					&\geq p(|K_{d-1}| = 0 \; \backslash \; |C_{d-1}| = 2^{d-1})^d\\
 					&= \left(\frac{\binom{n-2^{d-1}}{m}}{\binom{n}{m}} \right)^d\\
-					&\geq 1-\frac{m^2}{n-2^{d-1}+1}	\; \text{ (see proof of lemma\ref{lem1} for similar conclusion})\\
-					&= 1-\frac{m^2}{2^D-2^{d-1}+1}
+					&\geq (1-\frac{2^{d-1}m}{n-m+1})^d	\; \text{ (see proof of lemma\ref{lem1} for similar conclusion})\\
+					&= 1-\frac{2^{d-1}m d}{n-m+1}
 			\end{align*}
 		\end{proof}
 		
@@ -567,8 +571,8 @@
 			H(X | Y_d) &\geq p(Y_d = \alpha) \cdot H(X | Y_d = \alpha)\\
 				&= p(|C_d| = 2^d) \cdot p(|K_i| = 0	\; (0 \leq i < d) \; \backslash \; |C_d| = 2^d) \cdot H(X | Y_d = \alpha)\\
 				&\geq (1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{2^D-1})
-					\cdot (1-\frac{m^2}{2^D-2^{d-1}+1}) 
-					\cdot (1-\frac{m^2}{2^D-dm+1}) \cdot d 
+					\cdot (1-\frac{2^{d-1}m d}{n-m+1}) 
+					\cdot (1-\frac{dm^2}{2^D-m+1}) \cdot d 
 		\end{align*}
 		
 		Note that the condition $Y_d$ here contains all the
@@ -585,8 +589,8 @@
 			primary image's conditional entropy has a lower bound of
 			\begin{align*}
 				\max_{0 \leq d \leq D} \left\{ (1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{2^D-1})
-					\cdot (1-\frac{m^2}{2^D-2^{d-1}+1}) 
-					\cdot (1-\frac{m^2}{2^D-dm+1}) \cdot d \right\}
+					\cdot (1-\frac{2^{d-1}m d}{n-m+1}) 
+					\cdot (1-\frac{dm^2}{2^D-m+1}) \cdot d  \right\}
 			\end{align*}
 			considering all the information
 			that a computationally-unbounded attacker can
@@ -601,28 +605,28 @@
 		choosed in balance of security and efficiency.
 		
 		In the following graph, the simple lower
-		bound we proved when $m = 2^{12}, 2^{13}, 2^{14}, 2^{15}$ is given:
+		bound we proved when $m = 2^{11}, 2^{12}, 2^{13}, 2^{14}$ is given:
 		
 		\begin{center}
 		\includegraphics[scale=0.6]{lb_m.eps}
 		\end{center}
 		
-		Since our lower bound in theorem\ref{thm1} is a maximum value
+		Since our lower bound in theorem \ref{thm1} is a maximum value
 		over $d$, the $x$-axis is $d$ and the peak of each line
-		is the lower bound for each $m$. As it shows, when $m = 2^{14} = 16384$, the lower
-		bound is about $10.84$. This means that the system can achieve
+		is the lower bound for each $m$. As it shows, when $m = 2^{12} = 4096$, the lower
+		bound is about $11.2$. This means that the system can achieve
 		a relative high lower bound and keep its efficiency at the same time:
-		there is only one update operation after tens of thousands of index calculations.
+		there is only one update operation after thousands of index calculations.
 		
 		By observing the formula
-		of theorem\ref{thm1}, it's clear that $d \approx D/2$ is a
-		breakpoint. Before that point, the lower bound holds and
+		of theorem \ref{thm1}, it's clear that $d \approx D/2$ is a
+		breakpoint when $m$ is small. Before that point, the lower bound holds and
 		decreases slowly. This is very consistent with this
 		specific situation that $D = 32$.
 		
-		In fact, the proved lower bound in theorem\ref{thm1} is so
+		In fact, the proved lower bound in theorem \ref{thm1} is so
 		simple and the tight lower bound is expected to be much higher.
-		Orbserving the proof of theorem\ref{thm1}, only the
+		Observing the proof of theorem \ref{thm1}, only the
 		entropy in the situation $Y = \alpha$ is count and
 		all other entropy is considered to be $0$. However, in
 		many situations that $Y = \beta$, there is still a high entropy.
@@ -631,7 +635,7 @@
 		in recent $d$ updates are in candidate set $C_d$ or not, though
 		in real situation this is unknown to the attacker.
 		
-		However, to have a strictly proved and tight lower bound
+		To have a strictly proved and very tight lower bound
 		is a little hard.
 		So there's an approximate lower bound which is not
 		strictly proved, but should be more tight.
@@ -685,27 +689,83 @@
 		as $p_1, p_2, p_3$ respectively. 
 		$p_1 \cdot p_2 \cdot p_3$ can be measured in a real program which 
 		simulates the same behaviour as we defined in defender system.
-		The proof above can be checked by this experimental measurement.
+		So the proof above can be checked by this experimental measurement.
 		Moreover, this experiment will show how tight our lower bound is
-		when $H(X | Y_d = \beta)$ and $H(A | B = true)$ is ignored.
+		when $H(X | Y_d = \beta)$ and $H(A | B = true)$ are ignored.
+		Our experiment program simply simulates the whole process of $d$ updates
+		for $10000$ times and records the number of successful events
+		to estimate the real possibility $p_1 \cdot p_2 \cdot p_3$.
+		
+		The following graph shows the result when $m = 2^{13}$
+		\begin{center}
+			\includegraphics[scale=0.6]{p13.eps}
+		\end{center}
+		It can be seen that the simple lower bound is not too
+		far away from the experimental result when $m = 2^{13}$.
+		
+		The following graph shows the result when $m = 2^{14}$.
+		\begin{center}
+			\includegraphics[scale=0.6]{p14.eps}
+		\end{center}
+		It seems that when $m$ is large, the simple lower bound
+		estimated is much smaller than experimental result. Therefore,
+		there is still plenty of room to improve the lower bound
+		to make it tight, even if $H(X | Y_d = \beta)$ and $H(A | B = true)$ 
+		are ignored. Meanwhile, the lower bound that can be proved should
+		be higher than we simply get from theorem \ref{thm1}.
+		For example, when $m = 14$, the experimental result
+		of $p_1 \cdot p_2 \cdot p_3$ shows a lower bound of $10$
+		when $d = 11$, while our simple lower bound only shows $4$
+		when $d = 8$.
+		
+		In sum, it has been checked that our simple lower bound
+		is valid and it is indeed not so tight even if we ignore
+		$H(X | Y_d = \beta)$ and $H(A | B = true)$. In the experiment,
+		it shows that when $D = 32$ and $m = 2^{14} = 16384$, the lower bound
+		is still at least $10$.
 
 \section{Conclusion}
-	A simple defender model is proposed to ensure
-	the security of low entropy information
-	such as cellphone numbers. Based on that, defender system
-	 is implemented in LiveS Cube
-	system. To have a better and strict analysis, a simple lower bound of conditional
-	entropy is proved to show that the security
-	is indeed guaranteed in information theory.
-	It's also proved that the system can guarantee
-	a relative high lower bound and at the same time
-	keep a high efficiency.
+	To ensure the security of determinant encryption
+	for low entropy information such as cellphone numbers,
+	a simple defender model is proposed. Though the result
+	of this model is not strictly proved, it gives a comprehensive
+	explanation how the security is ensured.
+	Based on defender model, defender system is implemented in LiveS Cube
+	system. To strictly prove its security in information theory,
+	a simple lower bound of conditional entropy is given.
+	Conditional entropy measures the difficulty for an adversary
+	to get the plain information from all the related information
+	he or she already has.
+	The proof shows that a relative high lower bound
+	under computationally-unbounded adversaries can be guaranteed
+	when the efficiency is also kept.
+	However, the simple lower bound derived
+	is believed to be not so tight according to an approximate lower bound 
+	and an experiment. The experiment shows that the lower bound
+	should be much higher even if a lot of things are ignored as
+	in the proof especially when attackers are allowed to do many
+	attacks before one defend operation.
 	
-	What conditional entropy really means to
+	In sum, a strictly proved lower bound of conditional entropy
+	in defender system is given
+	and the tight lower bound should be still much higher than that.
+	So it's theoretically secured and should be more secured in practical.	
+	
+	Though defender system is now only used in specific LiveS Cube system,
+	it is believed that it will have a contribution to many other social
+	network systems because determinant encryption for low entropy
+	information is undeniable when encrypted index or identity has to be made
+	from information that can be easily memorized by human. This system will
+	make it easy to eliminate security dependency of social network operators
+	or servers
+	and meanwhile still keep the simplicity and easy accessibility of
+	client/server architecture than distributed architecture.
+	
+	In the future work, what conditional entropy really means to
 	real situation and what important and practical
 	result can we derive from the lower bound of
-	conditional entropy is worth researching later.
-	It's also good to establish a tighter lower bound
+	conditional entropy is worth researching.
+	It's also worthy to establish a tighter lower bound
 	for the system in the future, although this is
 	a little hard.
 		
