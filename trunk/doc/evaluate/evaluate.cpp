@@ -7,10 +7,10 @@ using namespace std;
 typedef unsigned long long ULL;
 typedef set<ULL>::iterator SIT;
 
-const int m = (1 << 14);
+const int m = (1 << 13);
 const int D = 32;
 const int MAXD = 14;
-const int TRIES = 50;
+const int TRIES = 10000;
 
 ULL n;
 set<ULL> C[MAXD+1];
