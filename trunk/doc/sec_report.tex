@@ -20,11 +20,11 @@
 %\paragraph*{Abstract}{
 \begin{abstract}
 	Some information has a very small input set. For example
-	cellphone numbers has only $2^{36}$ possible values. In that case, any
+	cellphone numbers has only $2^{32}$ possible values. In that case, any
 	determinant encryption could only
 	achieve a very low entropy bounded by the size of input set.
-	Again, for example, the entropy can't exceed $36$ for an input set
-	of size $2^{36}$. However, the determinant encryption is required
+	Again, for example, the entropy can't exceed $32$ for an input set
+	of size $2^{32}$. However, the determinant encryption is required
 	in situations such as hashing or generating an index or identity for a
 	given information. To ensure the security in a theoretical aspect
 	for such cases, conditional entropy is used instead of mere entropy.
@@ -194,14 +194,14 @@
 		Define the set of cellphone number as $\mathcal X = \{x | \text{$x$ is a cellphone number}\}$.
 		There's a function $f: \mathcal X \rightarrow F$ to generate index $h = f(x) \in F$ for
 		a given $x$. As described before, the cellphone number set $\mathcal X$ has a very small
-		size about $2^{36} \approx 10^{11}$. For a given index $h^*$, a simple attacker
+		size about $2^{32} \approx 10^{11}$. For a given index $h^*$, a simple attacker
 		can enumerate all possible $x$ to see whether $f(x) = h^*$. Therefore, in defender
 		model:
 		\begin{align*}
-			f_A(I_{n-1}) = I_{n-1}+c = I_{n-1}+2^{-36}
+			f_A(I_{n-1}) = I_{n-1}+c = I_{n-1}+2^{-32}
 		\end{align*}
 		
-		So the security will be compromised after $2^{36}$ rounds of attack if there's
+		So the security will be compromised after $2^{32}$ rounds of attack if there's
 		no defender. The defender system is going to fullfil the defender
 		function $f_D(I_{n-1}) = I_{n-1}/2$ by generating new indexes.
 		In LiveS Cube system, the indexes and corresponding data entries are stored
@@ -356,8 +356,9 @@
 		of conditional entropy $H(X|Y)$ is the definition of the condition $Y$.
 		To make a simple proof for the lower bound, we can simplify the
 		condition to achieve that. Before defining $Y$, let's
-		clarify how defender system behaviours more clearly first. Also, reference
-		to definition \ref{def2} to check about $X$ if that is unclear to you.
+		more clearly clarify how defender system behaviours first. Clear
+		definition of $X$ can be found in definition \ref{def2}
+		if that is unclear.
 		
 		The defender system will allow attacker to do at most $m$ possible
 		attack operations before one defend operation. More specifically, between
@@ -408,24 +409,33 @@
 		the random distribution of $|K_i|$ is only related to $|C_i|$ and has a maximum
 		of $m$. 
 		
-		Now simple condition $Y$ will be defined as following:
+		Now condition $Y$ will be simply defined as following:
 		\begin{mydef}[Simple Condition $Y_d$]
 			$Y_d$ is a random variable with values set
-			$\mathcal Y = \{ success, fail \}$ where
-			$Y_d = success$ means that $|C_d| = 2^d$
+			$\mathcal Y = \{ \alpha, \beta \}$ where
+			$Y_d = \alpha$ means that $|C_d| = 2^d$
 			and $|K_0| = |K_1| = \ldots = |K_{d-1}| = 0$.
-			Otherwise $Y_d = fail$.
+			Otherwise $Y_d = \beta$.
 		\end{mydef}
 		
-		There are only three more simple lemmas before our final simple proof
-		of the lower bound.
+		By the definition of conditional entropy,
+		\begin{align*}
+			H(X|Y) &= p(Y = \alpha) H(X | Y = \alpha) + p(Y = \beta) H(X | Y = \beta)\\
+				&\geq p(Y = \alpha) H(X | Y = \alpha) + 0
+		\end{align*}
+		
+		To prove a simple lower bound, three lemmas are proposed.
+		The first one shows a lower bound for $H(X | Y = \alpha)$
+		and the other two prove a lower bound for $p(Y = \alpha)$.
+		The final lower bound of $H(X | Y)$ will be achieved by putting
+		them together.
 		
 		\begin{mylemma}\label{lem1}\footnote{See definition\ref{def2} for $D$}
-			$H(X|Y_d = success) \geq d \cdot (1-\frac{m^2}{2^D-dm+1})$
+			$H(X|Y_d = \alpha) \geq d \cdot (1-\frac{m^2}{2^D-dm+1})$
 		\end{mylemma}
 		
 		\begin{proof}
-			When $Y_d = success$, the attacker
+			When $Y_d = \alpha$, the attacker
 			is just unlucky in last $d$ updates
 			and our defender system is lucky
 			to expand $C_d$ quickly.
@@ -435,13 +445,13 @@
 			
 			In addition, $H(A) \geq H(A|B)$ for
 			any $A, B$, which simply means that knowing something
-			more can never be a bad thing. Let $A = X | Y_d = success$
+			more can never be a bad thing. Let $A = X | Y_d = \alpha$
 			and $B$ be whether there is any $x \in C_d$ that
 			has been enumerated using $f_0, f_1, \ldots, f_{d-1}$ 
 			by the attacker or not.
 			Then
 			\begin{align*}
-				H(X | Y_d = success) &= H(A)\\
+				H(X | Y_d = \alpha) &= H(A)\\
 					&\geq H(A | B)\\
 					&\geq p(B = false) \cdot H(A | B = false)
 			\end{align*}
@@ -465,11 +475,20 @@
 			
 			So finally:
 			\begin{align*}
-				H(X | Y_d = success) &\geq p(B = false) \cdot H(A | B = false)\\
+				H(X | Y_d = \alpha) &\geq p(B = false) \cdot H(A | B = false)\\
 					&\geq d \cdot (1-\frac{m^2}{n-dm+1})\\
 					&= d \cdot (1-\frac{m^2}{2^D-dm+1})
 			\end{align*}
 		\end{proof}
+		
+		To prove a lower bound of $p(Y = \alpha)$, the following fact is used.
+		$(Y = \alpha)$ is equivalent to $\left(|C_d| = 2^d \text{ and } |K_i| = 0	\; (0 \leq i < d)\right)$.
+		Therefore 
+		\begin{align*}
+			p(Y = \alpha) = p(|C_d| = 2^d) \cdot p(|K_i| = 0	\; (0 \leq i < d) \; \backslash \; |C_d| = 2^d)
+		\end{align*}
+		The following two lemmas are for $p(|C_d| = 2^d)$ and $p(|K_i| = 0	\; (0 \leq i < d) \; \backslash \; |C_d| = 2^d)$ 
+		respectively.
 		
 		\begin{mylemma}
 			\begin{align*}
@@ -482,25 +501,26 @@
 			for all $G_i(i \leq d-1)$. So
 			\begin{align*}
 				p(|C_d| = 2^d) &= \prod_{i=0}^{d-1} p\left((\forall G_i(x_1, x_2), G_i(x_1, x_2) \cap C_i \leq 1)
-					 \; | \; |C_i| = 2^i\right)
+					 \; \backslash \; |C_i| = 2^i\right)
 			\end{align*}
 			
 			It's obvious that
 			\begin{align*}
-			&p\left((\forall G_i(x_1, x_2), G_i(x_1, x_2) \cap C_i \leq 1) \; | \; |C_i| = 2^i\right)\\
+			&p\left((\forall G_i(x_1, x_2), G_i(x_1, x_2) \cap C_i \leq 1) \; \backslash \; |C_i| = 2^i\right)\\
 			&\geq \\
-			&p\left((\forall G_{d-1}(x_1, x_2), G_{d-1}(x_1, x_2) \cap C_{d-1} \leq 1) \; | \; |C_{d-1}| = 2^{d-1}\right)
+			&p\left((\forall G_{d-1}(x_1, x_2), G_{d-1}(x_1, x_2) \cap C_{d-1} \leq 1) \; \backslash \; 
+				|C_{d-1}| = 2^{d-1}\right)
 			\end{align*}
 			
 			Therefore
 			\begin{align*}
 				&p(|C_d| = 2^d) \\
 				&\geq p\left((\forall G_{d-1}(x_1, x_2), G_{d-1}(x_1, x_2) 
-					\cap C_{d-1} \leq 1) \; | \; |C_{d-1}| = 2^{d-1})\right)^d\\
+					\cap C_{d-1} \leq 1) \; \backslash \; |C_{d-1}| = 2^{d-1})\right)^d\\
 				&= P^d
 			\end{align*}
 			
-			The $P$ here can be easily estimated by counting method as
+			$P$ here can be easily estimated by counting method as
 			\begin{align*}
 				P &= \frac{(n-2^{d-1})(n-2^{d-1}-1)\ldots(n-2^d+1)\cdot (n-2^d-1)!!}{(n-1)!!}\\
 					&= \frac{(n-2^{d-1})(n-2^{d-1}-1)\ldots (n-2^d+1)}{(n-1)(n-3)\ldots(n-2^d+1)}
@@ -528,39 +548,38 @@
 		\end{proof}
 		
 		\begin{mylemma}
-			$p(|K_0| = |K_1| = \ldots = |K_{d-1}| = 0 \; | \; |C_d| = 2^d) 
+			$p(|K_i| = 0	\; (0 \leq i < d) \; \backslash \; |C_d| = 2^d) 
 				\geq 1-\frac{m^2}{2^D-2^{d-1}+1}$
 		\end{mylemma}
 		
 		\begin{proof}
 			\begin{align*}
-				&p(|K_0| = |K_1| = \ldots = |K_{d-1}| = 0 \; | \; |C_d| = 2^d) \\\
-					&\geq p(|K_{d-1}| = 0 \; | \; |C_{d-1}| = 2^{d-1})^d\\
+				&p(|K_i| = 0	\; (0 \leq i < d) \; \backslash \; |C_d| = 2^d) \\\
+					&\geq p(|K_{d-1}| = 0 \; \backslash \; |C_{d-1}| = 2^{d-1})^d\\
 					&= \left(\frac{\binom{n-2^{d-1}}{m}}{\binom{n}{m}} \right)^d\\
 					&\geq 1-\frac{m^2}{n-2^{d-1}+1}	\; \text{ (see proof of lemma\ref{lem1} for similar conclusion})\\
 					&= 1-\frac{m^2}{2^D-2^{d-1}+1}
 			\end{align*}
 		\end{proof}
 		
-		Now, according to the definition of conditional entropy
-		and these three lemmas, here comes the final result
+		By putting them together, here comes the lower bound
 		\begin{align*}
-			H(X | Y) &= p(Y = success) \cdot H(X | Y = success)
-				+ p(Y = fail) \cdot H(X | Y = false)\\
-				&\geq p(Y = success) \cdot H(X | Y = success)+0\\
-				&= p(|C_d| = 2^d) \cdot p(|K_0| = |K_1| = \ldots = |K_{d-1}| = 0 
-					\; | \; |C_d| = 2^d) \cdot H(X | Y = success)\\
+			H(X | Y_d) &\geq p(Y_d = \alpha) \cdot H(X | Y_d = \alpha)\\
+				&= p(|C_d| = 2^d) \cdot p(|K_i| = 0	\; (0 \leq i < d) \; \backslash \; |C_d| = 2^d) \cdot H(X | Y_d = \alpha)\\
 				&\geq (1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{2^D-1})
 					\cdot (1-\frac{m^2}{2^D-2^{d-1}+1}) 
 					\cdot (1-\frac{m^2}{2^D-dm+1}) \cdot d 
 		\end{align*}
 		
-		Note that the condition $Y$ here contains all the
+		Note that the condition $Y_d$ here contains all the
 		information that attacker can have. It assumes that
 		the attacker is computationally-unbounded and he has
-		been using the system to enumerate the (primary image, index) pairs
-		for an infinite long time. Thus, after all these long but simple
-		proof, there is our final theorem:
+		been using the system to enumerate (primary image, index) pairs
+		for an infinite long time. Also note that the formula
+		satisfies arbitrary number $d$. Thus, the lower bound
+		of $H(X | Y)$ is the maximum value of that formula
+		over all possible $d$.
+		As a result, this is our final theorem:
 		\begin{mytheorem}\label{thm1}
 			In defender system, one index's corresponding
 			primary image's conditional entropy has a lower bound of
@@ -577,21 +596,21 @@
 			logarithm of the size of primary image set.
 		\end{mytheorem}
 		
-	\subsection{Concrete and Approximate Lower Bound}
-		In LiveS Cube system, $D = 36$ and $m$ should be
+	\subsection{Concrete Lower Bound and Approximate Estimation}
+		In LiveS Cube system, $D = 32$ and $m$ should be
 		choosed in balance of security and efficiency.
 		
 		In the following graph, the simple lower
-		bound when $m = 2^{14}, 2^{15}, 2^{16}, 2^{17}$ is given:
+		bound we proved when $m = 2^{12}, 2^{13}, 2^{14}, 2^{15}$ is given:
 		
 		\begin{center}
-		\includegraphics[scale=0.5]{lb_m.eps}
+		\includegraphics[scale=0.6]{lb_m.eps}
 		\end{center}
 		
 		Since our lower bound in theorem\ref{thm1} is a maximum value
 		over $d$, the $x$-axis is $d$ and the peak of each line
-		is the lower bound for each $m$. As it shows, when $m = 2^{16} = 65536$, the lower
-		bound is about $12.43$. This means that the system can achieve
+		is the lower bound for each $m$. As it shows, when $m = 2^{14} = 16384$, the lower
+		bound is about $10.84$. This means that the system can achieve
 		a relative high lower bound and keep its efficiency at the same time:
 		there is only one update operation after tens of thousands of index calculations.
 		
@@ -599,21 +618,21 @@
 		of theorem\ref{thm1}, it's clear that $d \approx D/2$ is a
 		breakpoint. Before that point, the lower bound holds and
 		decreases slowly. This is very consistent with this
-		concrete situation that $D = 36$ and $m = 2^{16}$.
+		specific situation that $D = 32$.
 		
 		In fact, the proved lower bound in theorem\ref{thm1} is so
 		simple and the tight lower bound is expected to be much higher.
 		Orbserving the proof of theorem\ref{thm1}, only the
-		entropy in the situation $Y = success$ is count and
+		entropy in the situation $Y = \alpha$ is count and
 		all other entropy is considered to be $0$. However, in
-		many situations that $Y = fail$, there is still a high entropy.
+		many situations that $Y = \beta$, there is still a high entropy.
 		What's more, $B = false$ is also assumed and the attacker is
 		given an extra information about whether all his enumerated $x$
 		in recent $d$ updates are in candidate set $C_d$ or not, though
 		in real situation this is unknown to the attacker.
 		
 		However, to have a strictly proved and tight lower bound
-		is a little hard for me.
+		is a little hard.
 		So there's an approximate lower bound which is not
 		strictly proved, but should be more tight.
 		In this approching,
@@ -637,6 +656,39 @@
 		The detailed derivation is however too complex
 		to write here.
 		
+	\subsection{Experimental Evaluation}
+		In our simple proof of the lower bound, $p(|C_d| = 2^d)$,
+		$p(|K_i| = 0 \; (i \leq 0 < d) \; \backslash |C_d| = 2^d)$ and $p(B = false)$ are 
+		three key points to the final result.
+		They represent that candidate sets are maximized in
+		last $d$ updates, collision sets are minimized in
+		last $d$ updates and candidate set $C_d$ is totally unknown
+		to the attacker respectively.
+		Lower bound for each of them has been proved:
+		\begin{align*}
+			p(B = false) &\geq 1-\frac{m^2}{2^D-dm+1}\\
+			p(|C_d| = 2^d) &\geq 1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{2^D-1}\\
+			p(|K_i| = 0 \; (i \leq 0 < d) \; \backslash |C_d| = 2^d) &\geq 1-\frac{m^2}{2^D-2^{d-1}+1}
+		\end{align*}
+		
+		By putting them together, lower bound $H(X | Y_d)$ is achieved:
+		\begin{align*}
+			H(X | Y_d) &\geq p(B = false) \cdot p(|C_d| = 2^d) \cdot 
+				p(|K_i| = 0 \; (i \leq 0 < d) \; \backslash |C_d| = 2^d) \cdot d\\
+				&\geq (1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{2^D-1})
+					\cdot (1-\frac{m^2}{2^D-2^{d-1}+1}) 
+					\cdot (1-\frac{m^2}{2^D-dm+1}) \cdot d 
+		\end{align*}
+		
+		For convenience, write $p(|C_d| = 2^d)$,
+		$p(|K_i| = 0 \; (i \leq 0 < d) \; \backslash |C_d| = 2^d)$ and $p(B = false)$
+		as $p_1, p_2, p_3$ respectively. 
+		$p_1 \cdot p_2 \cdot p_3$ can be measured in a real program which 
+		simulates the same behaviour as we defined in defender system.
+		The proof above can be checked by this experimental measurement.
+		Moreover, this experiment will show how tight our lower bound is
+		when $H(X | Y_d = \beta)$ and $H(A | B = true)$ is ignored.
+
 \section{Conclusion}
 	A simple defender model is proposed to ensure
 	the security of low entropy information
@@ -649,7 +701,6 @@
 	a relative high lower bound and at the same time
 	keep a high efficiency.
 	
-\section{Future Work}
 	What conditional entropy really means to
 	real situation and what important and practical
 	result can we derive from the lower bound of
