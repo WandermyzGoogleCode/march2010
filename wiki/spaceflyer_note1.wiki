@@ -78,3 +78,5 @@ B2C平台：
  # Entropic Security and the Encryption of High Entropy Messages 
  # Entropy measures and unconditional security in cryptography 
  # Secure applications of low-entropy keys 
+ # Deterministic and Eﬃciently Searchable Encryption
+ # Perfectly-Secure Key Distribution for Dynamic Conferences
