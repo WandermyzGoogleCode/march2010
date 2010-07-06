@@ -6,7 +6,7 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \author{Yuqian Li}
-\title{Analysis of a Secured System for Low Entropy Index}
+\title{Anti Brute Force on Very Low Entropy Encryption}
 \date{}
 
 \newtheorem{mydef}{Definition}
@@ -19,75 +19,174 @@
 \maketitle
 %\paragraph*{Abstract}{
 \begin{abstract}
-	Some information has a very small domain set such as
-	cellphone numbers which has only $2^{32}$ possible values. In that case, any
-	determinant encryption could only
-	achieve a very low entropy bounded by the size of input set.
-	For example, the entropy can't exceed $32$ for an input set
-	of size $2^{32}$. However, the determinant encryption is required
+	Some information has a very small domain set. In that case, any
+	deterministic encryption could only
+	achieve a very low entropy bounded by the size of domain set.
+	However, the deterministic encryption is required
 	in situations such as hashing or generating an index or identity for a
-	given information. To ensure the security in a theoretical aspect
-	for such cases, conditional entropy is used instead of mere entropy.
+	given information. 
+	
+	For such very low entropy encryption, the adversary does not need to
+	attempt every possible key. Instead, a successful brute force attack
+	to enumerate every possible
+	plain text and check whether the cipher text is the same
+	would be easy. A secured system
+	is designed and implemented to defend that attack.
+	That secured system is called defender system for the reason that it's based
+	on a simple idea called defender model from us. 
+	
+	To ensure the security in a theoretical aspect
+	for such cases, this paper uses conditional entropy instead of mere entropy.
 	The conditional entropy measures the difficulty for an adversary to
 	derive the information considering all related information 
-	that adversary has already achieved. A secured system
-	is implemented in LiveS Cube to protect indexes generated from cellphone numbers.
-	That secured system is called defender system for the reason that it's based
-	on a simple idea called defender model by us.
-	A relatively high lower
-	bound for conditional entropy can be guaranteed even with a computationally-unbounded adversary
-	in defender system.
+	that adversary has already achieved. 
+	In this system,
+	a relatively high lower
+	bound for conditional entropy can be guaranteed even with 
+	a computationally-unbounded adversary who launches brute force attacks as above.
 	In this paper, a very easy proof and some other approximation
 	and experiment are given to show the lower bound.
+	The practical meaning of conditional entropy's lower bound is also
+	given from the aspect of min-entropy.
 \end{abstract}
 %}
 
 \section{Introduction}
-	Determinant encryption for an information from
-	a very small input set is important for some social
-	network systems such as LiveS Cube. LiveS Cube is a system to
+	Deterministic encryption for an information from
+	a very small domain set is important for some social
+	network systems such as LiveS Cube. LiveS Cube\footnote{this is a system still 
+	under developing} is a system to
 	build a social network based on the address books in cellphones.
-	In that social network, each node is indexed by an encrypted information generated
+	In that social network, each node is indexed by a cipher text generated
 	from the cellphone number
 	of its user. Therefore, a huge network could be easily established
 	using existing address books in numerous of cellphones without
 	any additional effort of the users. However, cellphone numbers are
-	one of the most important privacy so the security of preventing
+	one of the most important privacy[ref] so the security of preventing
 	someone getting the corresponding cellphone number from its index 
 	is the base of the system.
 	
 	But the security
-	of such determinant encryption is hard to be guaranteed. For example, an
-	adversary might enumerate all possible values from the
-	input set and establish a table maps any encrypted
-	information to its plain information as long as the encryption
-	does not change. In such case, the conditional entropy
-	is $0$ since there's no randomness for the adversary with that table.
-	Even for a large input set which has a quite high entropy, a
+	of such deterministic encryption is hard to be guaranteed, especially
+	on a level that is not dependent on social network operators[ref].
+	It's true that the encryption could use a very strong key
+	so that it's almost impossible to enumerate the right key to convert cipher text
+	to plain text. However, the function to get the corresponding
+	cipher text from a given plain text must be permitted for all
+	social network operators and normal users, otherwise the social network
+	system could not operate.
+	Therefore, brute force attack can enumerate all possible values from the
+	small domain set and establish a table maps any cipher text
+	to its plain text as long as the encryption
+	does not change. In such case, the conditional entropy[ref] given that table
+	is $0$ since there's no uncertainty for the adversary to get the plain text.
+	Even for a large domain set which has a quite high entropy, a
 	computationally-unbounded adversary could establish that table
-	fast and the conditional entropy drops to $0$, which means that the
-	adversary knowns everything. So it's not the mere entropy that
-	determines the security, but the conditional entropy.
+	and the conditional entropy drops to $0$ again. 
+	So it's not the mere entropy[ref] that
+	determines the security, but the conditional entropy considering
+	all the information that adversary could gain during attacks.
+	The related entropic security analysis [ref] will be reviewed
+	in section \ref{sec_rw}.
 	
-	Therefore, even for the very small input set that has a very low
-	higher bound for entropy, there is still possibility to ensure the
-	theoretical security by given a lower bound for conditional entropy.
+	Therefore, even for the very low entropy information, 
+	there is still possibility to ensure the
+	theoretical security by giving a lower bound for conditional entropy
+	considering all information gained by possible brute force attacks from adversary.
 	The defender model is an easy model based on a simple idea to achieve that goal.
 	This model is used in LiveS Cube system so a defender system is made.
 	The analysis in the following sections is mainly based on that system.
 	The result shows that the system could ensure a relatively high lower bound
-	in a very efficient way. Since the analysis is quite simple, the
+	of conditional entropy in a very efficient way: suppose that the original entropy
+	is $D$, a lower bound of $c_1 D = \Omega(D)$ can be guaranteed
+	by performing one defend operation after $2^{c_2 D} = 2^{\Omega(D)}$ 
+	brute force attacks. Since the analysis is quite simple, the
 	bound estimated is believed not to be so tight. 
 	Considering the result derived by some other
 	more complex, however not accurate, only approximate ways, it is believed
 	that the tight lower bound for this system is much higher than what we proved.
+	Experiments are also conducted to evaluate the lower bound. They confirm that
+	our lower bound is valid but far from tight in some cases. At last, a practical
+	meaning of our conditional entropy's lower bound is given from the aspect
+	of min-entropy: the adversary is expected to compromise the security in a
+	chance of only $2^{-\Omega(D)}$.
 	
-	In the following sections, firstly the defender model and system will be
-	introduced. Then a simple proof for the lower bound of conditional entropy
-	is given. Finally there's some more discussions about the meaning of
-	conditional entropy and other approximate ways to estimate the conditional
-	entropy.
+	In sum, our contribution is threefold. Firstly, to solve the security problem
+	of low entropy information's deterministic encryption, defender model and system
+	are proposed. Secondly, conditional entropy is introduced to analysis
+	the theoretical security of system under computationally-unbounded brute force
+	attacks and a simple lower bound of conditional entropy is proved in defender system. 
+	Thirdly, approximation and experiments
+	are conducted to further check and evaluate our analysis and a practical meaning
+	of our conditional entropy based proof is derived from the experiment 
+	in the aspect of min-entropy.
 	
+	In the following sections, firstly some related works
+	about privacy problems in social network systems and
+	entropic security are reviewed. The defender model and system will be
+	introduced after that. Then a simple proof for the lower bound of conditional entropy
+	is given. Finally some other approximate and experimental ways to estimate the conditional
+	entropy are discussed.
+	
+\section{Related Work}	\label{sec_rw}
+	\subsection{Entropy and Entropic Security}
+	Entropy[ref] measures the uncertainty of an information. Intuitively, it's easy to
+	understand how it could define the security: the more uncertain an adversary
+	is about the information, the more security it has.
+	
+	Entropic security is introduced by Russel and Wang[ref] to define
+	whether the cipher text leak any predicate of the plain text. However,
+	it has to require the distribution on messages has high entropy from
+	the adversary's point of view. Similar entropic condition had been
+	achieved in hash functions by Canetti et al[ref]. Hash functions are
+	considered to be equivalent as deterministic encryption discussed in this
+	paper: anyone could easily get a deterministic cipher text from a
+	given plain text, but it's hard to find the corresponding plain text
+	for a given cipher text. The only difference is that no key exists in
+	hash functions and nobody could recover that plain text, while in our deterministic
+	encryption, a very strong key exists and anybody who does not have that key
+	could not recover that plain text. Since they key is considered unknown to adversaries 
+	and	it's considered to be infinitely strong, deterministic encryption and hash functions become
+	equivalent in the sense of security in our context.
+	
+	Entropic security has been further studied by [ref]
+	and its result applies to both encryption and hash functions.
+	However, all their work only apply to high entropy messages.
+	While for low entropy message, their results seems not work.
+	One simple contradiction for hash functions has already been
+	shown: enumerate all possible plain text and see which causes a collision
+	will recover the original plain text easily.
+	
+	The key to this failure is the conditional entropy. Mutual information
+	$I(X, Y)$ is widely used in those previous researches. By definition,
+	\begin{equation}
+		I(X, Y) = H(X) - H(X|Y)
+	\end{equation}
+	where $H(X)$ is the entropy of $X$ and $H(X|Y)$ is the conditional entropy
+	of $X$ given $Y$\footnote{See definition \ref{def_entropy}, \ref{def_con_entropy}}.
+	In their researches, $X$ is the plain text and $Y$ is the cipher text.
+	Therefore, whether $I(X, Y)$ is large is the key to the security they defined.
+	In traditional work, $I(X, Y)$ is required to be very small, for example $0$,
+	so $Y$ does not leak much information. And $I(X, Y)$ is small
+	is equivalent to that $H(X|Y)$ is large. So $I(X, Y)$ itself does not have any problem.
+	The problem is what $Y$ is.
+	If $Y$ is only the mere cipher text, it's meaningless when the $H(X)$ is small.
+	So even in the work of [ref] where $I(X, Y)$ is allowed
+	to be large, the same problem exists because $Y$ is still not changed.
+	In the low entropy cases, the adversary could launch simple brute force attacks,
+	the information from these attacks is critical to the security. Therefore, $Y$
+	should contain the information from those attacks for the security analysis.
+	Thus conditional entropy $H(X|Y)$ for such $Y$ could better describe security during
+	the attacks. One simple conclusion is that when $H(X|Y)$ drops to $0$, the adversary
+	has compromised the security successfully because no uncertainty exists considering 
+	all the information $Y$ after his or her attacks.
+	
+	In sum, conditional entropy $H(X|Y)$ or similar mutual information $I(X, Y)$
+	has already been utilized in previous work. But in this paper, $Y$ is defined to contain the information
+	gained by adversary during the brute force attacks so a better analysis
+	for low entropy encryption is achieved.
+	
+	\subsection{Privacy Problem in Social Network}		
 	Though defender system is currently used for only one specific LiveS Cube System,
 	it is believed to be useful for many other social network
 	systems for the following reasons. 
@@ -104,7 +203,7 @@
 	However, only having distributed clients is not convenient as client/server
 	when clients are not always online[check and ref]. So
 	one specific hardware is introduced in server to
-	guarantee strictly determinant behaviours instead of unpredictable behaviours
+	guarantee strictly deterministic behaviours instead of unpredictable behaviours
 	, so the complex security problems of a server in the unknown network world
 	become traditional security problems of protecting the hardware from being damaged in real world. Meanwhile,
 	the convenience of client/server mode is preserved.
@@ -122,7 +221,7 @@
 	nuisance calls can be made if they know your identity in a mobile system. However,
 	to ensure the security of identity is harder than password because the identity should
 	be human friendly and very easy to remember not only for the owner, but also for his or her friends.
-	That means only determinant encryption can be made for very low entropy information, as 
+	That means only deterministic encryption can be made for very low entropy information, as 
 	same as what LiveS Cube faces.
 	
 	Till now, identity is not well protected and is always stored as plain text in server's database. That means
@@ -270,7 +369,7 @@
 		the definition of entropy and conditional entropy if you are familiar
 		with them.		
 		
-		\begin{mydef}[Entropy]
+		\begin{mydef}[Entropy]\label{def_entropy}
 			The entropy of a discrete random variable $X$ with
 			possible values $\{x_1, x_2, \ldots, x_n\}$ is
 			\begin{align}
@@ -298,7 +397,7 @@
 				&= D
 		\end{align*}
 		
-		\begin{mydef}[Conditional Entropy]
+		\begin{mydef}[Conditional Entropy]\label{def_con_entropy}
 			For a discrete random variable $X$ with
 			possible values set $\mathcal X$,
 			suppose that there is another random
@@ -589,7 +688,7 @@
 			primary image's conditional entropy has a lower bound of
 			\begin{align*}
 				\max_{0 \leq d \leq D} \left\{ (1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{2^D-1})
-					\cdot (1-\frac{2^{d-1}m d}{n-m+1}) 
+					\cdot (1-\frac{2^{d-1}m d}{2^D-m+1}) 
 					\cdot (1-\frac{dm^2}{2^D-m+1}) \cdot d  \right\}
 			\end{align*}
 			considering all the information
@@ -597,6 +696,35 @@
 			have in an infinite long time. Here $m$ is
 			the maximum number of indexes that are allowed to be calculated
 			between defend operations and $D = \log(n)$ denotes the
+			logarithm of the size of primary image set.
+		\end{mytheorem}
+		
+		The formula above is a little complex. A much easier asymptotic result
+		could be derived from that complex formula. Suppose that
+		$d = c_1 D, m = 2^{c_2 D} \; (c_1, c_2 < 1)$ and $D$ is large enough:
+		\begin{align*}
+			H(X | Y_d) &= (1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{2^D-1})
+							\cdot (1-\frac{2^{d-1}m d}{2^D-m+1}) 
+							\cdot (1-\frac{dm^2}{2^D-m+1}) \cdot d\\
+						&= \left(1-\frac{c_1 \cdot D}{ 2^{D-2 c_1 D+2} } + o(1) \right)
+							\cdot \left(1-\frac{c_1 D}{2^{D-c_1 D+1 - c_2 D}} + o(1) \right)	
+							\cdot \left(1-\frac{c_1 D}{2^{D-2 c_2 D}} + o(1) \right) \cdot c_1 D\\
+		\end{align*}
+		Therefore, when $2c_1, c_1+c_2, 2c_2 < 1$, for example $c_1 = c_2 = 1/3$,
+		and $D$ is large enough:
+		\begin{align*}
+			m &= 2^{c_2 D} = 2^{\Omega(D)}\\
+			H(X | Y_d) &= c_1D+o(D) = \Omega(D)
+		\end{align*}		
+		So following theorem is derived:
+		\begin{mytheorem}
+			In defender system, one index's corresponding
+			primary image's conditional entropy has a lower bound of $\Omega(D)$
+			considering all the information
+			that a computationally-unbounded attacker can
+			have in an infinite long time and one defend operation
+			is enforced after $2^{\Omega(D)}$ calculations of indexes.
+			Here $D = \log(n)$ denotes the
 			logarithm of the size of primary image set.
 		\end{mytheorem}
 		
@@ -617,12 +745,6 @@
 		bound is about $11.2$. This means that the system can achieve
 		a relative high lower bound and keep its efficiency at the same time:
 		there is only one update operation after thousands of index calculations.
-		
-		By observing the formula
-		of theorem \ref{thm1}, it's clear that $d \approx D/2$ is a
-		breakpoint when $m$ is small. Before that point, the lower bound holds and
-		decreases slowly. This is very consistent with this
-		specific situation that $D = 32$.
 		
 		In fact, the proved lower bound in theorem \ref{thm1} is so
 		simple and the tight lower bound is expected to be much higher.
@@ -718,14 +840,74 @@
 		when $d = 11$, while our simple lower bound only shows $4$
 		when $d = 8$.
 		
+		To check that the simple lower bound is far from the experimental
+		result only when $m$ is large, one more experiment is conducted
+		when $m = 2^{11}$:
+		\begin{center}
+			\includegraphics[scale=0.6]{p11.eps}
+		\end{center}
+		They are very close so now it's confirmed that our estimation
+		of $p_1, p_2, p_3$ is correct and accurate when $m$ is small.
+		
 		In sum, it has been checked that our simple lower bound
 		is valid and it is indeed not so tight even if we ignore
-		$H(X | Y_d = \beta)$ and $H(A | B = true)$. In the experiment,
+		$H(X | Y_d = \beta)$ and $H(A | B = true)$, especially
+		when $m$ is large. In the experiment,
 		it shows that when $D = 32$ and $m = 2^{14} = 16384$, the lower bound
 		is still at least $10$.
 
+\subsection{Min-Entropy and More Meaningful Security}
+	All the analysis above is based on Shannon entropy defined in definition \ref{def_entropy}.
+	Min-entropy $H_\infty(X)$ define the entropy in a new way that
+	\begin{align*}
+		H_\infty(X) = \min_{x \in \mathcal X} \left(-\log p\left(X = x\right) \right)
+	\end{align*}
+	The conditional entropy could be similarly defined using min-entropy.
+	
+	The simple proof above also applies to this min-entropy
+	because $p(x | Y = y)$ is either $0$ or $2^{-d}$ which means:
+	\begin{align*}
+		-log(0) = \infty > -log(2^{-d}) = d
+	\end{align*}
+	More specifically,
+	$p_1 \cdot p_2 \cdot p_3$ denotes the probability that $p(x | Y = y) = 2^{-d}$.
+	And the proof shows a lower bound of $p_1 \cdot p_2 \cdot p_3$
+	leading to the final lower bound of conditional Shannon entropy $p_1 \cdot p_2 \cdot p_3 \cdot d$
+	which is identical to conditional min-entropy.
+	As it can be seen that min-entropy's definition is easier than
+	Shannon entropy, it's easier to find out the practical meaning of the lower
+	bound for conditional min-entropy. For min-entropy with a determinant condition,
+	$H_\infty(X | Y = y) = h$
+	denotes the highest probability $2^{-h}$ that adversary can achieve to guess
+	the right answer when $Y = y$ is known.
+	Since $H_\infty(X | Y) = E\left(H_\infty(X | Y = y)\right)$,
+	conditional min-entropy just means the expected highest
+	possibility that one adversary can guess the right answer.
+	Therefore, the proof of our conditional entropy shows that
+	the expected highest possibility that a computationally-unbounded
+	adversary can compromise the security is very small: $2^{-\Omega(D)}$.
+	
+	Since $h$ is either $d$ or $0$ as in our proof,
+	the conditional min-entropy $H_\infty(X | Y)$
+	is
+	\begin{align*}
+		&E\left(H_\infty(X | Y = y)\right)\\
+		&=p\left(H_\infty(X | Y = y) = d\right) \cdot d = p_1 \cdot p_2 \cdot p_3 \cdot d
+	\end{align*}
+	whose key is the chance to still confuse the adversary with 
+	$2^d$ equally possible uncertainties.
+	
+	So as in the graph of $p_1 \cdot p_2 \cdot p_3$ when 
+	$m = 2^{11}$ displayed above, both simple lower
+	bound and experimental result show that
+	there is a chance greater than $95\%$ percent that the adversary
+	will be confused with $2^{12}$ equally possible uncertainties
+	even if he or she is computationally-unbounded and has been attacking
+	for an infinite long time, as long as one defend operation is enforced
+	after $2^{11}$ index calculations.
+
 \section{Conclusion}
-	To ensure the security of determinant encryption
+	To ensure the security of deterministic encryption
 	for low entropy information such as cellphone numbers,
 	a simple defender model is proposed. Though the result
 	of this model is not strictly proved, it gives a comprehensive
@@ -739,12 +921,19 @@
 	The proof shows that a relative high lower bound
 	under computationally-unbounded adversaries can be guaranteed
 	when the efficiency is also kept.
+	Asymptotically, suppose that the original entropy is $D$,
+	a lower bound for conditional entropy of $\Omega(D)$ can be
+	achieved when only one defend operation is required after
+	$2^{\Omega(D)}$ attacks.
+	And from the aspect of min-entropy, our proof shows that
+	such an adversary is expected to compromise our security
+	in a chance less than $2^{-\Omega(D)}$.
 	However, the simple lower bound derived
 	is believed to be not so tight according to an approximate lower bound 
 	and an experiment. The experiment shows that the lower bound
 	should be much higher even if a lot of things are ignored as
 	in the proof especially when attackers are allowed to do many
-	attacks before one defend operation.
+	attacks before one defend operation. 
 	
 	In sum, a strictly proved lower bound of conditional entropy
 	in defender system is given
@@ -753,7 +942,7 @@
 	
 	Though defender system is now only used in specific LiveS Cube system,
 	it is believed that it will have a contribution to many other social
-	network systems because determinant encryption for low entropy
+	network systems because deterministic encryption for low entropy
 	information is undeniable when encrypted index or identity has to be made
 	from information that can be easily memorized by human. This system will
 	make it easy to eliminate security dependency of social network operators
