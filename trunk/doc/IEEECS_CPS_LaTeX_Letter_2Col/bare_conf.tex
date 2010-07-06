@@ -1,23 +1,417 @@
-\documentclass[10pt,a4paper]{article}
-\usepackage[latin1]{inputenc}
-\usepackage{amsmath}
-\usepackage{amsthm}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\author{Yuqian Li}
-\title{Anti Brute Force on Very Low Entropy Encryption}
-\date{}
 
+%% bare_conf.tex
+%% V1.3
+%% 2007/01/11
+%% by Michael Shell
+%% See:
+%% http://www.michaelshell.org/
+%% for current contact information.
+%%
+%% This is a skeleton file demonstrating the use of IEEEtran.cls
+%% (requires IEEEtran.cls version 1.7 or later) with an IEEE conference paper.
+%%
+%% Support sites:
+%% http://www.michaelshell.org/tex/ieeetran/
+%% http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/
+%% and
+%% http://www.ieee.org/
+
+%%*************************************************************************
+%% Legal Notice:
+%% This code is offered as-is without any warranty either expressed or
+%% implied; without even the implied warranty of MERCHANTABILITY or
+%% FITNESS FOR A PARTICULAR PURPOSE! 
+%% User assumes all risk.
+%% In no event shall IEEE or any contributor to this code be liable for
+%% any damages or losses, including, but not limited to, incidental,
+%% consequential, or any other damages, resulting from the use or misuse
+%% of any information contained here.
+%%
+%% All comments are the opinions of their respective authors and are not
+%% necessarily endorsed by the IEEE.
+%%
+%% This work is distributed under the LaTeX Project Public License (LPPL)
+%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
+%% distributed and modified. A copy of the LPPL, version 1.3, is included
+%% in the base LaTeX documentation of all distributions of LaTeX released
+%% 2003/12/01 or later.
+%% Retain all contribution notices and credits.
+%% ** Modified files should be clearly indicated as such, including  **
+%% ** renaming them and changing author support contact information. **
+%%
+%% File list of work: IEEEtran.cls, IEEEtran_HOWTO.pdf, bare_adv.tex,
+%%                    bare_conf.tex, bare_jrnl.tex, bare_jrnl_compsoc.tex
+%%*************************************************************************
+
+% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
+% *** with the testflow diagnostic prior to trusting their LaTeX platform ***
+% *** with production work. IEEE's font choices can trigger bugs that do  ***
+% *** not appear when using other class files.                            ***
+% The testflow support page is at:
+% http://www.michaelshell.org/tex/testflow/
+
+
+
+% Note that the a4paper option is mainly intended so that authors in
+% countries using A4 can easily print to A4 and see how their papers will
+% look in print - the typesetting of the document will not typically be
+% affected with changes in paper size (but the bottom and side margins will).
+% Use the testflow package mentioned above to verify correct handling of
+% both paper sizes by the user's LaTeX system.
+%
+% Also note that the "draftcls" or "draftclsnofoot", not "draft", option
+% should be used if it is desired that the figures are to be displayed in
+% draft mode.
+%
+\documentclass[10pt, conference, compsocconf]{IEEEtran}
+% Add the compsocconf option for Computer Society conferences.
+%
+% If IEEEtran.cls has not been installed into the LaTeX system files,
+% manually specify the path to it like:
+% \documentclass[conference]{../sty/IEEEtran}
+
+
+
+
+
+% Some very useful LaTeX packages include:
+% (uncomment the ones you want to load)
+
+
+% *** MISC UTILITY PACKAGES ***
+%
+%\usepackage{ifpdf}
+% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
+% compilation based on whether the output is pdf or dvi.
+% usage:
+% \ifpdf
+%   % pdf code
+% \else
+%   % dvi code
+% \fi
+% The latest version of ifpdf.sty can be obtained from:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/oberdiek/
+% Also, note that IEEEtran.cls V1.7 and later provides a builtin
+% \ifCLASSINFOpdf conditional that works the same way.
+% When switching from latex to pdflatex and vice-versa, the compiler may
+% have to be run twice to clear warning/error messages.
+
+
+
+
+
+
+% *** CITATION PACKAGES ***
+%
+%\usepackage{cite}
+% cite.sty was written by Donald Arseneau
+% V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
+% \cite{} output to follow that of IEEE. Loading the cite package will
+% result in citation numbers being automatically sorted and properly
+% "compressed/ranged". e.g., [1], [9], [2], [7], [5], [6] without using
+% cite.sty will become [1], [2], [5]--[7], [9] using cite.sty. cite.sty's
+% \cite will automatically add leading space, if needed. Use cite.sty's
+% noadjust option (cite.sty V3.8 and later) if you want to turn this off.
+% cite.sty is already installed on most LaTeX systems. Be sure and use
+% version 4.0 (2003-05-27) and later if using hyperref.sty. cite.sty does
+% not currently provide for hyperlinked citations.
+% The latest version can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/cite/
+% The documentation is contained in the cite.sty file itself.
+
+
+
+
+
+
+% *** GRAPHICS RELATED PACKAGES ***
+%
+\ifCLASSINFOpdf
+  % \usepackage[pdftex]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../pdf/}{../jpeg/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
+\else
+  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
+  % will default to the driver specified in the system graphics.cfg if no
+  % driver is specified.
+  % \usepackage[dvips]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../eps/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.eps}
+\fi
+% graphicx was written by David Carlisle and Sebastian Rahtz. It is
+% required if you want graphics, photos, etc. graphicx.sty is already
+% installed on most LaTeX systems. The latest version and documentation can
+% be obtained at: 
+% http://www.ctan.org/tex-archive/macros/latex/required/graphics/
+% Another good source of documentation is "Using Imported Graphics in
+% LaTeX2e" by Keith Reckdahl which can be found as epslatex.ps or
+% epslatex.pdf at: http://www.ctan.org/tex-archive/info/
+%
+% latex, and pdflatex in dvi mode, support graphics in encapsulated
+% postscript (.eps) format. pdflatex in pdf mode supports graphics
+% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
+% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
+% not a bitmapped formats (.jpeg, .png). IEEE frowns on bitmapped formats
+% which can result in "jaggedy"/blurry rendering of lines and letters as
+% well as large increases in file sizes.
+%
+% You can find documentation about the pdfTeX application at:
+% http://www.tug.org/applications/pdftex
+
+
+
+
+
+% *** MATH PACKAGES ***
+%
+\usepackage[cmex10]{amsmath}
+% A popular package from the American Mathematical Society that provides
+% many useful and powerful commands for dealing with mathematics. If using
+% it, be sure to load this package with the cmex10 option to ensure that
+% only type 1 fonts will utilized at all point sizes. Without this option,
+% it is possible that some math symbols, particularly those within
+% footnotes, will be rendered in bitmap form which will result in a
+% document that can not be IEEE Xplore compliant!
+%
+% Also, note that the amsmath package sets \interdisplaylinepenalty to 10000
+% thus preventing page breaks from occurring within multiline equations. Use:
+%\interdisplaylinepenalty=2500
+% after loading amsmath to restore such page breaks as IEEEtran.cls normally
+% does. amsmath.sty is already installed on most LaTeX systems. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/amslatex/math/
+
+
+
+
+
+% *** SPECIALIZED LIST PACKAGES ***
+%
+%\usepackage{algorithmic}
+% algorithmic.sty was written by Peter Williams and Rogerio Brito.
+% This package provides an algorithmic environment fo describing algorithms.
+% You can use the algorithmic environment in-text or within a figure
+% environment to provide for a floating algorithm. Do NOT use the algorithm
+% floating environment provided by algorithm.sty (by the same authors) or
+% algorithm2e.sty (by Christophe Fiorio) as IEEE does not use dedicated
+% algorithm float types and packages that provide these will not provide
+% correct IEEE style captions. The latest version and documentation of
+% algorithmic.sty can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithms/
+% There is also a support site at:
+% http://algorithms.berlios.de/index.html
+% Also of interest may be the (relatively newer and more customizable)
+% algorithmicx.sty package by Szasz Janos:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithmicx/
+
+
+
+
+% *** ALIGNMENT PACKAGES ***
+%
+%\usepackage{array}
+% Frank Mittelbach's and David Carlisle's array.sty patches and improves
+% the standard LaTeX2e array and tabular environments to provide better
+% appearance and additional user controls. As the default LaTeX2e table
+% generation code is lacking to the point of almost being broken with
+% respect to the quality of the end results, all users are strongly
+% advised to use an enhanced (at the very least that provided by array.sty)
+% set of table tools. array.sty is already installed on most systems. The
+% latest version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/tools/
+
+
+%\usepackage{mdwmath}
+%\usepackage{mdwtab}
+% Also highly recommended is Mark Wooding's extremely powerful MDW tools,
+% especially mdwmath.sty and mdwtab.sty which are used to format equations
+% and tables, respectively. The MDWtools set is already installed on most
+% LaTeX systems. The lastest version and documentation is available at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/mdwtools/
+
+
+% IEEEtran contains the IEEEeqnarray family of commands that can be used to
+% generate multiline equations as well as matrices, tables, etc., of high
+% quality.
+
+
+%\usepackage{eqparbox}
+% Also of notable interest is Scott Pakin's eqparbox package for creating
+% (automatically sized) equal width boxes - aka "natural width parboxes".
+% Available at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/eqparbox/
+
+
+
+
+
+% *** SUBFIGURE PACKAGES ***
+%\usepackage[tight,footnotesize]{subfigure}
+% subfigure.sty was written by Steven Douglas Cochran. This package makes it
+% easy to put subfigures in your figures. e.g., "Figure 1a and 1b". For IEEE
+% work, it is a good idea to load it with the tight package option to reduce
+% the amount of white space around the subfigures. subfigure.sty is already
+% installed on most LaTeX systems. The latest version and documentation can
+% be obtained at:
+% http://www.ctan.org/tex-archive/obsolete/macros/latex/contrib/subfigure/
+% subfigure.sty has been superceeded by subfig.sty.
+
+
+
+%\usepackage[caption=false]{caption}
+%\usepackage[font=footnotesize]{subfig}
+% subfig.sty, also written by Steven Douglas Cochran, is the modern
+% replacement for subfigure.sty. However, subfig.sty requires and
+% automatically loads Axel Sommerfeldt's caption.sty which will override
+% IEEEtran.cls handling of captions and this will result in nonIEEE style
+% figure/table captions. To prevent this problem, be sure and preload
+% caption.sty with its "caption=false" package option. This is will preserve
+% IEEEtran.cls handing of captions. Version 1.3 (2005/06/28) and later 
+% (recommended due to many improvements over 1.2) of subfig.sty supports
+% the caption=false option directly:
+%\usepackage[caption=false,font=footnotesize]{subfig}
+%
+% The latest version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/subfig/
+% The latest version and documentation of caption.sty can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/caption/
+
+
+
+
+% *** FLOAT PACKAGES ***
+%
+%\usepackage{fixltx2e}
+% fixltx2e, the successor to the earlier fix2col.sty, was written by
+% Frank Mittelbach and David Carlisle. This package corrects a few problems
+% in the LaTeX2e kernel, the most notable of which is that in current
+% LaTeX2e releases, the ordering of single and double column floats is not
+% guaranteed to be preserved. Thus, an unpatched LaTeX2e can allow a
+% single column figure to be placed prior to an earlier double column
+% figure. The latest version and documentation can be found at:
+% http://www.ctan.org/tex-archive/macros/latex/base/
+
+
+
+%\usepackage{stfloats}
+% stfloats.sty was written by Sigitas Tolusis. This package gives LaTeX2e
+% the ability to do double column floats at the bottom of the page as well
+% as the top. (e.g., "\begin{figure*}[!b]" is not normally possible in
+% LaTeX2e). It also provides a command:
+%\fnbelowfloat
+% to enable the placement of footnotes below bottom floats (the standard
+% LaTeX2e kernel puts them above bottom floats). This is an invasive package
+% which rewrites many portions of the LaTeX2e float routines. It may not work
+% with other packages that modify the LaTeX2e float routines. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/sttools/
+% Documentation is contained in the stfloats.sty comments as well as in the
+% presfull.pdf file. Do not use the stfloats baselinefloat ability as IEEE
+% does not allow \baselineskip to stretch. Authors submitting work to the
+% IEEE should note that IEEE rarely uses double column equations and
+% that authors should try to avoid such use. Do not be tempted to use the
+% cuted.sty or midfloat.sty packages (also by Sigitas Tolusis) as IEEE does
+% not format its papers in such ways.
+
+
+
+
+
+% *** PDF, URL AND HYPERLINK PACKAGES ***
+%
+%\usepackage{url}
+% url.sty was written by Donald Arseneau. It provides better support for
+% handling and breaking URLs. url.sty is already installed on most LaTeX
+% systems. The latest version can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/misc/
+% Read the url.sty source comments for usage information. Basically,
+% \url{my_url_here}.
+
+
+
+
+
+% *** Do not adjust lengths that control margins, column widths, etc. ***
+% *** Do not use packages that alter fonts (such as pslatex).         ***
+% There should be no need to do such things with IEEEtran.cls V1.6 and later.
+% (Unless specifically asked to do so by the journal or conference you plan
+% to submit to, of course. )
+
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+\usepackage{graphicx}
 \newtheorem{mydef}{Definition}
 \newtheorem{mylemma}{Lemma}
 \newtheorem{mytheorem}{Theorem}
 \newtheorem{mycor}{Corollary}
 
-
 \begin{document}
+%
+% paper title
+% can use linebreaks \\ within to get better formatting as desired
+\title{Anti Brute Force on Very Low Entropy Deterministic Encryption}
+
+
+% author names and affiliations
+% use a multiple column layout for up to two different
+% affiliations
+
+\author{\IEEEauthorblockN{Authors Name/s per 1st Affiliation (Author)}
+\IEEEauthorblockA{line 1 (of Affiliation): dept. name of organization\\
+line 2: name of organization, acronyms acceptable\\
+line 3: City, Country\\
+line 4: Email: name@xyz.com}
+\and
+\IEEEauthorblockN{Authors Name/s per 2nd Affiliation (Author)}
+\IEEEauthorblockA{line 1 (of Affiliation): dept. name of organization\\
+line 2: name of organization, acronyms acceptable\\
+line 3: City, Country\\
+line 4: Email: name@xyz.com}
+}
+
+% conference papers do not typically use \thanks and this command
+% is locked out in conference mode. If really needed, such as for
+% the acknowledgment of grants, issue a \IEEEoverridecommandlockouts
+% after \documentclass
+
+% for over three affiliations, or if they all won't fit within the width
+% of the page, use this alternative format:
+% 
+%\author{\IEEEauthorblockN{Michael Shell\IEEEauthorrefmark{1},
+%Homer Simpson\IEEEauthorrefmark{2},
+%James Kirk\IEEEauthorrefmark{3}, 
+%Montgomery Scott\IEEEauthorrefmark{3} and
+%Eldon Tyrell\IEEEauthorrefmark{4}}
+%\IEEEauthorblockA{\IEEEauthorrefmark{1}School of Electrical and Computer Engineering\\
+%Georgia Institute of Technology,
+%Atlanta, Georgia 30332--0250\\ Email: see http://www.michaelshell.org/contact.html}
+%\IEEEauthorblockA{\IEEEauthorrefmark{2}Twentieth Century Fox, Springfield, USA\\
+%Email: homer@thesimpsons.com}
+%\IEEEauthorblockA{\IEEEauthorrefmark{3}Starfleet Academy, San Francisco, California 96678-2391\\
+%Telephone: (800) 555--1212, Fax: (888) 555--1212}
+%\IEEEauthorblockA{\IEEEauthorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, California 90210--4321}}
+
+
+
+
+% use for special paper notices
+%\IEEEspecialpapernotice{(Invited Paper)}
+
+
+
+
+% make the title area
 \maketitle
-%\paragraph*{Abstract}{
+
+
 \begin{abstract}
 	Some information has a very small domain set. In that case, any
 	deterministic encryption could only
@@ -48,10 +442,29 @@
 	and experiment are given to show the lower bound.
 	The practical meaning of conditional entropy's lower bound is also
 	given from the aspect of min-entropy.
+	
 \end{abstract}
-%}
+
+\begin{IEEEkeywords}
+[TODO]component; formatting; style; styling;
+
+\end{IEEEkeywords}
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+\IEEEpeerreviewmaketitle
+
+
 
 \section{Introduction}
+% no \IEEEPARstart
 	Deterministic encryption for an information from
 	a very small domain set is important for some social
 	network systems such as LiveS Cube. LiveS Cube\footnote{this is a system still 
@@ -78,15 +491,15 @@
 	Therefore, brute force attack can enumerate all possible values from the
 	small domain set and establish a table maps any cipher text
 	to its plain text as long as the encryption
-	does not change. In such case, the conditional entropy[ref] given that table
+	does not change. In such case, the conditional entropy \cite{cond_entropy:1, cond_entropy:2} given that table
 	is $0$ since there's no uncertainty for the adversary to get the plain text.
 	Even for a large domain set which has a quite high entropy, a
 	computationally-unbounded adversary could establish that table
 	and the conditional entropy drops to $0$ again. 
-	So it's not the mere entropy[ref] that
+	So it's not the mere entropy \cite{entropy} that
 	determines the security, but the conditional entropy considering
 	all the information that adversary could gain during attacks.
-	The related entropic security analysis [ref] will be reviewed
+	The related entropic security analysis will be reviewed
 	in section \ref{sec_rw}.
 	
 	Therefore, even for the very low entropy information, 
@@ -128,17 +541,21 @@
 	is given. Finally some other approximate and experimental ways to estimate the conditional
 	entropy are discussed.
 	
+% You must have at least 2 lines in the paragraph with the drop letter
+% (should never be an issue)
+
 \section{Related Work}	\label{sec_rw}
 	\subsection{Entropy and Entropic Security}
-	Entropy[ref] measures the uncertainty of an information. Intuitively, it's easy to
+	Entropy\cite{entropy} measures the uncertainty of an information. Intuitively, it's easy to
 	understand how it could define the security: the more uncertain an adversary
 	is about the information, the more security it has.
 	
-	Entropic security is introduced by Russel and Wang[ref] to define
+	Entropic security is introduced by Russel and Wang\cite{Russel02howto} to define
 	whether the cipher text leak any predicate of the plain text. However,
 	it has to require the distribution on messages has high entropy from
 	the adversary's point of view. Similar entropic condition had been
-	achieved in hash functions by Canetti et al[ref]. Hash functions are
+	achieved in hash functions by Canetti et al\cite{Canetti97towardsrealizing, Canetti_perfectlyone-way}. 
+	Hash functions are
 	considered to be equivalent as deterministic encryption discussed in this
 	paper: anyone could easily get a deterministic cipher text from a
 	given plain text, but it's hard to find the corresponding plain text
@@ -149,7 +566,7 @@
 	and	it's considered to be infinitely strong, deterministic encryption and hash functions become
 	equivalent in the sense of security in our context.
 	
-	Entropic security has been further studied by [ref]
+	Entropic security has been further studied by \cite{entropic_wang}
 	and its result applies to both encryption and hash functions.
 	However, all their work only apply to high entropy messages.
 	While for low entropy message, their results seems not work.
@@ -171,7 +588,7 @@
 	is equivalent to that $H(X|Y)$ is large. So $I(X, Y)$ itself does not have any problem.
 	The problem is what $Y$ is.
 	If $Y$ is only the mere cipher text, it's meaningless when the $H(X)$ is small.
-	So even in the work of [ref] where $I(X, Y)$ is allowed
+	So even in the work of \cite{entropic_wang} where $I(X, Y)$ is allowed
 	to be large, the same problem exists because $Y$ is still not changed.
 	In the low entropy cases, the adversary could launch simple brute force attacks,
 	the information from these attacks is critical to the security. Therefore, $Y$
@@ -193,12 +610,12 @@
 	
 	Firstly, in recent years, OSNs like Facebook is becoming more and more popular, 
 	so that users put a lot of their private information on the Internet, which leads 
-	to serious security problems[1,2]. Meanwhile, more and more social network systems 
+	to serious security problems \cite{lzf1, lzf2}. Meanwhile, more and more social network systems 
 	begin to notice that security based on well performed administrators and unhackable 
 	servers is not reliable since human mistakes, behavior of operators and server 
 	vulnerabilities are unpredictable. So hardly can anyone still totally trust servers 
 	and administrators. Distributed social networks have been proposed by Buchegger 
-	et al.[3,4] to ensure distributed access control. In [5] a new architecture is 
+	et al.\cite{lzf3, lzf4} to ensure distributed access control. In \cite{lzf5} a new architecture is 
 	proposed to remove dependence on both the SNO(Social Network Operators) and other 
 	users, while preserving the simplicity and performance of traditional centralized 
 	server/client model. In this paper, a novel system based on centralized 
@@ -286,7 +703,7 @@
 		
 	\subsection{Defender System}\label{sec_ds}
 		Inspired by the simple defender model, the defender system is implemented
-		in LiveS Cube[ref] system which has to generate an index
+		in LiveS Cube system which has to generate an index
 		from a given cellphone number. The defender system is to prevent attackers
 		from knowing the corresponding cellphone number from its index.
 		
@@ -439,7 +856,8 @@
 		Therefore, $H(X | Y^{(m)})$ can be calculated as:
 		\begin{align*}
 			H(X | Y^{(m)}) &= \sum_{y \in \mathcal Y^{(m)}} p(y) H(x | Y^{(m)} = y)\\
-				&= \sum_{h^* \in y} p(y) H(x | Y^{(m)} = y) + \sum_{h^* \notin y} p(y) H(x | Y^{(m)} = y)\\
+				&= \sum_{h^* \in y} p(y) H(x | Y^{(m)} = y) + \\
+					& \;\;\;\; \sum_{h^* \notin y} p(y) H(x | Y^{(m)} = y)\\
 				&= 0+\frac{\binom{n-1}{m}}{\binom{n}{m}} \log(n-m)\\
 				&= \frac{n-m}{n} \log(n-m)
 		\end{align*}
@@ -474,7 +892,8 @@
 			$f_i(x) = g_i(f_{i+1}(x))$. Considering the capability of hardware and security,
 			$g_i$ is designed in a way that:
 			\begin{align*}
-				\{g_i(f_{i+1}(x_1)), g_i(f_{i+1}(x_2))\} = \{ f_i(x_1), f_i(x_2)\} = G_i(x_1, x_2)
+				\{g_i(f_{i+1}(x_1)), g_i(f_{i+1}(x_2))\} &= \{ f_i(x_1), f_i(x_2)\}\\
+					 &= G_i(x_1, x_2)
 			\end{align*}
 			But attacker don't know whether $g_i(f_{i+1}(x_1)) = f_i(x_1)$ or
 			$g_i(f_{i+1}(x_1)) = x_2$. 
@@ -491,8 +910,8 @@
 			\begin{align*}
 				C_0 &= \{h^*\}\\
 				C_i &= \{h | \exists G_{i-1}(x_1, x_2),
-					g_{i-1}(h) \in G_{i-1}(x_1, x_2) \text{ and } 
-					G_{i-1}(x_1, x_2) \cap C_{i-1} \neq \emptyset \} (i \geq 1)
+					g_{i-1}(h) \in G_{i-1}(x_1, x_2) \text{ and } \\
+					& \;\;\;\;\;\;\; G_{i-1}(x_1, x_2) \cap C_{i-1} \neq \emptyset \} \;\;(i \geq 1)
 			\end{align*}
 			Here $h^*$ is the index that attacker wants to know its primary image
 			$x$ such that $f_0(x) = h^*$. And collision sets are $K_0, K_1, K_2, \ldots$ where
@@ -566,7 +985,7 @@
 			For $p(B = false)$, use simple counting method:
 			\begin{align*}
 				p(B = false) &= \frac{\binom{n-dm}{m}}{\binom{n}{m}}\\
-					&= \frac{(n-dm)(n-dm-1)\ldots(n-dm-m+1)}{n(n-1)\ldots(n-m+1)}\\
+					&= \frac{(n-dm)\ldots(n-dm-m+1)}{n(n-1)\ldots(n-m+1)}\\
 					&\geq (\frac{n-dm-m+1}{n-m+1})^m\\
 					&= (1-\frac{dm}{n-m+1})^m\\
 					&\geq 1-\frac{dm^2}{n-m+1}
@@ -584,7 +1003,8 @@
 		$(Y = \alpha)$ is equivalent to $\left(|C_d| = 2^d \text{ and } |K_i| = 0	\; (0 \leq i < d)\right)$.
 		Therefore 
 		\begin{align*}
-			p(Y = \alpha) = p(|C_d| = 2^d) \cdot p(|K_i| = 0	\; (0 \leq i < d) \; \backslash \; |C_d| = 2^d)
+			p(Y = \alpha) &= p(|C_d| = 2^d)\\
+				& \;\;\;\;\; \cdot p(|K_i| = 0	\; (0 \leq i < d) \; \backslash \; |C_d| = 2^d)
 		\end{align*}
 		The following two lemmas are for $p(|C_d| = 2^d)$ and $p(|K_i| = 0	\; (0 \leq i < d) \; \backslash \; |C_d| = 2^d)$ 
 		respectively.
@@ -597,31 +1017,26 @@
 		
 		\begin{proof}
 			$|C_d| = 2^d$ means that $G_i(x_1, x_2) \cap C_i \leq 1$
-			for all $G_i(i \leq d-1)$. So
+			for all $G_i(i \leq d-1)$. Define
 			\begin{align*}
-				p(|C_d| = 2^d) &= \prod_{i=0}^{d-1} p\left((\forall G_i(x_1, x_2), G_i(x_1, x_2) \cap C_i \leq 1)
+				p(A_i) = p\left((\forall G_i(x_1, x_2), G_i(x_1, x_2) \cap C_i \leq 1)
 					 \; \backslash \; |C_i| = 2^i\right)
 			\end{align*}
-			
-			It's obvious that
+			So
 			\begin{align*}
-			&p\left((\forall G_i(x_1, x_2), G_i(x_1, x_2) \cap C_i \leq 1) \; \backslash \; |C_i| = 2^i\right)\\
-			&\geq \\
-			&p\left((\forall G_{d-1}(x_1, x_2), G_{d-1}(x_1, x_2) \cap C_{d-1} \leq 1) \; \backslash \; 
-				|C_{d-1}| = 2^{d-1}\right)
+				p(|C_d| = 2^d) &= \prod_{i=0}^{d-1} p(A_i)
 			\end{align*}
 			
-			Therefore
+			It's obvious that $\forall i < d, p(A_i) \geq p(A_{d-1})$, therefore
 			\begin{align*}
 				&p(|C_d| = 2^d) \\
-				&\geq p\left((\forall G_{d-1}(x_1, x_2), G_{d-1}(x_1, x_2) 
-					\cap C_{d-1} \leq 1) \; \backslash \; |C_{d-1}| = 2^{d-1})\right)^d\\
+				&\geq p(A_{d-1})^d\\
 				&= P^d
 			\end{align*}
 			
 			$P$ here can be easily estimated by counting method as
 			\begin{align*}
-				P &= \frac{(n-2^{d-1})(n-2^{d-1}-1)\ldots(n-2^d+1)\cdot (n-2^d-1)!!}{(n-1)!!}\\
+				P &= \frac{(n-2^{d-1})\ldots(n-2^d+1)\cdot (n-2^d-1)!!}{(n-1)!!}\\
 					&= \frac{(n-2^{d-1})(n-2^{d-1}-1)\ldots (n-2^d+1)}{(n-1)(n-3)\ldots(n-2^d+1)}
 			\end{align*}
 			
@@ -647,8 +1062,10 @@
 		\end{proof}
 		
 		\begin{mylemma}
-			$p(|K_i| = 0	\; (0 \leq i < d) \; \backslash \; |C_d| = 2^d) 
-				\geq 1-\frac{m^2}{2^D-2^{d-1}+1}$
+			\begin{align*}
+			&p(|K_i| = 0	\; (0 \leq i < d) \; \backslash \; |C_d| = 2^d) \\
+				&\geq 1-\frac{m^2}{2^D-2^{d-1}+1}
+			\end{align*}
 		\end{mylemma}
 		
 		\begin{proof}
@@ -656,7 +1073,8 @@
 				&p(|K_i| = 0	\; (0 \leq i < d) \; \backslash \; |C_d| = 2^d) \\\
 					&\geq p(|K_{d-1}| = 0 \; \backslash \; |C_{d-1}| = 2^{d-1})^d\\
 					&= \left(\frac{\binom{n-2^{d-1}}{m}}{\binom{n}{m}} \right)^d\\
-					&\geq (1-\frac{2^{d-1}m}{n-m+1})^d	\; \text{ (see proof of lemma\ref{lem1} for similar conclusion})\\
+					&\geq (1-\frac{2^{d-1}m}{n-m+1})^d	\; \\
+					& \;\;\;\;\;\; \text{ (see proof of lemma\ref{lem1} for similar conclusion})\\
 					&= 1-\frac{2^{d-1}m d}{n-m+1}
 			\end{align*}
 		\end{proof}
@@ -664,10 +1082,13 @@
 		By putting them together, here comes the lower bound
 		\begin{align*}
 			H(X | Y_d) &\geq p(Y_d = \alpha) \cdot H(X | Y_d = \alpha)\\
-				&= p(|C_d| = 2^d) \cdot p(|K_i| = 0	\; (0 \leq i < d) \; \backslash \; |C_d| = 2^d) \cdot H(X | Y_d = \alpha)\\
-				&\geq (1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{2^D-1})
-					\cdot (1-\frac{2^{d-1}m d}{n-m+1}) 
-					\cdot (1-\frac{dm^2}{2^D-m+1}) \cdot d 
+				&= p(|C_d| = 2^d) \\
+					&\;\;\;\;\;\; \cdot p(|K_i| = 0	\; (0 \leq i < d) \; \backslash \; |C_d| = 2^d) \\
+					&\;\;\;\;\;\; \cdot H(X | Y_d = \alpha)\\
+				&\geq (1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{2^D-1})\\
+					&\;\;\;\;\;\; \cdot (1-\frac{2^{d-1}m d}{2^D-m+1}) 
+					\cdot (1-\frac{dm^2}{2^D-m+1}) \cdot d \\
+				&= B(D, m, d)
 		\end{align*}
 		
 		Note that the condition $Y_d$ here contains all the
@@ -683,9 +1104,7 @@
 			In defender system, one index's corresponding
 			primary image's conditional entropy has a lower bound of
 			\begin{align*}
-				\max_{0 \leq d \leq D} \left\{ (1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{2^D-1})
-					\cdot (1-\frac{2^{d-1}m d}{2^D-m+1}) 
-					\cdot (1-\frac{dm^2}{2^D-m+1}) \cdot d  \right\}
+				\max_{0 \leq d \leq D} \left\{ B(D, m, d) \right\}
 			\end{align*}
 			considering all the information
 			that a computationally-unbounded attacker can
@@ -699,15 +1118,13 @@
 		could be derived from that complex formula. Suppose that
 		$d = c_1 D, m = 2^{c_2 D} \; (c_1, c_2 < 1)$ and $D$ is large enough:
 		\begin{align*}
-			H(X | Y_d) &= (1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{2^D-1})
-							\cdot (1-\frac{2^{d-1}m d}{2^D-m+1}) 
-							\cdot (1-\frac{dm^2}{2^D-m+1}) \cdot d\\
-						&= \left(1-\frac{c_1 \cdot D}{ 2^{D-2 c_1 D+2} } + o(1) \right)
-							\cdot \left(1-\frac{c_1 D}{2^{D-c_1 D+1 - c_2 D}} + o(1) \right)	
-							\cdot \left(1-\frac{c_1 D}{2^{D-2 c_2 D}} + o(1) \right) \cdot c_1 D\\
+			H(X | Y_d) &= B(D, m, d)\\
+						&= \left(1-\frac{c_1 \cdot D}{ 2^{D-2 c_1 D+2} } + o(1) \right)\\
+							&\;\;\;\;\; \cdot \left(1-\frac{c_1 D}{2^{D-c_1 D+1 - c_2 D}} + o(1) \right)\\
+							&\;\;\;\;\; \cdot \left(1-\frac{c_1 D}{2^{D-2 c_2 D}} + o(1) \right) \cdot c_1 D\\
 		\end{align*}
 		Therefore, when $2c_1, c_1+c_2, 2c_2 < 1$, for example $c_1 = c_2 = 1/3$,
-		and $D$ is large enough:
+		and $D$ is large enough, there exists:
 		\begin{align*}
 			m &= 2^{c_2 D} = 2^{\Omega(D)}\\
 			H(X | Y_d) &= c_1D+o(D) = \Omega(D)
@@ -729,12 +1146,15 @@
 		choosed in balance of security and efficiency.
 		
 		In the following graph, the simple lower
-		bound we proved when $m = 2^{11}, 2^{12}, 2^{13}, 2^{14}$ is given:
+		bound we proved when $m = 2^{11}, 2^{12}, 2^{13}, 2^{14}$ is given
+		in figure \ref{lb_m}
 		
-		\begin{center}
-		\includegraphics[scale=0.6]{lb_m.eps}
-		\end{center}
-		
+		\begin{figure}[!t]
+		\centering
+		\includegraphics[width=3in]{lb_m.eps}
+		\caption{Lower Bound over d}\label{lb_m}
+		\end{figure}		
+
 		Since our lower bound in theorem \ref{thm1} is a maximum value
 		over $d$, the $x$-axis is $d$ and the peak of each line
 		is the lower bound for each $m$. As it shows, when $m = 2^{12} = 4096$, the lower
@@ -779,8 +1199,14 @@
 		to write here.
 		
 	\subsection{Experimental Evaluation}
-		In our simple proof of the lower bound, $p(|C_d| = 2^d)$,
-		$p(|K_i| = 0 \; (i \leq 0 < d) \; \backslash |C_d| = 2^d)$ and $p(B = false)$ are 
+		For convenience, define
+		\begin{align*}
+		 p_1 &= p(B = false)
+		 p_2 &= p(|C_d| = 2^d)\\
+		 p_3 &= p(|K_i| = 0 \; (i \leq 0 < d) \; \backslash |C_d| = 2^d)\\
+		\end{align*}
+		In our simple proof of the lower bound, $p_1$,
+		$p_2$ and $p_3$ are 
 		three key points to the final result.
 		They represent that candidate sets are maximized in
 		last $d$ updates, collision sets are minimized in
@@ -788,23 +1214,17 @@
 		to the attacker respectively.
 		Lower bound for each of them has been proved:
 		\begin{align*}
-			p(B = false) &\geq 1-\frac{m^2}{2^D-dm+1}\\
-			p(|C_d| = 2^d) &\geq 1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{2^D-1}\\
-			p(|K_i| = 0 \; (i \leq 0 < d) \; \backslash |C_d| = 2^d) &\geq 1-\frac{m^2}{2^D-2^{d-1}+1}
+			p_1 &\geq 1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{2^D-1}\\
+			p_2 &\geq 1-\frac{m^2}{2^D-dm+1}\\
+			p_3 &\geq 1-\frac{m^2}{2^D-2^{d-1}+1}
 		\end{align*}
 		
 		By putting them together, lower bound $H(X | Y_d)$ is achieved:
 		\begin{align*}
-			H(X | Y_d) &\geq p(B = false) \cdot p(|C_d| = 2^d) \cdot 
-				p(|K_i| = 0 \; (i \leq 0 < d) \; \backslash |C_d| = 2^d) \cdot d\\
-				&\geq (1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{2^D-1})
-					\cdot (1-\frac{m^2}{2^D-2^{d-1}+1}) 
-					\cdot (1-\frac{m^2}{2^D-dm+1}) \cdot d 
+			H(X | Y_d) &\geq p_1 \cdot p_2 \cdot p_3 \cdot d\\
+				&\geq B(D, m, d)
 		\end{align*}
 		
-		For convenience, write $p(|C_d| = 2^d)$,
-		$p(|K_i| = 0 \; (i \leq 0 < d) \; \backslash |C_d| = 2^d)$ and $p(B = false)$
-		as $p_1, p_2, p_3$ respectively. 
 		$p_1 \cdot p_2 \cdot p_3$ can be measured in a real program which 
 		simulates the same behaviour as we defined in defender system.
 		So the proof above can be checked by this experimental measurement.
@@ -814,17 +1234,24 @@
 		for $10000$ times and records the number of successful events
 		to estimate the real possibility $p_1 \cdot p_2 \cdot p_3$.
 		
-		The following graph shows the result when $m = 2^{13}$
-		\begin{center}
-			\includegraphics[scale=0.6]{p13.eps}
-		\end{center}
+		Figure \ref{p13} shows the result when $m = 2^{13}$
+		
+		\begin{figure}[!t]
+		\centering
+		\includegraphics[width=3in]{p13.eps}
+		\caption{$p_1 \cdot p_2 \cdot p_3$ when $m = 2^{13}$}\label{p13}
+		\end{figure}
+
 		It can be seen that the simple lower bound is not too
 		far away from the experimental result when $m = 2^{13}$.
 		
-		The following graph shows the result when $m = 2^{14}$.
-		\begin{center}
-			\includegraphics[scale=0.6]{p14.eps}
-		\end{center}
+		Figure \ref{p14} shows the result when $m = 2^{14}$.
+		\begin{figure}[!t]
+		\centering
+		\includegraphics[width=3in]{p14.eps}
+		\caption{$p_1 \cdot p_2 \cdot p_3$ when $m = 2^{13}$}\label{p14}
+		\end{figure}
+		
 		It seems that when $m$ is large, the simple lower bound
 		estimated is much smaller than experimental result. Therefore,
 		there is still plenty of room to improve the lower bound
@@ -838,10 +1265,13 @@
 		
 		To check that the simple lower bound is far from the experimental
 		result only when $m$ is large, one more experiment is conducted
-		when $m = 2^{11}$:
-		\begin{center}
-			\includegraphics[scale=0.6]{p11.eps}
-		\end{center}
+		when $m = 2^{11}$ and the result is shown in figure \ref{p11}.
+		\begin{figure}[!t]
+		\centering
+		\includegraphics[width=3in]{p11.eps}
+		\caption{$p_1 \cdot p_2 \cdot p_3$ when $m = 2^{13}$}\label{p11}
+		\end{figure}
+		
 		They are very close so now it's confirmed that our estimation
 		of $p_1, p_2, p_3$ is correct and accurate when $m$ is small.
 		
@@ -902,6 +1332,92 @@
 	for an infinite long time, as long as one defend operation is enforced
 	after $2^{11}$ index calculations.
 
+	[TODO floating graph]
+
+% An example of a floating figure using the graphicx package.
+% Note that \label must occur AFTER (or within) \caption.
+% For figures, \caption should occur after the \includegraphics.
+% Note that IEEEtran v1.7 and later has special internal code that
+% is designed to preserve the operation of \label within \caption
+% even when the captionsoff option is in effect. However, because
+% of issues like this, it may be the safest practice to put all your
+% \label just after \caption rather than within \caption{}.
+%
+% Reminder: the "draftcls" or "draftclsnofoot", not "draft", class
+% option should be used if it is desired that the figures are to be
+% displayed while in draft mode.
+%
+%\begin{figure}[!t]
+%\centering
+%\includegraphics[width=2.5in]{myfigure}
+% where an .eps filename suffix will be assumed under latex, 
+% and a .pdf suffix will be assumed for pdflatex; or what has been declared
+% via \DeclareGraphicsExtensions.
+%\caption{Simulation Results}
+%\label{fig_sim}
+%\end{figure}
+
+% Note that IEEE typically puts floats only at the top, even when this
+% results in a large percentage of a column being occupied by floats.
+
+
+% An example of a double column floating figure using two subfigures.
+% (The subfig.sty package must be loaded for this to work.)
+% The subfigure \label commands are set within each subfloat command, the
+% \label for the overall figure must come after \caption.
+% \hfil must be used as a separator to get equal spacing.
+% The subfigure.sty package works much the same way, except \subfigure is
+% used instead of \subfloat.
+%
+%\begin{figure*}[!t]
+%\centerline{\subfloat[Case I]\includegraphics[width=2.5in]{subfigcase1}%
+%\label{fig_first_case}}
+%\hfil
+%\subfloat[Case II]{\includegraphics[width=2.5in]{subfigcase2}%
+%\label{fig_second_case}}}
+%\caption{Simulation results}
+%\label{fig_sim}
+%\end{figure*}
+%
+% Note that often IEEE papers with subfigures do not employ subfigure
+% captions (using the optional argument to \subfloat), but instead will
+% reference/describe all of them (a), (b), etc., within the main caption.
+
+
+% An example of a floating table. Note that, for IEEE style tables, the 
+% \caption command should come BEFORE the table. Table text will default to
+% \footnotesize as IEEE normally uses this smaller font for tables.
+% The \label must come after \caption as always.
+%
+%\begin{table}[!t]
+%% increase table row spacing, adjust to taste
+%\renewcommand{\arraystretch}{1.3}
+% if using array.sty, it might be a good idea to tweak the value of
+% \extrarowheight as needed to properly center the text within the cells
+%\caption{An Example of a Table}
+%\label{table_example}
+%\centering
+%% Some packages, such as MDW tools, offer better commands for making tables
+%% than the plain LaTeX2e tabular which is used here.
+%\begin{tabular}{|c||c|}
+%\hline
+%One & Two\\
+%\hline
+%Three & Four\\
+%\hline
+%\end{tabular}
+%\end{table}
+
+
+% Note that IEEE does not put floats in the very first column - or typically
+% anywhere on the first page for that matter. Also, in-text middle ("here")
+% positioning is not used. Most IEEE journals/conferences use top floats
+% exclusively. Note that, LaTeX2e, unlike IEEE journals/conferences, places
+% footnotes above bottom floats. This can be corrected via the \fnbelowfloat
+% command of the stfloats package.
+
+
+
 \section{Conclusion}
 	To ensure the security of deterministic encryption
 	for low entropy information such as cellphone numbers,
@@ -953,5 +1469,58 @@
 	It's also worthy to establish a tighter lower bound
 	for the system in the future, although this is
 	a little hard.
-		
+
+% conference papers do not normally have an appendix
+
+
+% use section* for acknowledgement
+\section*{Acknowledgment}
+
+
+The authors would like to thank...
+more thanks here
+
+
+% trigger a \newpage just before the given reference
+% number - used to balance the columns on the last page
+% adjust value as needed - may need to be readjusted if
+% the document is modified later
+%\IEEEtriggeratref{8}
+% The "triggered" command can be changed if desired:
+%\IEEEtriggercmd{\enlargethispage{-5in}}
+
+% references section
+
+% can use a bibliography generated by BibTeX as a .bbl file
+% BibTeX documentation can be easily obtained at:
+% http://www.ctan.org/tex-archive/biblio/bibtex/contrib/doc/
+% The IEEEtran BibTeX style support page is at:
+% http://www.michaelshell.org/tex/ieeetran/bibtex/
+%\bibliographystyle{IEEEtran}
+% argument is your BibTeX string definitions and bibliography database(s)
+%\bibliography{IEEEabrv,../bib/paper}
+%
+% <OR> manually copy in the resultant .bbl file
+% set second argument of \begin to the number of references
+% (used to reserve space for the reference number labels box)
+
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,paper}
+
+\begin{thebibliography}{1}
+
+\bibitem{cond_entropy:1}
+Theresa M. Korn; Korn, Granino Arthur. \emph{Mathematical Handbook for Scientists and Engineers: 
+	Definitions, Theorems, and Formulas for Reference and Review}. \hskip 1em plus
+  0.5em minus 0.4em\relax New York: Dover Publications. pp. 613¨C614. ISBN 0-486-41147-8.
+  
+\bibitem{cond_entropy:2}
+C. Arndt (2001). \emph{Information Measures: Information and its description in Science and Engineering)}. 
+\hskip 1em plus 0.5em minus 0.4em\relax Berlin: Springer. pp. 370¨C373. ISBN 3-540-41633-1.
+
+\end{thebibliography}
+
+% that's all folks
 \end{document}
+
+
