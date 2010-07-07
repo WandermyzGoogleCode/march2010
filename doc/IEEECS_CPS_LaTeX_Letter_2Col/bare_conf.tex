@@ -357,7 +357,8 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Anti Brute Force on Very Low Entropy Deterministic Encryption}
+\title{Analysis of a Novel Mechanism for Securing Low Entropy PII}
+%\title{Dictionary Attack Resistant System for Low Entropy PII}
 
 
 % author names and affiliations
@@ -413,40 +414,36 @@ line 4: Email: name@xyz.com}
 
 
 \begin{abstract}
-	Some information has a very small domain set. In that case, any
-	deterministic encryption could only
-	achieve a very low entropy bounded by the size of domain set.
+	Deterministic encryption for low entropy personally
+	identifiable information (PII) is easy to be dictionary
+	attacked.
 	However, the deterministic encryption is required
-	in situations such as hashing or generating an index or identity for a
-	given information. 
+	in situations such as hashing or generating an encrypted
+	index from a given PII. 
+	In such cases, the adversary does not need to
+	attempt every possible key used by encryption to recover PII. 
+	Instead, enumerating every possible PII's
+	plain text and check its cipher text
+	would be easy. 
 	
-	For such very low entropy encryption, the adversary does not need to
-	attempt every possible key. Instead, a successful brute force attack
-	to enumerate every possible
-	plain text and check whether the cipher text is the same
-	would be easy. A secured system
-	is designed and implemented to defend that attack.
-	That secured system is called defender system for the reason that it's based
-	on a simple idea called defender model from us. 
-	
-	To ensure the security in a theoretical aspect
-	for such cases, this paper uses conditional entropy instead of mere entropy.
-	The conditional entropy measures the difficulty for an adversary to
-	derive the information considering all related information 
-	that adversary has already achieved. 
-	In this system,
-	a relatively high lower
-	bound for conditional entropy can be guaranteed even with 
-	a computationally-unbounded adversary who launches brute force attacks as above.
-	In this paper, a very easy proof and some other approximation
-	and experiment are given to show the lower bound.
-	The practical meaning of conditional entropy's lower bound is also
-	given from the aspect of min-entropy.
+	A novel mechanism
+	is designed and implemented to defend such attack.
+	To prove the theoretical security of that mechanism,
+	this paper uses conditional entropy which
+	measures the difficulty for an adversary to
+	derive the PII given all related information achieved during attacks.
+	A proof to a lower bound for conditional entropy is given 
+	against a computationally-unbounded adversary.
+	Besides, experiments are conducted to evaluate our result and
+	they confirm that the lower bound is valid while not so tight.
+	The essential meaning of the lower bound is also
+	given based on min-entropy.
 	
 \end{abstract}
 
 \begin{IEEEkeywords}
-[TODO]component; formatting; style; styling;
+personally identifiable information; online social network; entropy; deterministic encryption;
+security;
 
 \end{IEEEkeywords}
 
@@ -465,86 +462,137 @@ line 4: Email: name@xyz.com}
 
 \section{Introduction}
 % no \IEEEPARstart
-	Deterministic encryption for an information from
-	a very small domain set is important for some social
-	network systems such as LiveS Cube. LiveS Cube\footnote{this is a system still 
-	under developing} is a system to
-	build a social network based on the address books in cellphones.
-	In that social network, each node is indexed by a cipher text generated
-	from the cellphone number
-	of its user. Therefore, a huge network could be easily established
-	using existing address books in numerous of cellphones without
-	any additional effort of the users. However, cellphone numbers are
-	one of the most important privacy[ref] so the security of preventing
-	someone getting the corresponding cellphone number from its index 
-	is the base of the system.
+	To be easily remembered by humans, 
+	personally identifiable information (PII) often has
+	a very low entropy (e.g. cellphone numbers).
+	As online social networks (OSN) become more and more popular,
+	protecting PII leakage from both social network operators (SNO)
+	and other users is more important than ever.
+	For most OSN, PII is only an information to identify
+	the user for login, searching, establishing relations among
+	users. So OSN could use cipher text generated from PII's plain text
+	to prevent leakage. However, to guarantee the functionality and efficiency,
+	the encryption must be deterministic for fast indexing and identifying.
+
+%	Deterministic encryption for an information from
+%	a very small domain set is important for some social
+%	network systems such as LiveS Cube. LiveS Cube\footnote{this is a system still 
+%	under developing} is a system to
+%	build a social network based on the address books in cellphones.
+%	In that social network, each node is indexed by a cipher text generated
+%	from the cellphone number
+%	of its user. Therefore, a huge network could be easily established
+%	using existing address books in numerous of cellphones without
+%	any additional effort of the users. However, cellphone numbers are
+%	one of the most important privacy[ref] so the security of preventing
+%	someone getting the corresponding cellphone number from its index 
+%	is the base of the system.
 	
 	But the security
 	of such deterministic encryption is hard to be guaranteed, especially
-	on a level that is not dependent on social network operators[ref].
-	It's true that the encryption could use a very strong key
-	so that it's almost impossible to enumerate the right key to convert cipher text
-	to plain text. However, the function to get the corresponding
-	cipher text from a given plain text must be permitted for all
-	social network operators and normal users, otherwise the social network
+	on a level that is not dependent on SNO.
+	It's true that the encryption could use a very strong key and algorithm
+	so it's almost impossible to enumerate the right key to convert cipher text
+	to plain text.
+	However, the function to get the corresponding
+	cipher text from a given plain text must be permitted for
+	social network operators and users, otherwise the social network
 	system could not operate.
-	Therefore, brute force attack can enumerate all possible values from the
-	small domain set and establish a table maps any cipher text
+	Therefore, dictionary attack can enumerate all possible values
+	of PII's plain text and establish a table maps any cipher text
 	to its plain text as long as the encryption
-	does not change. In such case, the conditional entropy \cite{cond_entropy:1, cond_entropy:2} given that table
-	is $0$ since there's no uncertainty for the adversary to get the plain text.
-	Even for a large domain set which has a quite high entropy, a
+	does not change. In such case, the conditional entropy \cite{math_book, info_measure} 
+	of cipher text's corresponding plain text given that table
+	is $0$ since there's no uncertainty for the adversary.
+	Even for PII which has a quite high entropy, a
 	computationally-unbounded adversary could establish that table
 	and the conditional entropy drops to $0$ again. 
-	So it's not the mere entropy \cite{entropy} that
-	determines the security, but the conditional entropy considering
-	all the information that adversary could gain during attacks.
-	The related entropic security analysis will be reviewed
-	in section \ref{sec_rw}.
+	So conditional entropy given
+	all the information that adversary could gain during attacks
+	could better describe the security of PII than PII's entropy.
 	
-	Therefore, even for the very low entropy information, 
+	Therefore, even for the very low entropy PII, 
 	there is still possibility to ensure the
 	theoretical security by giving a lower bound for conditional entropy
-	considering all information gained by possible brute force attacks from adversary.
-	The defender model is an easy model based on a simple idea to achieve that goal.
-	This model is used in LiveS Cube system so a defender system is made.
-	The analysis in the following sections is mainly based on that system.
-	The result shows that the system could ensure a relatively high lower bound
-	of conditional entropy in a very efficient way: suppose that the original entropy
-	is $D$, a lower bound of $c_1 D = \Omega(D)$ can be guaranteed
-	by performing one defend operation after $2^{c_2 D} = 2^{\Omega(D)}$ 
-	brute force attacks. Since the analysis is quite simple, the
-	bound estimated is believed not to be so tight. 
-	Considering the result derived by some other
-	more complex, however not accurate, only approximate ways, it is believed
-	that the tight lower bound for this system is much higher than what we proved.
-	Experiments are also conducted to evaluate the lower bound. They confirm that
-	our lower bound is valid but far from tight in some cases. At last, a practical
-	meaning of our conditional entropy's lower bound is given from the aspect
-	of min-entropy: the adversary is expected to compromise the security in a
-	chance of only $2^{-\Omega(D)}$.
+	given all information gained by possible attacks from the adversary.
+	The defender model is proposed to achieve that goal.
+	Inspired by that model, a defender mechanism is designed and implemented
+	in an OSN system which uses cellphone numbers
+	to identify users and establish social networks.
+	Only some key points about how to design and implement that mechanism
+	are described here because this paper is mainly focus on the analysis.
+	The analysis shows that the mechanism could ensure a lower bound
+	of conditional entropy in an efficient way: suppose that the original entropy
+	is $D$, a lower bound of $\Omega(D)$ can be guaranteed
+	by performing one defend operation after $2^{\Omega(D)}$ 
+	dictionary attacks.
+	Experiments are also conducted to evaluate the lower bound and they confirm that
+	our lower bound is valid but far from tight in some cases. At last, the essential
+	meaning of our conditional entropy's lower bound is given based on min-entropy: 
+	the expected chance to guess the right plain text is only $2^{-\Omega(D)}$ for
+	a computationally-unbounded adversary.
 	
-	In sum, our contribution is threefold. Firstly, to solve the security problem
-	of low entropy information's deterministic encryption, defender model and system
-	are proposed. Secondly, conditional entropy is introduced to analysis
-	the theoretical security of system under computationally-unbounded brute force
-	attacks and a simple lower bound of conditional entropy is proved in defender system. 
-	Thirdly, approximation and experiments
-	are conducted to further check and evaluate our analysis and a practical meaning
-	of our conditional entropy based proof is derived from the experiment 
-	in the aspect of min-entropy.
+	In sum, our contribution is threefold. 
+	\begin{enumerate}
+		\item To solve the security problem
+		of low entropy PII's deterministic encryption, defender model and mechanism
+		are proposed. But only the key points of how to design and implement that mechanism
+		are described in this paper.
+		\item Conditional entropy is introduced to analysis
+		the security of this novel defender mechanism 
+		under computationally-unbounded dictionary
+		attacks and a lower bound of conditional entropy is proved. 
+		\item Experiments
+		are conducted to check and evaluate our analysis.
+	\end{enumerate}
 	
-	In the following sections, firstly some related works
-	about privacy problems in social network systems and
-	entropic security are reviewed. The defender model and system will be
-	introduced after that. Then a simple proof for the lower bound of conditional entropy
-	is given. Finally some other approximate and experimental ways to estimate the conditional
-	entropy are discussed.
+	In the first section, related work about entropic security
+	and privacy problems in OSN are reviewed. 
+	In the second section, defender model and system will be
+	introduced. In the third section, a proof and some experiments
+	for the lower bound of conditional entropy
+	are given. The essential meaning of our result is also given based on min-entropy
+	in the third section.
 	
 % You must have at least 2 lines in the paragraph with the drop letter
 % (should never be an issue)
 
 \section{Related Work}	\label{sec_rw}
+	\subsection{Privacy Problems in Online Social Network}		
+	In recent years, OSNs like Facebook is becoming more and more popular, 
+	so that users put a lot of their private information on the Internet, which leads 
+	to serious security problems \cite{lzf1, lzf2}. Meanwhile, more and more users
+	begin to be aware of that security based on well performed administrators and unhackable 
+	servers is not reliable since human mistakes, behavior of operators and server 
+	vulnerabilities are unpredictable. Distributed social networks have been proposed by 
+	Buchegger et al.\cite{lzf3, lzf4} to ensure distributed access control and
+	remove dependence on both the SNO(Social Network Operators) and other users.
+	In \cite{lzf5} a new architecture is proposed for the same purpose, 
+	while preserving the simplicity and performance of traditional centralized server/client model.
+	In this paper, a novel mechanism based on centralized 
+	server/clients is proposed to make a social network with low entropy PII
+	(e.g. cellphone numbers) secure and trusted independent of both SNO and other users.
+	
+	Besides, traditional websites tend to encrypt only password of users in their database, 
+	but store plain text of PII. However, as more and more new OSN emerge every day, 
+	PII also worth being encrypted as well as password. \cite{guide}
+	explains the importance of protecting the confidentiality of PII (Personally 
+	Identifiable Information) and impacts of PII leakage in the 
+	context of information security. It also includes a list of confidentiality 
+	safeguards ranging from operational activities to technical methods. Among 
+	these safeguards, some researches focus on how to minimize the use and 
+	collection of PII. For example, \cite{charact} points out two defects 
+	in privacy policies of popular OSNs and provides a method to find the minimum 
+	of private information needed for a particular set of interactions. In addition, 
+	\cite{leakage} carries out a detailed analysis on possible ways of PII 
+	leakage via OSNs. Our work, which is a different approach, is based mainly 
+	on another two of the methods listed in \cite{guide}, i.e. de-identifying 
+	information and anonymizing information. In this way, prevention of leakage is no 
+	longer necessary since neither third-party services nor the first-party 
+	(the party that directly serves the user) server is able to retrieve plain or 
+	recoverable PII data, even in ideally unbounded-computational brute force attack, 
+	while the basic function of PII, i.e. identification, is remained.
+	
 	\subsection{Entropy and Entropic Security}
 	Entropy\cite{entropy} measures the uncertainty of an information. Intuitively, it's easy to
 	understand how it could define the security: the more uncertain an adversary
@@ -569,7 +617,7 @@ line 4: Email: name@xyz.com}
 	Entropic security has been further studied by \cite{entropic_wang}
 	and its result applies to both encryption and hash functions.
 	However, all their work only apply to high entropy messages.
-	While for low entropy message, their results seems not work.
+	While for low entropy message, their results seem not work.
 	One simple contradiction for hash functions has already been
 	shown: enumerate all possible plain text and see which causes a collision
 	will recover the original plain text easily.
@@ -584,65 +632,25 @@ line 4: Email: name@xyz.com}
 	In their researches, $X$ is the plain text and $Y$ is the cipher text.
 	Therefore, whether $I(X, Y)$ is large is the key to the security they defined.
 	In traditional work, $I(X, Y)$ is required to be very small, for example $0$,
-	so $Y$ does not leak much information. And $I(X, Y)$ is small
+	so $Y$ does not leak much information. And the requirement that $I(X, Y)$ is small
 	is equivalent to that $H(X|Y)$ is large. So $I(X, Y)$ itself does not have any problem.
 	The problem is what $Y$ is.
-	If $Y$ is only the mere cipher text, it's meaningless when the $H(X)$ is small.
-	So even in the work of \cite{entropic_wang} where $I(X, Y)$ is allowed
+	If $Y$ is only the cipher text, it's not suitable for the case that $H(X)$ is small.
+	So even in \cite{entropic_wang} where $I(X, Y)$ is allowed
 	to be large, the same problem exists because $Y$ is still not changed.
-	In the low entropy cases, the adversary could launch simple brute force attacks,
+	In the low entropy cases where the adversary could easily launch dictionary attacks,
 	the information from these attacks is critical to the security. Therefore, $Y$
 	should contain the information from those attacks for the security analysis.
-	Thus conditional entropy $H(X|Y)$ for such $Y$ could better describe security during
-	the attacks. One simple conclusion is that when $H(X|Y)$ drops to $0$, the adversary
-	has compromised the security successfully because no uncertainty exists considering 
-	all the information $Y$ after his or her attacks.
-	
+	Thus conditional entropy $H(X|Y)$ for such $Y$ could better describe the security. 
+		
 	In sum, conditional entropy $H(X|Y)$ or similar mutual information $I(X, Y)$
 	has already been utilized in previous work. But in this paper, $Y$ is defined to contain the information
-	gained by adversary during the brute force attacks so a better analysis
+	gained by adversary during the dictionary attacks so a better analysis
 	for low entropy encryption is achieved.
 	
-	\subsection{Privacy Problems in Online Social Network}		
-	Though defender system is currently used for only one specific LiveS Cube System,
-	it is believed to be useful for many other social network
-	systems for the following reasons. 
-	
-	Firstly, in recent years, OSNs like Facebook is becoming more and more popular, 
-	so that users put a lot of their private information on the Internet, which leads 
-	to serious security problems \cite{lzf1, lzf2}. Meanwhile, more and more social network systems 
-	begin to notice that security based on well performed administrators and unhackable 
-	servers is not reliable since human mistakes, behavior of operators and server 
-	vulnerabilities are unpredictable. So hardly can anyone still totally trust servers 
-	and administrators. Distributed social networks have been proposed by Buchegger 
-	et al.\cite{lzf3, lzf4} to ensure distributed access control. In \cite{lzf5} a new architecture is 
-	proposed to remove dependence on both the SNO(Social Network Operators) and other 
-	users, while preserving the simplicity and performance of traditional centralized 
-	server/client model. In this paper, a novel system based on centralized 
-	server/clients is proposed to make a social network with low entropy index 
-	(e.g. Phone numbers) secure and trusted in terms of both SNO and other users.
-	
-	Secondly, not only password is worth being protected, but identity is also worth 
-	being protected as so many new social networks emerge every day. 
-	[Guide to Protecting...] explains the importance of protecting the confidentiality 
-	of PII (Personally Identifiable Information, e.g., user ID) and impacts of PII 
-	leakage in the context of information security. It also includes a list of 
-	confidentiality safeguards ranging from operational activities to technical 
-	methods. Among these safeguards, some researches focus on how to minimize the 
-	use, collection and retention of PII. For example, [characterizing privacy] 
-	points out two defects in privacy policies of popular OSNs and provides an approach 
-	to evaluating the bare minimum of private information needed for a particular set 
-	of interactions. In addition, [On the leakage] carries out a detailed analysis on 
-	possible ways of PII leakage via OSNs. Our work, in contrast, is based mainly on 
-	two of the methods listed in [Guide to Protecting], i.e. de-identifying information 
-	and anonymizing information. In this way, prevention of leakage is no longer necessary
-	since neither third-party services nor the first-party server is able to retrieve 
-	plain or recoverable PII data, even in ideally unbounded-computational brute force 
-	attack, while the basic function of PII, i.e. identification, is remained.
-	
-\section{Defender Model and System}
+\section{Defender Model and Mechanism}
 	\subsection{Defender Model}
-		Defender model is a very simple model that
+		Defender model is a simple model that
 		is not based on formal information theory.
 		The adversary is called attacker in this model.
 		The attacker can launch some attacks and after
@@ -693,24 +701,26 @@ line 4: Email: name@xyz.com}
 		Here $d > 1$ is the rate to reduce the information.
 		It can be easily conducted that:
 		\begin{align*}
-			\lim_{n \rightarrow \infty} I_n &= \lim_{n \rightarrow \infty} \sum_{0 \leq i < n} \frac{c}{d^i}\\
-				&= \frac{c}{d-1}
+			\lim_{n \rightarrow \infty} I_n &= \lim_{n \rightarrow \infty} \sum_{0 \leq i < n} \frac{c}{d^i}
+				= \frac{c}{d-1}
 		\end{align*}
 		
 		This means that for a small $d$ such as $2$, even $c$ is as large as
 		$0.1$ and the attacker is computationally-unbounded, the attacker
 		could never compromise the security.
 		
-	\subsection{Defender System}\label{sec_ds}
-		Inspired by the simple defender model, the defender system is implemented
-		in LiveS Cube system which has to generate an index
-		from a given cellphone number. The defender system is to prevent attackers
+	\subsection{Defender Mechanism}\label{sec_ds}
+		Inspired by defender model, the defender mechanism is implemented
+		in a specific OSN
+		which has to generate an encrypted index
+		from a given PII. That PII are cellphone numbers
+		in that specific OSN and the defender mechanism is to prevent attackers
 		from knowing the corresponding cellphone number from its index.
 		
 		Define the set of cellphone number as $\mathcal X = \{x | \text{$x$ is a cellphone number}\}$.
 		There's a function $f: \mathcal X \rightarrow F$ to generate index $h = f(x) \in F$ for
-		a given $x$. As described before, the cellphone number set $\mathcal X$ has a very small
-		size about $2^{32} \approx 10^{11}$. For a given index $h^*$, a simple attacker
+		a given $x$. The cellphone number set $\mathcal X$ has a very small
+		size about $10^{10} \approx 2^{32}$. For a given index $h^*$, a simple attacker
 		can enumerate all possible $x$ to see whether $f(x) = h^*$. Therefore, in defender
 		model:
 		\begin{align*}
@@ -718,31 +728,33 @@ line 4: Email: name@xyz.com}
 		\end{align*}
 		
 		So the security will be compromised after $2^{32}$ rounds of attack if there's
-		no defender. The defender system is going to fullfil the defender
-		function $f_D(I_{n-1}) = I_{n-1}/2$ by generating new indexes.
-		In LiveS Cube system, the indexes and corresponding data entries are stored
-		in database which we think attacker may have an access to. To generate
+		no defender. The defender system is going to fulfil the defender
+		function $f_D(I_{n-1}) = I_{n-1}/2$ by updating indexes.
+		In the OSN, indexes and corresponding encrypted user data entries are stored
+		in database. And we think attackers may gain root access to the server
+		and then access to the database. Therefore, to generate
 		new indexes, the system has to send indexes and data entries to a 
 		secured module
-		and get new indexes and data entries from that module. If attacker
-		could track each new index and its old index, there's no loss of information 
+		and get new indexes and encrypted data entries from that module. If attacker
+		could track each new index from its old index, there's no loss of information 
 		for attacker. Therefore, we have to make sure that the attacker couldn't track
 		the procedure to update the indexes.
-		To do that, the module is implemented in a special hardware that nobody
+		To do that, the module is implemented in a special hardware\footnote{something 
+		like TPM (Thusted Platform Module)} that nobody
 		could see what's going on inside the hardware without damaging it in real world.
-		The best strategy againt the attacker 
+		The best strategy against the attacker 
 		is to send all indexes and data entries to that hardware and then
 		retrieve all new indexes and data entries together. By doing that, the attacker
 		loses all information, which means $f_D(I_{n-1}) = 0$. However, the entries
-		in database may be too many for that hardware to store. Therefore, the system
-		sends two indexes and data entries from the database to hardware in one time and
-		then retrieve their new indexes and data entries. After that, the attacker can
-		only guess which new index is from which old index and there are $2$ possibilites.
-		Thus, the defender system fullfils the equation $f_D(I_{n-1}) = I_{n-1}/2$.
+		in database may be too many for that hardware to store. Therefore, in defender mechanism,
+		two indexes and data entries are sent from the database to hardware at a time and
+		then their new indexes and data entries are retrieved together. After that, the attacker can
+		only guess which new index is from which old index from $2$ possibilites.
+		Thus, the equation $f_D(I_{n-1}) = I_{n-1}/2$ is fulfilled by this mechanism.
 		
-		In short, in defender system,
+		In short, in defender mechanism,
 		there's a function $g: F \rightarrow F$ regenerating 
-		new indexes from old indexes. The defender system
+		new indexes from old indexes. The defender mechanism
 		will randomly choose $h_1, h_2 \in F$ that have
 		not been regenerated yet in each time and generate
 		$h_1', h_2' \in F$ in a way that attacker can't tell whether
@@ -760,27 +772,28 @@ line 4: Email: name@xyz.com}
 		The $m$ can be tuned in balance of security and the
 		efficiency of system.
 		
-		The conclusions about the defender model
-		and system above are not strictly
-		proved because defender model itself
-		is not well defined in theoretical aspect. 
-		However this is a comprehensive explanation to show how and why
-		defender system works. In the following section, a mathematical proof
-		will be given based on information theory to demonstrate that
-		the defender system can truly ensure the security even for
-		a computationally-unbounded attacker, consistent with what
-		is claimed here.
-		
 \section{Analysis of Conditional Entropy}
+	In this section, a mathematical proof
+	will be given based on information theory to demonstrate that
+	the defender mechanism can truly ensure the security even for
+	a computationally-unbounded attacker, consistent with what
+	is claimed before.
+	
+	The first subsection here will demonstrate the definition
+	of entropy and conditional entropy along with some
+	definitions and examples in our context. The second subsection
+	will give a proof to show a lower bound for conditional entropy
+	under defender mechanism. In the third subsection, experiments
+	are conducted to check and evaluate the result. The final subsection
+	will give an essential meaning of our lower bound based on min-entropy.
+	
 	\subsection{Definition and Examples}
 		In this subsection, a brief definition for entropy and conditional
-		entropy is given. Besides, the formal definition of defender system
-		and its behaviour is given.
+		entropy is given along with the formal definition of defender mechanism
+		and its behaviour.
 		Some additional examples are taken to further
 		demonstrate the relation between conditional entropy and
-		the security. Feel free to skip the content about
-		the definition of entropy and conditional entropy if you are familiar
-		with them.		
+		the security.
 		
 		\begin{mydef}[Entropy]\label{def_entropy}
 			The entropy of a discrete random variable $X$ with
@@ -795,19 +808,19 @@ line 4: Email: name@xyz.com}
 		\begin{mydef}\label{def2}
 			$\mathcal{X} = \{x_1, x_2, \ldots, x_n\}$ is the set of all possible 
 			primary images\footnote{the primary images are cellphone numbers
-			in LiveS Cube system} that index $h_i = f(x_i)$ can be calculated.
+			in our specific OSN} that index $h_i = f(x_i)$ can be calculated.
+			For convenience, suppose $n = 2^D$.
 			Suppose $h^*$ is the index that attacker wants to
 			get its primary image $x^* \in \mathcal{X}$ satisfying $f(x^*) = h^*$.
 			The discrete random variable $X$ is the
-			primary image guessed by the attacker. For convenience,
-			suppose $n = 2^D$.
+			primary image guessed by the attacker. 
 		\end{mydef}
 		
 		In ideal situation, the attacker has no related information, so $X$ should
 		be uniformly distributed. In such case, the entropy is simply:
 		\begin{align*}
-			H(X) &= -\sum_{i=1}^{2^D} 2^{-D} \log 2^{-D}\\
-				&= D
+			H(X) &= -\sum_{i=1}^{2^D} 2^{-D} \log 2^{-D}
+				= D
 		\end{align*}
 		
 		\begin{mydef}[Conditional Entropy]\label{def_con_entropy}
@@ -819,13 +832,12 @@ line 4: Email: name@xyz.com}
 			of $X$ given $Y$ is
 			\begin{align}
 				H(X|Y) &= \sum_{y \in \mathcal Y} p(y) H(X | Y = y)\\
-					&= -\sum_{y \in \mathcal Y} p(y) \sum_{x \in \mathcal X} p(x|y) \log p(x|y)\\
-					&= -\sum_{y \in \mathcal Y} \sum_{x \in \mathcal X} p(x, y) \log p(x|y)
+					&= -\sum_{y \in \mathcal Y} p(y) \sum_{x \in \mathcal X} p(x|y) \log p(x|y)
 			\end{align}
 		\end{mydef}
 		
 		In our context, random variable $Y$ represents the related information
-		that attacker has. For example, when attacker has enumerated only one
+		achieved by attacker. For example, when attacker has enumerated only one
 		$x$ to calculate $f(x)$, $Y$ can be defined as $Y^{(1)}$:
 		\begin{align*}
 			&\mathcal Y^{(1)} = \{y \: | \: \exists x \in \mathcal X, f(x) = y\}\\
@@ -868,21 +880,22 @@ line 4: Email: name@xyz.com}
 		entropy which notifies the security decreases about linearly when $m$ is small 
 		compared with $n$.
 		
-	\subsection{Proof of a Simple Lower Bound}
+	\subsection{Proof of a Lower Bound}
 		As the example above demonstrates, the key to the calculation
 		of conditional entropy $H(X|Y)$ is the definition of the condition $Y$.
 		To make a simple proof for the lower bound, we can simplify the
 		condition to achieve that. Before defining $Y$, let's
-		more clearly clarify how defender system behaviours first. Clear
+		more clearly clarify how defender mechanism behaviours first. Clear
 		definition of $X$ can be found in definition \ref{def2}
 		if that is unclear.
 		
 		The defender system will allow attacker to do at most $m$ possible
 		attack operations before one defend operation. More specifically, between
 		two operations of updating the whole database about the indexes and data entries,
-		at most $m$ indexes are calculated from primary indexes. It's formally defined
+		at most $m$ indexes are calculated from primary images(i.e. cellphone numbers). 
+		It's formally defined
 		as:
-		\begin{mydef}[Defender System]
+		\begin{mydef}[Defender Mechanism]
 			There are functions $f_0, f_1, f_2, \ldots$ where
 			$f_0$ denotes the most recent function $f: \mathcal{X} \rightarrow F$
 			to generate an index $f(x) = h \in F$ from primary image $x$. 
@@ -899,12 +912,11 @@ line 4: Email: name@xyz.com}
 			$g_i(f_{i+1}(x_1)) = x_2$. 
 			Here, set $G_i$ is defined for convenience in later proof and
 			it's also totally random
-			to the attacker. \footnote{See section \ref{sec_ds} for the purpose
-			of $g$}
+			to the attacker.
 		\end{mydef}
 		
 		To better describe the interaction between attacker and defender
-		system, candidate sets and collision sets is defined as following
+		system, candidate sets and collision sets are defined as following
 		\begin{mydef}[Candidate and Collision Set]
 			Candidate sets are $C_0, C_1, C_2, \ldots$ recursively defined as
 			\begin{align*}
@@ -948,22 +960,22 @@ line 4: Email: name@xyz.com}
 		The final lower bound of $H(X | Y)$ will be achieved by putting
 		them together.
 		
-		\begin{mylemma}\label{lem1}\footnote{See definition \ref{def2} for $D$}
+		\begin{mylemma}\label{lem1}
 			$H(X|Y_d = \alpha) \geq d \cdot (1-\frac{dm^2}{2^D-m+1})$
 		\end{mylemma}
 		
-		\begin{proof}
+		\begin{IEEEproof}
 			When $Y_d = \alpha$, the attacker
 			is just unlucky in last $d$ updates
 			and our defender system is lucky
 			to expand $C_d$ quickly.
 			In this case, the best that attacker
-			may have is to know all relations
+			could still know are all relations
 			like $f_d(x) = h$ for $x \in \mathcal X$.
 			
 			In addition, $H(A) \geq H(A|B)$ for
 			any $A, B$, which simply means that knowing something
-			more can never be a bad thing. Let $A = X | Y_d = \alpha$
+			more can never be a bad thing. Let $A = (X | Y_d = \alpha)$
 			and $B$ be whether there is any $x \in C_d$ that
 			has been enumerated using $f_0, f_1, \ldots, f_{d-1}$ 
 			by the attacker or not.
@@ -975,11 +987,10 @@ line 4: Email: name@xyz.com}
 			\end{align*}
 			
 			When $B = false$, each $f_d(x_i) = h_i \in C_d$
-			has an equal chance of $f_0(x_i) = h^*$. Therefore
-			we have:
+			has an equal chance of $f_0(x_i) = h^*$. Therefore:
 			\begin{align*}
-				H(A | B = false) &\geq -\sum_{i = 1}^{2^d} \frac{1}{2^d} \log(\frac{1}{2^d})\\
-					&= d
+				H(A | B = false) &\geq -\sum_{i = 1}^{2^d} \frac{1}{2^d} \log(\frac{1}{2^d})
+					= d
 			\end{align*}
 			
 			For $p(B = false)$, use simple counting method:
@@ -997,7 +1008,7 @@ line 4: Email: name@xyz.com}
 					&\geq d \cdot (1-\frac{dm^2}{n-m+1})\\
 					&= d \cdot (1-\frac{dm^2}{2^D-m+1})
 			\end{align*}
-		\end{proof}
+		\end{IEEEproof}
 		
 		To prove a lower bound of $p(Y = \alpha)$, the following fact is used.
 		$(Y = \alpha)$ is equivalent to $\left(|C_d| = 2^d \text{ and } |K_i| = 0	\; (0 \leq i < d)\right)$.
@@ -1015,7 +1026,7 @@ line 4: Email: name@xyz.com}
 			\end{align*}
 		\end{mylemma}
 		
-		\begin{proof}
+		\begin{IEEEproof}
 			$|C_d| = 2^d$ means that $G_i(x_1, x_2) \cap C_i \leq 1$
 			for all $G_i(i \leq d-1)$. Define
 			\begin{align*}
@@ -1029,9 +1040,9 @@ line 4: Email: name@xyz.com}
 			
 			It's obvious that $\forall i < d, p(A_i) \geq p(A_{d-1})$, therefore
 			\begin{align*}
-				&p(|C_d| = 2^d) \\
-				&\geq p(A_{d-1})^d\\
-				&= P^d
+				&p(|C_d| = 2^d) 
+				\geq p(A_{d-1})^d
+				= P^d
 			\end{align*}
 			
 			$P$ here can be easily estimated by counting method as
@@ -1059,7 +1070,7 @@ line 4: Email: name@xyz.com}
 				&\geq 1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{n-1}\\
 				&= 1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{2^D-1}
 			\end{align*}
-		\end{proof}
+		\end{IEEEproof}
 		
 		\begin{mylemma}
 			\begin{align*}
@@ -1068,16 +1079,16 @@ line 4: Email: name@xyz.com}
 			\end{align*}
 		\end{mylemma}
 		
-		\begin{proof}
+		\begin{IEEEproof}
 			\begin{align*}
 				&p(|K_i| = 0	\; (0 \leq i < d) \; \backslash \; |C_d| = 2^d) \\\
 					&\geq p(|K_{d-1}| = 0 \; \backslash \; |C_{d-1}| = 2^{d-1})^d\\
 					&= \left(\frac{\binom{n-2^{d-1}}{m}}{\binom{n}{m}} \right)^d\\
-					&\geq (1-\frac{2^{d-1}m}{n-m+1})^d	\; \\
+					&\geq \left(1-\frac{2^{d-1}m}{n-m+1}\right)^d	\; \\
 					& \;\;\;\;\;\; \text{ (see proof of lemma\ref{lem1} for similar conclusion})\\
 					&= 1-\frac{2^{d-1}m d}{n-m+1}
 			\end{align*}
-		\end{proof}
+		\end{IEEEproof}
 		
 		By putting them together, here comes the lower bound
 		\begin{align*}
@@ -1101,12 +1112,12 @@ line 4: Email: name@xyz.com}
 		over all possible $d$.
 		As a result, this is our final theorem:
 		\begin{mytheorem}\label{thm1}
-			In defender system, one index's corresponding
+			Under defender mechanism, one index's corresponding
 			primary image's conditional entropy has a lower bound of
 			\begin{align*}
 				\max_{0 \leq d \leq D} \left\{ B(D, m, d) \right\}
 			\end{align*}
-			considering all the information
+			given all the information
 			that a computationally-unbounded attacker can
 			have in an infinite long time. Here $m$ is
 			the maximum number of indexes that are allowed to be calculated
@@ -1129,9 +1140,9 @@ line 4: Email: name@xyz.com}
 			m &= 2^{c_2 D} = 2^{\Omega(D)}\\
 			H(X | Y_d) &= c_1D+o(D) = \Omega(D)
 		\end{align*}		
-		So following theorem is derived:
+		So the following theorem is derived:
 		\begin{mytheorem}
-			In defender system, one index's corresponding
+			Under defender mechanism, one index's corresponding
 			primary image's conditional entropy has a lower bound of $\Omega(D)$
 			considering all the information
 			that a computationally-unbounded attacker can
@@ -1141,11 +1152,12 @@ line 4: Email: name@xyz.com}
 			logarithm of the size of primary image set.
 		\end{mytheorem}
 		
-	\subsection{Concrete Lower Bound and Approximate Estimation}
-		In LiveS Cube system, $D = 32$ and $m$ should be
+	\subsection{Concrete Lower Bound and Analysis}
+		In our specific OSN dealing with cellphone numbers, 
+		$D = 32$ and $m$ should be
 		choosed in balance of security and efficiency.
 		
-		In the following graph, the simple lower
+		The simple lower
 		bound we proved when $m = 2^{11}, 2^{12}, 2^{13}, 2^{14}$ is given
 		in figure \ref{lb_m}
 		
@@ -1158,9 +1170,9 @@ line 4: Email: name@xyz.com}
 		Since our lower bound in theorem \ref{thm1} is a maximum value
 		over $d$, the $x$-axis is $d$ and the peak of each line
 		is the lower bound for each $m$. As it shows, when $m = 2^{12} = 4096$, the lower
-		bound is about $11.2$. This means that the system can achieve
-		a relative high lower bound and keep its efficiency at the same time:
-		there is only one update operation after thousands of index calculations.
+		bound is about $11.1$. 
+		Thus only one update operation after thousands of index calculations is required
+		to guarantee a lower bound higher than $10$.
 		
 		In fact, the proved lower bound in theorem \ref{thm1} is so
 		simple and the tight lower bound is expected to be much higher.
@@ -1172,45 +1184,22 @@ line 4: Email: name@xyz.com}
 		given an extra information about whether all his enumerated $x$
 		in recent $d$ updates are in candidate set $C_d$ or not, though
 		in real situation this is unknown to the attacker.
-		
-		To have a strictly proved and very tight lower bound
-		is a little hard.
-		So there's an approximate lower bound which is not
-		strictly proved, but should be more tight.
-		In this approching,
-		the size of candidate set is
-		considered to be growing in an equivalent
-		constant rate $r \in (1, 2)$ which
-		should be very close to $2$.
-		And in collision set $K_i$, each
-		element has an equal chance of
-		$r^{-i}$ to become $h^*$.
-		Suppose that the attacker
-		has enumerated $f_i(x) = h$
-		for $k$ rounds, i.e. $0 \leq i < k \leq \log_r(n)$. Here
-		$i < \log_r(n)$ because when
-		$|C_i| = n$, the information that
-		attacker can still acquire through
-		enumeration is considered to be $0$.
-		Under these unproved assumptions,
-		a formal proof can be given to show that the lower bound
-		$H(X | Y) \geq 18$ holds when $m = 2^{20}$. 
-		The detailed derivation is however too complex
-		to write here.
+		So it's believed that the tight lower bound of our system is much
+		higher than what we proved.
 		
 	\subsection{Experimental Evaluation}
 		For convenience, define
 		\begin{align*}
-		 p_1 &= p(B = false)
+		 p_1 &= p(B = false)\\
 		 p_2 &= p(|C_d| = 2^d)\\
-		 p_3 &= p(|K_i| = 0 \; (i \leq 0 < d) \; \backslash |C_d| = 2^d)\\
+		 p_3 &= p(|K_i| = 0 \; (i \leq 0 < d) \; \backslash |C_d| = 2^d)
 		\end{align*}
-		In our simple proof of the lower bound, $p_1$,
+		In our proof of the lower bound, $p_1$,
 		$p_2$ and $p_3$ are 
 		three key points to the final result.
-		They represent that candidate sets are maximized in
+		They represent the possibility that candidate sets are maximized in
 		last $d$ updates, collision sets are minimized in
-		last $d$ updates and candidate set $C_d$ is totally unknown
+		last $d$ updates, candidate set $C_d$ is totally unknown
 		to the attacker respectively.
 		Lower bound for each of them has been proved:
 		\begin{align*}
@@ -1221,12 +1210,12 @@ line 4: Email: name@xyz.com}
 		
 		By putting them together, lower bound $H(X | Y_d)$ is achieved:
 		\begin{align*}
-			H(X | Y_d) &\geq p_1 \cdot p_2 \cdot p_3 \cdot d\\
-				&\geq B(D, m, d)
+			H(X | Y_d) &\geq p_1 \cdot p_2 \cdot p_3 \cdot d
+				\geq B(D, m, d)
 		\end{align*}
 		
 		$p_1 \cdot p_2 \cdot p_3$ can be measured in a real program which 
-		simulates the same behaviour as we defined in defender system.
+		simulates the same behaviour as we defined in defender mechanism.
 		So the proof above can be checked by this experimental measurement.
 		Moreover, this experiment will show how tight our lower bound is
 		when $H(X | Y_d = \beta)$ and $H(A | B = true)$ are ignored.
@@ -1272,7 +1261,7 @@ line 4: Email: name@xyz.com}
 		\caption{$p_1 \cdot p_2 \cdot p_3$ when $m = 2^{13}$}\label{p11}
 		\end{figure}
 		
-		They are very close so now it's confirmed that our estimation
+		Two lines are very close so now it's confirmed that our estimation
 		of $p_1, p_2, p_3$ is correct and accurate when $m$ is small.
 		
 		In sum, it has been checked that our simple lower bound
@@ -1283,7 +1272,7 @@ line 4: Email: name@xyz.com}
 		is still at least $10$.
 
 \subsection{Min-Entropy and More Meaningful Security}
-	All the analysis above is based on Shannon entropy defined in definition \ref{def_entropy}.
+	All the analysis above is based on Shannon entropy (see definition \ref{def_entropy}).
 	Min-entropy $H_\infty(X)$ define the entropy in a new way that
 	\begin{align*}
 		H_\infty(X) = \min_{x \in \mathcal X} \left(-\log p\left(X = x\right) \right)
@@ -1291,17 +1280,17 @@ line 4: Email: name@xyz.com}
 	The conditional entropy could be similarly defined using min-entropy.
 	
 	The simple proof above also applies to this min-entropy
-	because $p(x | Y = y)$ is either $0$ or $2^{-d}$ which means:
+	because $p(x | Y = y)$ is either $0$ or $2^{-d}$ which implies:
 	\begin{align*}
 		-log(0) = \infty > -log(2^{-d}) = d
 	\end{align*}
 	More specifically,
 	$p_1 \cdot p_2 \cdot p_3$ denotes the probability that $p(x | Y = y) = 2^{-d}$.
-	And the proof shows a lower bound of $p_1 \cdot p_2 \cdot p_3$
-	leading to the final lower bound of conditional Shannon entropy $p_1 \cdot p_2 \cdot p_3 \cdot d$
+	And the proof above shows a lower bound of $p_1 \cdot p_2 \cdot p_3$
+	leading to the final lower bound of conditional Shannon entropy: $p_1 \cdot p_2 \cdot p_3 \cdot d$,
 	which is identical to conditional min-entropy.
 	As it can be seen that min-entropy's definition is easier than
-	Shannon entropy, it's easier to find out the practical meaning of the lower
+	Shannon entropy, it's easier to find out the meaning of the lower
 	bound for conditional min-entropy. For min-entropy with a determinant condition,
 	$H_\infty(X | Y = y) = h$
 	denotes the highest probability $2^{-h}$ that adversary can achieve to guess
@@ -1311,16 +1300,16 @@ line 4: Email: name@xyz.com}
 	possibility that one adversary can guess the right answer.
 	Therefore, the proof of our conditional entropy shows that
 	the expected highest possibility that a computationally-unbounded
-	adversary can compromise the security is very small: $2^{-\Omega(D)}$.
+	adversary can guess the right plain text is very small: $2^{-\Omega(D)}$.
 	
-	Since $h$ is either $d$ or $0$ as in our proof,
+	Since $h$ is either $d$ or $0$ in our proof,
 	the conditional min-entropy $H_\infty(X | Y)$
 	is
 	\begin{align*}
-		&E\left(H_\infty(X | Y = y)\right)\\
-		&=p\left(H_\infty(X | Y = y) = d\right) \cdot d = p_1 \cdot p_2 \cdot p_3 \cdot d
+		E\left(H_\infty(X | Y = y)\right) &= p\left(H_\infty(X | Y = y) = d\right) \cdot d\\
+		 &= p_1 \cdot p_2 \cdot p_3 \cdot d
 	\end{align*}
-	whose key is the chance to still confuse the adversary with 
+	where $p_1 \cdot p_2 \cdot p_3$ is the chance to still confuse the adversary with 
 	$2^d$ equally possible uncertainties.
 	
 	So as in the graph of $p_1 \cdot p_2 \cdot p_3$ when 
@@ -1331,8 +1320,6 @@ line 4: Email: name@xyz.com}
 	even if he or she is computationally-unbounded and has been attacking
 	for an infinite long time, as long as one defend operation is enforced
 	after $2^{11}$ index calculations.
-
-	[TODO floating graph]
 
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
@@ -1420,55 +1407,41 @@ line 4: Email: name@xyz.com}
 
 \section{Conclusion}
 	To ensure the security of deterministic encryption
-	for low entropy information such as cellphone numbers,
-	a simple defender model is proposed. Though the result
-	of this model is not strictly proved, it gives a comprehensive
-	explanation how the security is ensured.
-	Based on defender model, defender system is implemented in LiveS Cube
-	system. To strictly prove its security in information theory,
-	a simple lower bound of conditional entropy is given.
-	Conditional entropy measures the difficulty for an adversary
-	to get the plain information from all the related information
-	he or she already has.
-	The proof shows that a relative high lower bound
-	under computationally-unbounded adversaries can be guaranteed
-	when the efficiency is also kept.
+	for low entropy PII such as cellphone numbers,
+	a defender model is proposed.
+	Based on that model, defender mechanism is implemented for a specific
+	OSN which uses cellphone numbers to generate an index. 
+	To strictly prove defender mechanism's security in information theory,
+	a lower bound of conditional entropy is given.
+	The proof is valid for even
+	computationally-unbounded adversaries
+	and at the same time the system's efficiency is also kept.
 	Asymptotically, suppose that the original entropy is $D$,
 	a lower bound for conditional entropy of $\Omega(D)$ can be
-	achieved when only one defend operation is required after
+	guaranteed when only one defend operation is required after
 	$2^{\Omega(D)}$ attacks.
-	And from the aspect of min-entropy, our proof shows that
-	such an adversary is expected to compromise our security
-	in a chance less than $2^{-\Omega(D)}$.
-	However, the simple lower bound derived
-	is believed to be not so tight according to an approximate lower bound 
-	and an experiment. The experiment shows that the lower bound
-	should be much higher even if a lot of things are ignored as
-	in the proof especially when attackers are allowed to do many
-	attacks before one defend operation. 
+	Based on min-entropy, our proof shows that
+	such an adversary only has an expected chance 
+	about $2^{-\Omega(D)}$ to guess the right plain text.
+	However, the lower bound derived
+	is believed to be not so tight. 
+	Conducted experiments confirm that the proved lower bound is valid while
+	the tight lower bound
+	should be much higher even if a lot of things are ignored.
 	
 	In sum, a strictly proved lower bound of conditional entropy
-	in defender system is given
+	under defender mechanism is given
 	and the tight lower bound should be still much higher than that.
 	So it's theoretically secured and should be more secured in practical.	
 	
-	Though defender system is now only used in specific LiveS Cube system,
-	it is believed that it will have a contribution to many other social
+	It is believed that
+	this defender system will have a contribution to many other online social
 	network systems because deterministic encryption for low entropy
-	information is undeniable when encrypted index or identity has to be made
-	from information that can be easily memorized by human. This system will
-	make it easy to eliminate security dependency of social network operators
-	or servers
+	PII is undeniable when encrypted index or identity has to be made
+	from information that can be easily memorized by human. This mechanism will
+	make it easy to achieve high security independent of social network operators
 	and meanwhile still keep the simplicity and easy accessibility of
-	client/server architecture than distributed architecture.
-	
-	In the future work, what conditional entropy really means to
-	real situation and what important and practical
-	result can we derive from the lower bound of
-	conditional entropy is worth researching.
-	It's also worthy to establish a tighter lower bound
-	for the system in the future, although this is
-	a little hard.
+	client/server architecture.
 
 % conference papers do not normally have an appendix
 
@@ -1507,18 +1480,13 @@ more thanks here
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEabrv,paper}
 
-\begin{thebibliography}{1}
-
-\bibitem{cond_entropy:1}
-Theresa M. Korn; Korn, Granino Arthur. \emph{Mathematical Handbook for Scientists and Engineers: 
-	Definitions, Theorems, and Formulas for Reference and Review}. \hskip 1em plus
-  0.5em minus 0.4em\relax New York: Dover Publications. pp. 613¨C614. ISBN 0-486-41147-8.
-  
-\bibitem{cond_entropy:2}
-C. Arndt (2001). \emph{Information Measures: Information and its description in Science and Engineering)}. 
-\hskip 1em plus 0.5em minus 0.4em\relax Berlin: Springer. pp. 370¨C373. ISBN 3-540-41633-1.
-
-\end{thebibliography}
+%\begin{thebibliography}{1}
+%
+%\bibitem{cond_entropy:2}
+%C. Arndt (2001). \emph{Information Measures: Information and its description in Science and Engineering)}. 
+%\hskip 1em plus 0.5em minus 0.4em\relax Berlin: Springer. pp. 370¨C373. ISBN 3-540-41633-1.
+%
+%\end{thebibliography}
 
 % that's all folks
 \end{document}

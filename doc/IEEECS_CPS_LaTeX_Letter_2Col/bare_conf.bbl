@@ -21,9 +21,20 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{math_book}
+G.~A. Korn and T.~M. Korn, \emph{Mathematical Handbook for Scientists and
+  Engineers: Definitions, Theorems, and Formulas for Reference and
+  Review}.\hskip 1em plus 0.5em minus 0.4em\relax New York: Dover, 2000.
+
+\bibitem{info_measure}
+C.~Arndt, \emph{Information Measures: Information and its description in
+  Science and Engineering)}.\hskip 1em plus 0.5em minus 0.4em\relax Berlin:
+  Springer, 2001.
+
 \bibitem{entropy}
-C.~E. Shannon, ``A mathematical theory of communication,'' \emph{SIGMOBILE Mob.
-  Comput. Commun. Rev.}, vol.~5, no.~1, pp. 3--55, 2001.
+C.~E. Shannon, ``Mathematical handbook for scientists and engineers:
+  Definitions, theorems, and formulas for reference and review,''
+  \emph{SIGMOBILE Mob. Comput. Commun. Rev.}, vol.~5, no.~1, pp. 3--55, 2001.
 
 \bibitem{Russel02howto}
 A.~Russel, S.~Key, E.~Russell, and H.~Wang, ``How to fool an unbounded
@@ -71,5 +82,21 @@ J.~Anderson, C.~Diaz, J.~Bonneau, and F.~Stajano, ``Privacy-enabling social
   networking over untrusted networks,'' in \emph{WOSN '09: Proceedings of the
   2nd ACM workshop on Online social networks}.\hskip 1em plus 0.5em minus
   0.4em\relax New York, NY, USA: ACM, 2009, pp. 1--6.
+
+\bibitem{guide}
+\BIBentryALTinterwordspacing
+E.~McCallister, T.~Grance, and K.~Scarfone, ``Guide to protecting the
+  confidentiality of personally identifiable information (pii),'' 2010.
+  [Online]. Available:
+  \url{http://csrc.nist.gov/publications/nistpubs/800-122/sp800-122.pdf}
+\BIBentrySTDinterwordspacing
+
+\bibitem{charact}
+B.~Krishnamurthy and C.~E. Wills, ``Characterizing privacy in online social
+  networks.''
+
+\bibitem{leakage}
+B.~{Krishnamurthy} and C.~E. Wills, ``On the leakage of personally identifiable
+  information via online social networks.''
 
 \end{thebibliography}
