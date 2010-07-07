@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Arch Linux) (format=latex 2010.3.14)  6 JUL 2010 21:44
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Arch Linux) (format=latex 2010.3.14)  7 JUL 2010 22:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -199,81 +199,77 @@ LaTeX Font Info:    ... okay on input line 356.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 356.
 LaTeX Font Info:    ... okay on input line 356.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 412.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 413.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 470.
+(Font)              <7> on input line 506.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 470.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 471.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 471.
+(Font)              <5> on input line 506.
 
 [1
 
 
-] [2]
-Underfull \hbox (badness 6775) in paragraph at lines 710--716
+]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 631.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 631.
+ [2]
+Underfull \hbox (badness 6775) in paragraph at lines 720--726
 []\OT1/ptm/m/n/10 Define the set of cell-phone num-ber as $\OMS/cmsy/m/n/10 X \
 OT1/cmr/m/n/10 =
  []
 
 [3] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 886--894
-[]\OT1/ptm/m/n/10 There are func-tions
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 909--910
+Underfull \hbox (badness 10000) in paragraph at lines 921--922
 []\OT1/ptm/m/n/10 Candidate
  []
 
 
-Overfull \hbox (12.2201pt too wide) in paragraph at lines 943--943
+Overfull \hbox (12.2201pt too wide) in paragraph at lines 955--955
 [] 
  []
 
-** ATTENTION: \proof is deprecated (line 955). Use \IEEEproof instead.
-[5]
-Underfull \hbox (badness 1472) in paragraph at lines 1002--1005
+
+Underfull \hbox (badness 1472) in paragraph at lines 1013--1016
 []\OT1/ptm/m/n/10 To prove a lower bound of $\OML/cmm/m/it/10 p\OT1/cmr/m/n/10 
 (\OML/cmm/m/it/10 Y \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 \OT1/cmr/m/n/10 )$\OT1/
 ptm/m/n/10 , the fol-
  []
 
 
-Underfull \hbox (badness 4779) in paragraph at lines 1002--1005
+Underfull \hbox (badness 4779) in paragraph at lines 1013--1016
 \OT1/ptm/m/n/10 low-ing fact is used. $\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 Y \OT1
 /cmr/m/n/10 = \OML/cmm/m/it/10 \OT1/cmr/m/n/10 )$ \OT1/ptm/m/n/10 is equiv-a-l
 ent to
  []
 
-** ATTENTION: \proof is deprecated (line 1018). Use \IEEEproof instead.
-
-Overfull \hbox (2.50706pt too wide) in paragraph at lines 1024--1024
+[5]
+Overfull \hbox (2.50706pt too wide) in paragraph at lines 1035--1035
 [] 
  []
 
-** ATTENTION: \proof is deprecated (line 1071). Use \IEEEproof instead.
 [6]
-Underfull \hbox (badness 1917) in paragraph at lines 1134--1142
-\OT1/ptm/m/n/10 ing pri-mary im-age's con-di-tional en-tropy has a lower
+Underfull \hbox (badness 2635) in paragraph at lines 1160--1163
+[]\OT1/ptm/m/n/10 The sim-ple lower bound we proved when $\OML/cmm/m/it/10 m \O
+T1/cmr/m/n/10 =
  []
 
 File: lb_m.eps Graphic file (type eps)
-<lb_m.eps> [7]
+<lb_m.eps>
 File: p13.eps Graphic file (type eps)
  <p13.eps>
 File: p14.eps Graphic file (type eps)
- <p14.eps>
+ <p14.eps> [7]
 File: p11.eps Graphic file (type eps)
- <p11.eps> [8] [9] (./bare_conf.bbl
+ <p11.eps> [8] (./bare_conf.bbl
 Missing character: There is no ¡ in font ptmri7t!
 Missing character: There is no ¯ in font ptmri7t!
-)
-Missing character: There is no ¨ in font ptmr7t!
-Missing character: There is no ¨ in font ptmr7t!
 
+Underfull \hbox (badness 4543) in paragraph at lines 88--93
+\OT1/ptm/m/n/9 Avail-able: http://csrc.nist.gov/publications/nistpubs/800-
+ []
+
+[9])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -285,14 +281,16 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[10] (./bare_conf.aux) ) 
+[10
+
+] (./bare_conf.aux) ) 
 Here is how much of TeX's memory you used:
- 1882 strings out of 493848
- 26940 string characters out of 3154002
- 97422 words of memory out of 3000000
- 5188 multiletter control sequences out of 15000+200000
+ 1885 strings out of 493848
+ 26958 string characters out of 3154002
+ 96422 words of memory out of 3000000
+ 5191 multiletter control sequences out of 15000+200000
  28205 words of font info for 63 fonts, out of 3000000 for 9000
  717 hyphenation exceptions out of 8191
  27i,16n,20p,216b,299s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on bare_conf.dvi (10 pages, 69276 bytes).
+Output written on bare_conf.dvi (10 pages, 66096 bytes).
