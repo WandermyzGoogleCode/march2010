@@ -17,7 +17,8 @@ p13 = plm(13);
 p14 = plm(14);
 
 GO13 = function(){
-	plot(x, p13, type="b", xlab="d", ylab="p1*p2*p3", pch=0, cex.lab=1.2);
+	plot(x, p13, type="b", xlab="number of lucky updates: d", 
+		ylab="possibility: p1*p2*p3", pch=0, cex.lab=1.2);
 	lines(d13, type="b", pch=3);
 	legend(1, 0.8, c("experimental result", "simple lower bound"), 
 		bty="n", pch=c(3, 0), cex=1.2);
@@ -25,8 +26,8 @@ GO13 = function(){
 }
 
 GO14 = function(){
-	plot(x, p14, type="b", ylim=c(0,1), xlab="d", 
-		ylab="p1*p2*p3", cex.lab=1.2, pch=0);
+	plot(x, p14, type="b", ylim=c(0,1), xlab="number of lucky updates: d", 
+		ylab="possibility: p1*p2*p3", cex.lab=1.2, pch=0);
 	lines(d14, type="b", pch=3);
 	legend(2, 0.3, c("experimental result", "simple lower bound"), 
 		bty="n", pch=c(3, 0), cex=1.2);
@@ -34,7 +35,8 @@ GO14 = function(){
 }
 
 GO11 = function(){
-	plot(x, p11, type="b", xlab="d", ylab="p1*p2*p3", pch=0);
+	plot(x, p11, type="b", xlab="number of lucky updates: d", 
+		ylab="possibility: p1*p2*p3", cex.lab=1.2, pch=0);
 	lines(d11, type="b", pch=3);
 	legend(1, 0.9, c("experimental result", "simple lower bound"), 
 		bty="n", pch=c(3, 0), cex=1.2);
