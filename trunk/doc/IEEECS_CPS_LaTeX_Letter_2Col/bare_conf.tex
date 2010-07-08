@@ -366,17 +366,17 @@
 % use a multiple column layout for up to two different
 % affiliations
 
-\author{\IEEEauthorblockN{Authors Name/s per 1st Affiliation (Author)}
-\IEEEauthorblockA{line 1 (of Affiliation): dept. name of organization\\
-line 2: name of organization, acronyms acceptable\\
-line 3: City, Country\\
-line 4: Email: name@xyz.com}
-\and
-\IEEEauthorblockN{Authors Name/s per 2nd Affiliation (Author)}
-\IEEEauthorblockA{line 1 (of Affiliation): dept. name of organization\\
-line 2: name of organization, acronyms acceptable\\
-line 3: City, Country\\
-line 4: Email: name@xyz.com}
+\author{\IEEEauthorblockN{Yuqian Li, Yang Liu, Zhifang Liu, Zhen Chen}
+\IEEEauthorblockA{Computer Science and Technology Department\\
+Tsinghua University\\
+Beijing, China\\
+liyuqian79@gmail.com}
+%\and
+%\IEEEauthorblockN{Authors Name/s per 2nd Affiliation (Author)}
+%\IEEEauthorblockA{line 1 (of Affiliation): dept. name of organization\\
+%line 2: name of organization, acronyms acceptable\\
+%line 3: City, Country\\
+%line 4: Email: name@xyz.com}
 }
 
 % conference papers do not typically use \thanks and this command
@@ -435,7 +435,7 @@ line 4: Email: name@xyz.com}
 	A lower bound for conditional entropy
 	against a computationally-unbounded adversary is guaranteed.
 	Besides, experiments are conducted to evaluate our result and
-	they confirm that the lower bound is valid while not so tight.
+	they confirm that the lower bound is valid.
 	The essential meaning of the lower bound is also
 	given based on min-entropy.
 	
@@ -490,10 +490,10 @@ security;
 	
 	Although seems to be safe, deterministic encryption is 
 	vulnerable to dictionary attacks, especially
-	on a level that is not dependent on SNO.
+	on a level that is independent on SNO.
 	To put it simple, the online identification system explicitly
 	allows for dictionary attack, because the system can hardly tell
-	the difference between a normal human or SNO behaviour and a carefully 
+	the difference between a normal human behaviour and a carefully 
 	designed automatic brute force dictionary attack. A dictionary
 	attack that simulates normal human behaviour and enumerates all
 	possible values of PII's plain text is feasible unless the encryption
@@ -620,12 +620,12 @@ security;
 	
 	Entropic security is introduced by Russel and Wang\cite{Russel02howto} to define
 	whether the cipher text leak any predicate of the plain text. However,
-	it requires that the distribution on messages must have high entropy from
+	it requires messages to have high entropy from
 	the adversary's point of view. Similar entropic condition had been
 	achieved in hash functions by Canetti et al\cite{Canetti97towardsrealizing, Canetti_perfectlyone-way}. 
 	Hash functions are
 	considered to be equivalent as deterministic encryption discussed in this
-	paper: anyone could easily get a deterministic cipher text from a
+	paper: anyone could get a deterministic cipher text from a
 	given plain text, but it's hard to find the corresponding plain text
 	for a given cipher text. Entropic security has been further 
 	studied by \cite{entropic_wang}
@@ -645,8 +645,8 @@ security;
 	where $H(X)$ is the entropy of $X$ and $H(X|Y)$ is the conditional entropy
 	of $X$ given $Y$ (See definition \ref{def_entropy}, \ref{def_con_entropy}).
 	In their researches, $X$ is the plain text and $Y$ is the cipher text.
-	and whether $I(X, Y)$ is large is the key to the security they defined.
-	Note that the requirement that $I(X, Y)$ is small
+	Whether $I(X, Y)$ is small is key to the security they defined.
+	Note that $I(X, Y)$ is small
 	is equivalent to that $H(X|Y)$ is large. So $I(X, Y)$ itself does not have any problem.
 	The problem is what $Y$ is.
 	If $Y$ is only the cipher text, it's not suitable for the case that $H(X)$ is small.
@@ -670,9 +670,9 @@ security;
 		Once enough information is achieved by attacker, 
 		the security is compromised.
 		
-		Initially, the attacker knows nothing. And after
+		Initially, the attacker knows nothing. After
 		each attack, the information gained
-		is described as a function $f_A$, so we define:
+		is described as a function $f_A$, so define:
 		\begin{align}
 			I_0 &= 0\\
 			I_n &= f_A(I_{n-1})\label{AONLY}
@@ -695,9 +695,9 @@ security;
 		a large $m$ is secured if the attacker is computationally-bounded.
 		
 		However, in some situations, $m$ is very small so
-		we must introduce a defender to against that attacker. 
+		a defender is introduced against that attacker. 
 		The defender's action is also described as a function $f_D$
-		so the equation(\ref{AONLY}) above becomes:
+		so the equation(\ref{AONLY}) becomes:
 		\begin{align}
 			I_n = f_A(f_D(I_{n-1}))
 		\end{align}
@@ -710,15 +710,15 @@ security;
 		attacker in a constant rate will be effective. With
 		that defender,
 		the equation(\ref{AONLYE}) becomes
-		\begin{align}
+		\begin{equation}
 			I_n = f_D(I_{n-1})+c = I_{n-1}/d+c
-		\end{align}
+		\end{equation}
 		Here $d > 1$ is the rate to reduce the information.
 		It can be easily conducted that:
-		\begin{align*}
-			\lim_{n \rightarrow \infty} I_n &= \lim_{n \rightarrow \infty} \sum_{0 \leq i < n} \frac{c}{d^i}
-				= \frac{c}{d-1}
-		\end{align*}
+		\begin{equation*}
+			\lim_{n \rightarrow \infty} I_n = \lim_{n \rightarrow \infty} \sum_{0 \leq i < n} \frac{c}{d^i}
+				= \frac{d \cdot c}{d-1}
+		\end{equation*}
 		
 		This means that for a small $d$ such as $2$, even $c$ is as large as
 		$0.1$ and the attacker is computationally-unbounded, security will
@@ -727,11 +727,11 @@ security;
 	\subsection{Defender Mechanism}\label{sec_ds}
 		Inspired by defender model, the defender mechanism is implemented
 		in a specific OSN
-		which has to generate an encrypted index
-		from a given PII. That PII are cellphone numbers
+		which generates encrypted indexes
+		from given PII. That PII are cellphone numbers
 		in that specific OSN and the defender mechanism is to prevent attackers
 		from knowing the corresponding cellphone number from its index.
-		The defender mechanism also applies to other PII and cellphone numbers are introduced
+		The defender mechanism also applies to other PII so cellphone numbers are introduced
 		in this paper only for some concrete analysis and a better understanding.
 		
 		Define the set of cellphone number as 
@@ -817,9 +817,9 @@ security;
 		\begin{mydef}[Entropy]\label{def_entropy}
 			The entropy of a discrete random variable $X$ with
 			possible values $\{x_1, x_2, \ldots, x_n\}$ is
-			\begin{align}
+			\begin{equation}
 				H(X) = -\sum_{i=1}^n p(x_i)\log p(x_i)
-			\end{align}
+			\end{equation}
 			where $\log$ refers to $\log_2$ in our context.
 		\end{mydef}
 		
@@ -885,7 +885,7 @@ security;
 		
 		Therefore, $H(X | Y^{(m)})$ can be calculated as:
 		\begin{align*}
-			H(X | Y^{(m)}) &= \sum_{y \in \mathcal Y^{(m)}} p(y) H(x | Y^{(m)} = y)\\
+			H(X | Y^{(m)}) %&= \sum_{y \in \mathcal Y^{(m)}} p(y) H(x | Y^{(m)} = y)\\
 				&= \sum_{h^* \in y} p(y) H(x | Y^{(m)} = y) + \\
 					& \;\;\;\; \sum_{h^* \notin y} p(y) H(x | Y^{(m)} = y)\\
 				&= 0+\frac{\binom{n-1}{m}}{\binom{n}{m}} \log(n-m)\\
@@ -944,9 +944,9 @@ security;
 			\end{align*}
 			Here $h^*$ is the index that attacker wants to know its primary image
 			$x^*$ such that $f_0(x^*) = h^*$. And collision sets are $K_0, K_1, K_2, \ldots$ where
-			\begin{align*}
+			\begin{equation*}
 				K_i = \{h | f_i(x) = h \text{ is enumerated by attacker and } h \in C_i \}
-			\end{align*}
+			\end{equation*}
 		\end{mydef}
 		
 		The candidate set $C_i$ can be described as the set of indexes 
@@ -1001,7 +1001,7 @@ security;
 			by the attacker or not.
 			Then
 			\begin{align*}
-				H(X | Y_d = \alpha) &= H(A)\\
+				H(X | Y_d = \alpha) %&= H(A)\\
 					&\geq H(A | B)\\
 					&\geq p(B = false) \cdot H(A | B = false)
 			\end{align*}
@@ -1019,13 +1019,12 @@ security;
 					&= \frac{(n-dm)\ldots(n-dm-m+1)}{n(n-1)\ldots(n-m+1)}\\
 					&\geq (\frac{n-dm-m+1}{n-m+1})^m\\
 					&= (1-\frac{dm}{n-m+1})^m\\
-					&\geq 1-\frac{dm^2}{n-m+1}
+					&\geq 1-\frac{dm^2}{2^D-m+1}
 			\end{align*}
 			
 			So finally:
 			\begin{align*}
 				H(X | Y_d = \alpha) &\geq p(B = false) \cdot H(A | B = false)\\
-					&\geq d \cdot (1-\frac{dm^2}{n-m+1})\\
 					&= d \cdot (1-\frac{dm^2}{2^D-m+1})
 			\end{align*}
 		\end{IEEEproof}
@@ -1087,8 +1086,7 @@ security;
 			p(|C_d| = 2^d) &\geq P^d\\
 				&\geq (\frac{n-2^{d-1}}{n-1})^{d \cdot 2^{d-1}}\\
 				&= (1-\frac{2^{d-1}+1}{n-1})^{d \cdot 2^{d-1}}\\
-				&\geq 1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{n-1}\\
-				&= 1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{2^D-1}
+				&\geq 1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{2^D-1}
 			\end{align*}
 		\end{IEEEproof}
 		
@@ -1113,9 +1111,9 @@ security;
 		By putting them together, here comes the lower bound
 		\begin{align*}
 			H(X | Y_d) &\geq p(Y_d = \alpha) \cdot H(X | Y_d = \alpha)\\
-				&= p(|C_d| = 2^d) \\
+				&= H(X | Y_d = \alpha) \cdot p(|C_d| = 2^d) \\
 					&\;\;\;\;\;\; \cdot p(|K_i| = 0	\; (0 \leq i < d) \; \backslash \; |C_d| = 2^d) \\
-					&\;\;\;\;\;\; \cdot H(X | Y_d = \alpha)\\
+					%&\;\;\;\;\;\; \cdot H(X | Y_d = \alpha)\\
 				&\geq (1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{2^D-1})\\
 					&\;\;\;\;\;\; \cdot (1-\frac{2^{d-1}m d}{2^D-m+1}) 
 					\cdot (1-\frac{dm^2}{2^D-m+1}) \cdot d \\
@@ -1181,7 +1179,7 @@ security;
 		
 		\begin{figure}[!t]
 		\centering
-		\includegraphics[width=3in]{lb_m.eps}
+		\includegraphics[width=3in, trim=0mm 0mm 0mm 20mm]{lb_m.eps}
 		\caption{Lower Bound over d}\label{lb_m}
 		\end{figure}		
 
@@ -1213,14 +1211,8 @@ security;
 		In our proof above, $p_1$,
 		$p_2$ and $p_3$ are 
 		three key points to the final result.
-		Lower bound for each of them has been proved:
-		\begin{align*}
-			p_1 &\geq 1-\frac{d \cdot 2^{2d-2}+d \cdot 2^{d-1}}{2^D-1}\\
-			p_2 &\geq 1-\frac{m^2}{2^D-dm+1}\\
-			p_3 &\geq 1-\frac{m^2}{2^D-2^{d-1}+1}
-		\end{align*}
-		
-		Lower bound $H(X | Y_d)$ is achieved by:
+		Lower bound for each of them has been proved
+		and lower bound of $H(X | Y_d)$ is achieved by:
 		\begin{align*}
 			H(X | Y_d) &\geq p_1 \cdot p_2 \cdot p_3 \cdot d
 				\geq B(D, m, d)
@@ -1236,25 +1228,23 @@ security;
 		for $10000$ times and records the number of successful events
 		to estimate the possibility $p_1 \cdot p_2 \cdot p_3$.
 		
-		Figure \ref{p13} shows the result when $m = 2^{13}$
+		Figure \ref{p13}, \ref{p14} show the result when $m = 2^{13}, 2^{14}$
 		
 		\begin{figure}[!t]
 		\centering
-		\includegraphics[width=3in]{p13.eps}
+		\includegraphics[width=3in, trim=0mm 0mm 0mm 20mm]{p13.eps}
 		\caption{$p_1 \cdot p_2 \cdot p_3$ when $m = 2^{13}$}\label{p13}
 		\end{figure}
 
-		It can be seen that the simple lower bound is not too
-		far away from the experimental result when $m = 2^{13}$.
-		
-		Figure \ref{p14} shows the result when $m = 2^{14}$.
 		\begin{figure}[!t]
 		\centering
-		\includegraphics[width=3in]{p14.eps}
+		\includegraphics[width=3in, trim=0mm 0mm 0mm 20mm]{p14.eps}
 		\caption{$p_1 \cdot p_2 \cdot p_3$ when $m = 2^{13}$}\label{p14}
 		\end{figure}
 		
-		It seems that when $m$ is large, the simple lower bound
+		It can be seen that the simple lower bound is not too
+		far away from the experimental result when $m = 2^{13}$.		
+		However when $m = 2^{14}$, the simple lower bound
 		estimated is much smaller than experimental result. Therefore,
 		there is still plenty of room to improve the lower bound
 		to make it tight, even if $H(X | Y_d = \beta)$ and $H(A | B = true)$ 
@@ -1267,15 +1257,15 @@ security;
 		
 		To check that the simple lower bound is far from the experimental
 		result only for large $m$, one more experiment is conducted
-		for $m = 2^{11}$ and is shown in figure \ref{p11}.
+		for $m = 2^{11}$ and shown in figure \ref{p11}
+		which confirms that our estimation
+		of $p_1, p_2, p_3$ is correct and accurate for small $m$.
+
 		\begin{figure}[!t]
 		\centering
-		\includegraphics[width=3in]{p11.eps}
+		\includegraphics[width=3in, trim=0mm 0mm 0mm 20mm]{p11.eps}
 		\caption{$p_1 \cdot p_2 \cdot p_3$ when $m = 2^{11}$}\label{p11}
 		\end{figure}
-		
-		Two lines are very close so it's confirmed that our estimation
-		of $p_1, p_2, p_3$ is correct and accurate for small $m$.
 		
 		In sum, it has been evaluated that our simple lower bound
 		is valid while it is not so tight even if we ignore
@@ -1314,7 +1304,7 @@ security;
 	And it's $2^{-10}$ in the special case for $D = 32$ and $m = 2^{12}$.
 	
 	Since $h$ is either $d$ or $0$ in our proof,
-	the conditional min-entropy $H_\infty(X | Y)$ is
+	$H_\infty(X | Y)$ is
 	\begin{align*}
 		E\left(H_\infty(X | Y = y)\right) &= p\left(H_\infty(X | Y = y) = d\right) \cdot d\\
 		 &= p_1 \cdot p_2 \cdot p_3 \cdot d
@@ -1442,10 +1432,7 @@ security;
 	the tight lower bound
 	should be much higher even if a lot of things are ignored.
 	
-	In short, a strictly proved lower bound of conditional entropy
-	for defender mechanism is given
-	and the tight lower bound should be still much higher than that.
-	So it's theoretically secured and should be more secured in practical.	
+	In short, it's theoretically secured and should be more practically secured.	
 	
 % conference papers do not normally have an appendix
 
