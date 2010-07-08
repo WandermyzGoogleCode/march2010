@@ -964,18 +964,20 @@ security;
 			$Y_d = \alpha$ means that $|C_d| = 2^d$
 			and $|K_i| = 0~(0 \leq i < d)$.
 			Otherwise $Y_d = \beta$.
+			Here $d$ is a parameter to denote the number
+			of updates that defender mechanism is lucky.
 		\end{mydef}
 		
 		By the definition of conditional entropy,
 		\begin{align*}
-			H(X|Y) &= p(Y = \alpha) H(X | \alpha) + p(Y = \beta) H(X | \beta)\\
-				&\geq p(Y = \alpha) H(X | \alpha) + 0
+			H(X|Y_d) &= p(Y_d = \alpha) H(X | \alpha) + p(Y_d = \beta) H(X | \beta)\\
+				&\geq p(Y_d = \alpha) H(X | \alpha) + 0
 		\end{align*}
 		
 		To prove a simple lower bound, three lemmas are proposed.
-		The first one shows a lower bound of $H(X | Y = \alpha)$
-		and the other two for a lower bound of $p(Y = \alpha)$.
-		The lower bound of $H(X | Y)$ is achieved by putting
+		The first one shows a lower bound of $H(X | Y_d = \alpha)$
+		and the other two for a lower bound of $p(Y_d = \alpha)$.
+		The lower bound of $H(X | Y_d)$ is achieved by putting
 		them together.
 		
 		\begin{mylemma}\label{lem1}

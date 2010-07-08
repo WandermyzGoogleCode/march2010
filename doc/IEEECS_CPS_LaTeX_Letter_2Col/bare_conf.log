@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Arch Linux) (format=latex 2010.3.14)  8 JUL 2010 16:24
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Arch Linux) (format=latex 2010.3.14)  8 JUL 2010 16:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -382,29 +382,29 @@ Underfull \hbox (badness 10000) in paragraph at lines 938--939
  []
 
 [4]
-Underfull \vbox (badness 2961) has occurred while \output is active []
+Underfull \vbox (badness 1436) has occurred while \output is active []
 
 
-Underfull \hbox (badness 1472) in paragraph at lines 1031--1034
+Underfull \hbox (badness 1472) in paragraph at lines 1033--1036
 []\OT1/ptm/m/n/10 To prove a lower bound of $\OML/cmm/m/it/10 p\OT1/cmr/m/n/10 
 (\OML/cmm/m/it/10 Y \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 \OT1/cmr/m/n/10 )$\OT1/
 ptm/m/n/10 , the fol-
  []
 
 
-Underfull \hbox (badness 4779) in paragraph at lines 1031--1034
+Underfull \hbox (badness 4779) in paragraph at lines 1033--1036
 \OT1/ptm/m/n/10 low-ing fact is used. $\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 Y \OT1
 /cmr/m/n/10 = \OML/cmm/m/it/10 \OT1/cmr/m/n/10 )$ \OT1/ptm/m/n/10 is equiv-a-l
 ent to
  []
 
 
-Overfull \hbox (2.50706pt too wide) in paragraph at lines 1053--1053
+Overfull \hbox (2.50706pt too wide) in paragraph at lines 1055--1055
 [] 
  []
 
 [5]
-Underfull \hbox (badness 2229) in paragraph at lines 1123--1132
+Underfull \hbox (badness 2229) in paragraph at lines 1125--1134
 []\OT1/ptm/m/n/10 Note that $\OML/cmm/m/it/10 Y[]$ \OT1/ptm/m/n/10 here con-tai
 ns all in-for-ma-tion that a
  []
@@ -414,14 +414,14 @@ File: lb_m.eps Graphic file (type eps)
 File: p13.eps Graphic file (type eps)
  <p13.eps>
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 1242.
+(Font)              <8> on input line 1244.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 1242.
+(Font)              <6> on input line 1244.
 File: p14.eps Graphic file (type eps)
  <p14.eps> [7]
 File: p11.eps Graphic file (type eps)
  <p11.eps>
-Underfull \hbox (badness 1622) in paragraph at lines 1425--1442
+Underfull \hbox (badness 1622) in paragraph at lines 1427--1444
 []\OT1/ptm/m/n/10 This pa-per mainly fo-cuses on anal-y-sis of this de-
  []
 
@@ -447,22 +447,15 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1494.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1496.
 [9
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1494.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1496.
  (./bare_conf.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1494.
-
-
-Package rerunfilecheck Warning: File `bare_conf.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `bare_conf.out':
-(rerunfilecheck)             Before: 4C79D1AD7E2FCBD3484675E564D30838;1002
-(rerunfilecheck)             After:  4F2BC645DD3E88EB4EA050E2C47833D0;1002.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1496.
+Package rerunfilecheck Info: File `bare_conf.out' has not changed.
+(rerunfilecheck)             Checksum: 4F2BC645DD3E88EB4EA050E2C47833D0;1002.
  ) 
 Here is how much of TeX's memory you used:
  5464 strings out of 493848
@@ -473,4 +466,4 @@ Here is how much of TeX's memory you used:
  717 hyphenation exceptions out of 8191
  32i,16n,28p,244b,424s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on bare_conf.dvi (9 pages, 80636 bytes).
+Output written on bare_conf.dvi (9 pages, 80820 bytes).

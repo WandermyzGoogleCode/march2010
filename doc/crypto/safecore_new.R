@@ -23,10 +23,10 @@ legendStr = c(paste("max(H | m = 2^11) =", as.character(max(y1))),
 		  paste("max(H | m = 2^14) =", as.character(max(y4)))
 )
 
-xlabStr = "d";
-ylabStr = "H(X | Y_d)"	
+xlabStr = "number of lucky updates: d";
+ylabStr = "conditional entropy: H(X | Y_d)"	
 	
-plot(d, y1, type="b", xlab = xlabStr, ylab = ylabStr, pch=1);
+plot(d, y1, type="b", xlab = xlabStr, ylab = ylabStr, pch=1, cex.lab=1.2);
 lines(d, y2, type="b", pch=24);
 lines(d, y3, type="b", pch=20);
 lines(d, y4, type="b", pch=0);
