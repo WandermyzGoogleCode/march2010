@@ -357,7 +357,8 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Analysis of a Novel Mechanism for Securing Low Entropy PII}
+\title{The Power of Refresh: a Novel Mechanism for Securing Low Entropy PII}
+%\title{Analysis of a Novel Mechanism for Securing Low Entropy PII}
 %\title{Dictionary Attack Resistant System for Low Entropy PII}
 
 
@@ -422,13 +423,12 @@ line 4: Email: name@xyz.com}
 	Deterministic encryption, however, 
 	is indispensable in the generation of hash or index of PII.
 	
-	This paper presents a novel mechanism to frustrate such attack attempts. 
-	This novel mechanism adopts an updatable piece of hardware 
-	obfuscator to the encryption schema.
-	The adoption of this obfuscator will add an extra layer of security 
-	to the method of deterministic encyption.
-	In this paper, we mainly focus on analysis of this mechanism.
-	To prove the theoretical security of that mechanism,
+	This paper briefly presents a novel model as well as
+	its implementation to frustrate dictionary attacks
+	by refreshing the encryption in an external blackbox.	
+	The major part of this paper is about the analysis
+	of this novel mechanism.
+	To prove the security  theoretically,
 	conditional entropy is used in this paper which
 	measures the difficulty for an adversary to
 	derive the PII given all related information achieved during attacks.
@@ -461,18 +461,18 @@ security;
 
 
 \section{Introduction}
-% no \IEEEPARstart
-	To be easily remembered by humans, 
-	personally identifiable information (PII) often has
-	a very low entropy (e.g. cellphone numbers).
-	As online social networks (OSN) become more and more popular,
+% no \IEEEPARstart 
+	Personally identifiable information (PII) often has
+	a very low entropy (e.g. cellphone numbers) for human memorization.
+	In online social networks (OSN), PII is the information
+	to identify a particular user, such as the usernames like cellphone numbers,
+	email addresses.	
+	As OSN become more and more popular,
 	protecting PII leakage from both social network operators (SNO)
 	and other users is more important than ever.
-	For most OSN, PII is only an information to identify
-	the user for login, searching, establishing relations among
-	users. So OSN could use cipher text generated from PII's plain text
-	to prevent leakage. However, to guarantee the functionality and efficiency,
-	the encryption must be deterministic for fast indexing and identifying.
+	OSN could use deterministic encryption of PII,
+	because it both protects the plain text and provides quick identification
+	and indexing.
 
 %	Deterministic encryption for an information from
 %	a very small domain set is important for some social
@@ -488,69 +488,75 @@ security;
 %	someone getting the corresponding cellphone number from its index 
 %	is the base of the system.
 	
-	But the security
-	of such deterministic encryption is hard to be guaranteed, especially
+	Although seems to be safe, deterministic encryption is 
+	vulnerable to dictionary attacks, especially
 	on a level that is not dependent on SNO.
-	It's true that the encryption could use a very strong key and algorithm
-	so it's almost impossible to enumerate the right key to convert cipher text
-	to plain text.
-	However, the function to get the corresponding
-	cipher text from a given plain text must be permitted for
-	social network operators and users, otherwise the social network
-	system could not operate.
-	Therefore, dictionary attack can enumerate all possible values
+	To put it simple, the online identification system explicitly
+	allows for dictionary attack, because the system can hardly tell
+	the difference between a normal human or SNO behaviour and a carefully 
+	designed automatic brute force dictionary attack. A dictionary
+	attack that simulates normal human behaviour and enumerates all
+	possible values of PII's plain text is feasible unless the encryption
+	schema changes. But a change of encryption schema is impossible
+	for both cost and user-convenience considerations.	
+	
+	Once after the dictionary attack has enumerated all possible values
 	of PII's plain text and establish a table maps any cipher text
-	to its plain text as long as the encryption
-	does not change. In such case, the conditional entropy \cite{math_book, info_measure} 
-	of cipher text's corresponding plain text given that table
-	is $0$ since there's no uncertainty for the adversary.
+	to its plain text, the conditional entropy \cite{math_book, info_measure}
+	which measures the uncertainty of the plain text given
+	its corresponding cipher text and that table, is $0$.
 	Even for PII which has a quite high entropy, a
 	computationally-unbounded adversary could establish that table
 	and the conditional entropy drops to $0$ again. 
 	So conditional entropy given
-	all the information that adversary could gain during attacks
+	all information achieved by adversary during attacks
 	could better describe the security of PII than its entropy.
 	
 	Therefore, even for very low entropy PII, 
 	there is still possibility to ensure the
 	theoretical security by giving a lower bound for conditional entropy.
-	The defender model is proposed to achieve that goal.
+	This paper presents a defender model to achieve that goal.
 	Inspired by that model, a defender mechanism is designed and implemented
 	in an OSN system which uses cellphone numbers
 	to identify users and establish social networks.
-	Only some key points about how to design and implement that mechanism
-	are described here because this paper is mainly focus on the analysis.
+	After a brief description of defender model and mechanism,
+	this paper mainly focuses on the analysis of that mechanism.
 	The analysis shows that a lower bound 
 	of conditional entropy could be given in an efficient way: suppose that the original entropy
 	is $D$, a lower bound of $\Omega(D)$ can be guaranteed
 	by performing one defend operation after $2^{\Omega(D)}$ 
 	dictionary attacks.
-	Experiments are also conducted to evaluate the lower bound and they confirm that
+	Experiments conducted confirm that
 	our lower bound is valid but far from tight in some cases. At last, the essential
 	meaning of our conditional entropy's lower bound is given based on min-entropy: 
 	the expected chance to guess the right plain text is only $2^{-\Omega(D)}$ for
 	a computationally-unbounded adversary.
 	
-	In conclusion, the major contributions are as follows: 
-	\begin{enumerate}
-		\item To secure low entropy PII's deterministic encryption, 
-		defender model and mechanism are proposed.
-		\item To analysis defender mechanism's security,
-		a proof of conditional entropy's lower bound
-		is given.
-		\item Experiments
-		are conducted to evaluate our analysis.
-	\end{enumerate}
+%	In conclusion, the major contributions are as follows: 
+%	\begin{enumerate}
+%		\item To secure low entropy PII's deterministic encryption, 
+%		defender model and mechanism are proposed.
+%		\item To analysis defender mechanism's security,
+%		a proof of conditional entropy's lower bound
+%		is given.
+%		\item Experiments
+%		are conducted to evaluate our analysis.
+%	\end{enumerate}
 	
 	The rest of this paper is organized as follows.
-	Related work about entropic security
-	and privacy problems in OSN are reviewed in section 2. In
-	section 3, defender model and mechanism are introduced. 
-	A proof and some experiments for the
-	lower bound of conditional entropy are given in section 4, 
-	along with the essential
-	meaning of our result based on min-entropy. 
-	At last, we conclude the paper in section 5.	
+	Section \ref{sec_rw} provides a literature review on privacy problems in OSN and 
+	entropic security. Section \ref{sec_def} introduces the defender model and mechanism.
+	Section \ref{sec_proof} provides a theoretical proof as well as experiments and analysis
+	of its essential meaning.
+	
+%	Related work about entropic security
+%	and privacy problems in OSN are reviewed in section 2. In
+%	section 3, defender model and mechanism are introduced. 
+%	A proof and some experiments for the
+%	lower bound of conditional entropy are given in section 4, 
+%	along with the essential
+%	meaning of our result based on min-entropy. 
+%	At last, we conclude the paper in section 5.	
 	
 %	In the first section, related work about entropic security
 %	and privacy problems in OSN are reviewed. 
@@ -564,13 +570,20 @@ security;
 % (should never be an issue)
 
 \section{Related Work}	\label{sec_rw}
-	\subsection{Privacy Problems in Online Social Network}		
-	In recent years, OSNs like Facebook is becoming more and more popular, 
-	so that users put a lot of their private information on the Internet, which leads 
-	to serious security problems \cite{lzf1, lzf2}. Meanwhile, more and more users
-	begin to be aware of that security based on well performed administrators and unhackable 
+	\subsection{Privacy Problems in Online Social Network}
+	There are two problems related to our work.	
+	
+	Firstly, security of online PII becomes an important concern \cite{lzf1, lzf2} because
+	of the growing popularity of OSNs, such as Facebook and
+	the growing tendency for users to share their information
+	on OSNs.
+	Meanwhile, more and more users
+	begin to be aware of that security based on well performed 
+	administrations and shielded
 	servers is not reliable since human mistakes, behavior of operators and server 
-	vulnerabilities are unpredictable. Distributed social networks have been proposed by 
+	vulnerabilities are unpredictable. 
+	
+	Distributed social networks have been proposed by 
 	Buchegger et al.\cite{lzf3, lzf4} to ensure distributed access control and
 	remove dependence on both the SNO(Social Network Operators) and other users.
 	In \cite{lzf5} a new architecture is proposed for the same purpose, 
@@ -579,9 +592,10 @@ security;
 	server/clients is proposed to make a social network with low entropy PII
 	(e.g. cellphone numbers) secure and trusted independent of both SNO and other users.
 	
-	Besides, traditional websites tend to encrypt only password of users in their database, 
-	but store plain text of PII. However, as more and more new OSN emerge every day, 
-	PII also worth being encrypted as well as password. \cite{guide}
+	Secondly, traditional websites tend to encrypt only password of users in their database, 
+	but store plain text of PII. However, as more and more new OSNs emerge every day, 
+	PII also worth being encrypted as well as password, otherwise
+	one OSN could be easily threatened by another OSN's PII and password leakage. \cite{guide}
 	explains the importance of protecting the confidentiality of PII (Personally 
 	Identifiable Information) and impacts of PII leakage in the 
 	context of information security. It also includes a list of confidentiality 
@@ -602,11 +616,11 @@ security;
 	\subsection{Entropy and Entropic Security}
 	Entropy\cite{entropy} measures the uncertainty of an information. Intuitively, it's easy to
 	understand: the cipher text is secured
-	if the adversary is uncertain with the plain text.
+	if the adversary is uncertain about the plain text.
 	
 	Entropic security is introduced by Russel and Wang\cite{Russel02howto} to define
 	whether the cipher text leak any predicate of the plain text. However,
-	it has to require the distribution on messages has high entropy from
+	it requires that the distribution on messages must have high entropy from
 	the adversary's point of view. Similar entropic condition had been
 	achieved in hash functions by Canetti et al\cite{Canetti97towardsrealizing, Canetti_perfectlyone-way}. 
 	Hash functions are
@@ -617,7 +631,7 @@ security;
 	studied by \cite{entropic_wang}
 	and its result applies to both encryption and hash functions.
 	
-	However, all their work only apply to high entropy messages.
+	However, all of their work only apply to high entropy messages.
 	While for low entropy message, 
 	one simple contradiction has already been
 	shown: enumerate all possible plain text and see which causes a collision
@@ -646,9 +660,9 @@ security;
 	gained by adversary during the dictionary attacks so a better analysis
 	for low entropy encryption is achieved.
 	
-\section{Defender Model and Mechanism}
+\section{Defender Model and Mechanism}\label{sec_def}
 	\subsection{Defender Model}
-		Defender model is a simple model that
+		The defender model is a simple model that
 		is not based on formal information theory.
 		The adversary is called attacker in this model
 		and can launch some attacks. After
@@ -693,7 +707,7 @@ security;
 		For attackers who enumerate all possibilities,
 		a defender 
 		who periodically reduces the information gained by
-		attacker in a constant rate would effective. With
+		attacker in a constant rate will be effective. With
 		that defender,
 		the equation(\ref{AONLYE}) becomes
 		\begin{align}
@@ -717,6 +731,8 @@ security;
 		from a given PII. That PII are cellphone numbers
 		in that specific OSN and the defender mechanism is to prevent attackers
 		from knowing the corresponding cellphone number from its index.
+		The defender mechanism also applies to other PII and cellphone numbers are introduced
+		in this paper only for some concrete analysis and a better understanding.
 		
 		Define the set of cellphone number as 
 		$\mathcal X = \{x | \text{$x$ is a cellphone number}\}$.
@@ -736,7 +752,9 @@ security;
 		for attacker so it has to make sure that the procedure to update the indexes
 		is untrackable.
 		In the specific OSN, indexes and corresponding encrypted user data entries are stored
-		in server's database. And we think attackers(e.g. SNO) may gain root access to 
+		in server's database. 
+		This paper suggests a scenario that attackers(e.g. SNO) already
+		escalated their privilege to root access for
 		both server and database. Therefore, the system has to send 
 		indexes and data entries to another 
 		secured module and get new indexes and encrypted data 
@@ -774,11 +792,11 @@ security;
 		The $m$ can be tuned in balance of security and the
 		efficiency.
 		
-\section{Analysis of Conditional Entropy}
-	In this section, a proof
-	will be given based on information theory to demonstrate the security of
-	defender mechanism under
-	a computationally-unbounded attacker.
+\section{Analysis of Conditional Entropy}\label{sec_proof}
+	This section gives out a proof of the defender mechanism 
+	and a demonstration
+	of its security under a computationally-unbounded attacker
+	in information theory.
 	
 	The first subsection below will demonstrate the definition
 	of entropy and conditional entropy along with some
@@ -808,7 +826,7 @@ security;
 		Correspondingly, in defender mechanism, define
 		\begin{mydef}\label{def2}
 			$\mathcal{X} = \{x_1, x_2, \ldots, x_n\}$ is the set of all possible 
-			primary images(cellphone numbers
+			primary images(i.e. PII, and cellphone numbers
 			in our specific OSN) that index $h_i = f(x_i)$ can be calculated.
 			For convenience, define $n = 2^D$.
 			Suppose $h^*$ is the index that attacker wants to
@@ -1398,15 +1416,17 @@ security;
 \section{Conclusion}
 	To ensure the security of deterministic encryption
 	for low entropy PII such as cellphone numbers,
-	a defender model is proposed.
-	Based on that model, defender mechanism is implemented for a specific
+	this paper briefly presents a novel defender model as well
+	as a defender mechanism implemented for a specific
 	OSN which uses cellphone numbers to generate encrypted indexes. 
-	In this paper, we mainly focus on analysis of this mechanism.
-	To strictly prove defender mechanism's security in information theory,
-	a lower bound of conditional entropy is given.
-	The proof is valid for even
-	computationally-unbounded adversaries
-	and at the same time the system's efficiency is also kept.
+	The defender mechanism also applies to PII other than
+	cellphone numbers.
+	
+	This paper mainly focuses on analysis of this defender mechanism.
+	A lower bound of conditional entropy is calculated to
+	prove the mechanism's security for even
+	computationally-unbounded adversaries.
+	At the same time, the system's efficiency is also kept.
 	Asymptotically, suppose that the original entropy is $D$,
 	a lower bound for conditional entropy of $\Omega(D)$ can be
 	guaranteed when only one defend operation is required after
@@ -1421,7 +1441,7 @@ security;
 	should be much higher even if a lot of things are ignored.
 	
 	In short, a strictly proved lower bound of conditional entropy
-	under defender mechanism is given
+	for defender mechanism is given
 	and the tight lower bound should be still much higher than that.
 	So it's theoretically secured and should be more secured in practical.	
 	
@@ -1429,11 +1449,11 @@ security;
 
 
 % use section* for acknowledgement
-\section*{Acknowledgment}
-
-
-The authors would like to thank...
-more thanks here
+%\section*{Acknowledgment}
+%
+%
+%The authors would like to thank...
+%more thanks here
 
 
 % trigger a \newpage just before the given reference
