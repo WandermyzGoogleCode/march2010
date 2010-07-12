@@ -419,30 +419,27 @@ Beijing 10084, China\\
 	(PII) is vulnerable 
 	to dictionary attack. It is particularly so because 
 	of an expedient method to enumerate possible PII's 
-	plain text instead of possible key.
+	plain text instead of all possible keys.
 	Deterministic encryption, however, 
 	is indispensable in the generation of hash or index of PII.
 	
-	This paper briefly presents a novel model as well as
-	its implementation to frustrate dictionary attacks
+	This paper briefly presents a novel mechanism
+	to frustrate dictionary attacks
 	by refreshing the encryption in an external blackbox.	
 	The major part of this paper is about the analysis
 	of this novel mechanism.
-	To prove the security  theoretically,
-	conditional entropy is used in this paper which
-	measures the difficulty for an adversary to
-	derive the PII given all related information achieved during attacks.
+	The use of conditional entropy in this paper both measures the increased
+	difficulty for attack and proves the value and feasibility
+	of this novel mechanism.
 	A lower bound for conditional entropy
 	against a computationally-unbounded adversary is guaranteed.
-	Besides, experiments are conducted to evaluate our result and
-	they confirm that the lower bound is valid.
 	The essential meaning of the lower bound is also
 	given based on min-entropy.
 	
 \end{abstract}
 
 \begin{IEEEkeywords}
-personally identifiable information; online social network; entropy; deterministic encryption;
+personally identifiable information; online social network; conditional entropy; deterministic encryption;
 security;
 
 \end{IEEEkeywords}
@@ -464,15 +461,12 @@ security;
 % no \IEEEPARstart 
 	Personally identifiable information (PII) often has
 	a very low entropy (e.g. cellphone numbers) for human memorization.
-	In online social networks (OSN), PII is the information
+	In online social network (OSN), PII is the information
 	to identify a particular user, such as the usernames like cellphone numbers,
 	email addresses.	
 	As OSN become more and more popular,
 	protecting PII leakage from both social network operators (SNO)
 	and other users is more important than ever.
-	OSN could use deterministic encryption of PII,
-	because it both protects the plain text and provides quick identification
-	and indexing.
 
 %	Deterministic encryption for an information from
 %	a very small domain set is important for some social
@@ -488,6 +482,9 @@ security;
 %	someone getting the corresponding cellphone number from its index 
 %	is the base of the system.
 	
+	OSN could use deterministic encryption of PII,
+	because it both protects the plain text and provides quick identification
+	and indexing.
 	Although seems to be safe, deterministic encryption is 
 	vulnerable to dictionary attacks, especially
 	on a level that is independent on SNO.
@@ -500,35 +497,30 @@ security;
 	schema changes. But a change of encryption schema is impossible
 	for both cost and user-convenience considerations.	
 	
-	Once after the dictionary attack has enumerated all possible values
-	of PII's plain text and establish a table maps any cipher text
-	to its plain text, the conditional entropy \cite{math_book, info_measure}
+	Once the dictionary attack has enumerated all possible values
+	of PII's plain text and established a table which maps all cipher texts
+	to corresponding plain texts, the conditional entropy \cite{math_book, info_measure}
 	which measures the uncertainty of the plain text given
 	its corresponding cipher text and that table, is $0$.
-	Even for PII which has a quite high entropy, a
+	Even for high entropy PII, a
 	computationally-unbounded adversary could establish that table
 	and the conditional entropy drops to $0$ again. 
 	So conditional entropy given
 	all information achieved by adversary during attacks
-	could better describe the security of PII than its entropy.
+	could be a better measurement of the security.
 	
-	Therefore, even for very low entropy PII, 
-	there is still possibility to ensure the
-	theoretical security by giving a lower bound for conditional entropy.
-	This paper presents a defender model to achieve that goal.
-	Inspired by that model, a defender mechanism is designed and implemented
+	Therefore, a lower bound for conditional entropy can possibly ensure
+	the security, even for low entropy PII.
+	Based on a defender model, a defender mechanism is designed and implemented
 	in an OSN system which uses cellphone numbers
 	to identify users and establish social networks.
-	After a brief description of defender model and mechanism,
-	this paper mainly focuses on the analysis of that mechanism.
-	The analysis shows that a lower bound 
-	of conditional entropy could be given in an efficient way: suppose that the original entropy
-	is $D$, a lower bound of $\Omega(D)$ can be guaranteed
+	The analysis of the mechanism shows that a lower bound 
+	of conditional entropy can be guaranteed efficiently: suppose that the original entropy
+	is $D$, a lower bound of conditional entropy $\Omega(D)$ can be guaranteed
 	by performing one defend operation after $2^{\Omega(D)}$ 
-	dictionary attacks.
-	Experiments conducted confirm that
-	our lower bound is valid but far from tight in some cases. At last, the essential
-	meaning of our conditional entropy's lower bound is given based on min-entropy: 
+	possible attacks.
+	Experiments confirm that
+	our lower bound is valid. Finally, based on min-entropy,
 	the expected chance to guess the right plain text is only $2^{-\Omega(D)}$ for
 	a computationally-unbounded adversary.
 	
@@ -544,10 +536,9 @@ security;
 %	\end{enumerate}
 	
 	The rest of this paper is organized as follows.
-	Section \ref{sec_rw} provides a literature review on privacy problems in OSN and 
+	Section \ref{sec_rw} provides a brief literature review on privacy problems in OSN and 
 	entropic security. Section \ref{sec_def} introduces the defender model and mechanism.
-	Section \ref{sec_proof} provides a theoretical proof as well as experiments and analysis
-	of its essential meaning.
+	Section \ref{sec_proof} provides a proof as well as experiments and its essential meaning.
 	
 %	Related work about entropic security
 %	and privacy problems in OSN are reviewed in section 2. In
@@ -571,23 +562,26 @@ security;
 
 \section{Related Work}	\label{sec_rw}
 	\subsection{Privacy Problems in Online Social Network}
-	There are two problems related to our work.	
+	Following related works are focused on two privacy problems 
+	which we want to solve in a different way for low entropy PII.	
 	
 	Firstly, security of online PII becomes an important concern \cite{lzf1, lzf2} because
 	of the growing popularity of OSNs, such as Facebook and
 	the growing tendency for users to share their information
 	on OSNs.
 	Meanwhile, more and more users
-	begin to be aware of that security based on well performed 
-	administrations and shielded
+	become aware of that security based on well performed 
+	management and shielded
 	servers is not reliable since human mistakes, behavior of operators and server 
 	vulnerabilities are unpredictable. 
 	
-	Distributed social networks have been proposed by 
-	Buchegger et al.\cite{lzf3, lzf4} to ensure distributed access control and
-	remove dependence on both the SNO(Social Network Operators) and other users.
-	In \cite{lzf5} a new architecture is proposed for the same purpose, 
-	while preserving the simplicity and performance of traditional centralized server/client model.
+	Buchegger et al.\cite{lzf3, lzf4} proposes the use of distributed social networks
+	to control access and
+	remove security dependence on both the SNO(Social Network Operators) and other users.
+	The same purpose could be achieved by traditional centralized server/client model
+	to preserve the simplicity and performance, such as \cite{lzf5} proposes.
+%	In \cite{lzf5} a new architecture is proposed for the same purpose, 
+%	while preserving the simplicity and performance of traditional centralized server/client model.
 	In this paper, a novel mechanism based on centralized 
 	server/clients is proposed to make a social network with low entropy PII
 	(e.g. cellphone numbers) secure and trusted independent of both SNO and other users.
@@ -596,8 +590,8 @@ security;
 	but store plain text of PII. However, as more and more new OSNs emerge every day, 
 	PII also worth being encrypted as well as password, otherwise
 	one OSN could be easily threatened by another OSN's PII and password leakage. \cite{guide}
-	explains the importance of protecting the confidentiality of PII (Personally 
-	Identifiable Information) and impacts of PII leakage in the 
+	explains the importance of protecting the confidentiality of PII 
+	and impacts of PII leakage in the 
 	context of information security. It also includes a list of confidentiality 
 	safeguards ranging from operational activities to technical methods. Among 
 	these safeguards, some researches focus on how to minimize the use and 
@@ -607,15 +601,14 @@ security;
 	\cite{leakage} carries out a detailed analysis on possible ways of PII 
 	leakage via OSNs. Our work, which is a different approach, is based mainly 
 	on another two of the methods listed in \cite{guide}, i.e. de-identifying 
-	information and anonymizing information. In this way, prevention of leakage is no 
-	longer necessary since neither third-party services nor the first-party 
-	(the party that directly serves the user) server is able to retrieve plain or 
-	recoverable PII data, even in ideally unbounded-computational brute force attack, 
-	while the basic function of PII, i.e. identification, is remained.
+	information and anonymizing information. With the combination of these two ways, 
+	prevention of leakage is no longer necessary, since neither third-party services 
+	nor the first-party (the party that directly serves the user) server is able to 
+	retrieve plain or recoverable PII data.
 	
 	\subsection{Entropy and Entropic Security}
 	Entropy\cite{entropy} measures the uncertainty of an information. Intuitively, it's easy to
-	understand: the cipher text is secured
+	understand: the cipher text is regarded as secure
 	if the adversary is uncertain about the plain text.
 	
 	Entropic security is introduced by Russel and Wang\cite{Russel02howto} to define
@@ -624,7 +617,7 @@ security;
 	the adversary's point of view. Similar entropic condition had been
 	achieved in hash functions by Canetti et al\cite{Canetti97towardsrealizing, Canetti_perfectlyone-way}. 
 	Hash functions are
-	considered to be equivalent as deterministic encryption discussed in this
+	considered to be equivalent to deterministic encryption discussed in this
 	paper: anyone could get a deterministic cipher text from a
 	given plain text, but it's hard to find the corresponding plain text
 	for a given cipher text. Entropic security has been further 
@@ -634,7 +627,7 @@ security;
 	However, all of their work only apply to high entropy messages.
 	While for low entropy message, 
 	one simple contradiction has already been
-	shown: enumerate all possible plain text and see which causes a collision
+	shown: enumerate all possible plain texts and a successful collision
 	will recover the original plain text easily.
 	
 	The key to this failure is the conditional entropy. Mutual information
@@ -644,19 +637,19 @@ security;
 	\end{equation}
 	where $H(X)$ is the entropy of $X$ and $H(X|Y)$ is the conditional entropy
 	of $X$ given $Y$ (See definition \ref{def_entropy}, \ref{def_con_entropy}).
-	In their researches, $X$ is the plain text and $Y$ is the cipher text.
+	In their work, $X$ is the plain text and $Y$ is the cipher text.
 	Whether $I(X, Y)$ is small is key to the security they defined.
 	Note that $I(X, Y)$ is small
-	is equivalent to that $H(X|Y)$ is large. So $I(X, Y)$ itself does not have any problem.
+	is equivalent to that $H(X|Y)$ is large so $I(X, Y)$ itself does not have any problem.
 	The problem is what $Y$ is.
 	If $Y$ is only the cipher text, it's not suitable for the case that $H(X)$ is small.
 	In the low entropy cases where the adversary could easily launch dictionary attacks,
 	the information from these attacks is critical to the security. Therefore, $Y$
-	should contain the information from those attacks for the security analysis.
-	So conditional entropy $H(X|Y)$ for such $Y$ could better describe the security. 
+	should contain the information from those attacks for a better security analysis.
 		
-	In sum, conditional entropy $H(X|Y)$ or similar mutual information $I(X, Y)$
-	has already been utilized in previous work. But in this paper, $Y$ is defined to contain the information
+	In summary, conditional entropy $H(X|Y)$ or equivalent mutual information $I(X, Y)$
+	has already been utilized in previous work. In their work, $Y$ only
+	contains the information of cipher text, while in this paper, $Y$ is defined to contain the information
 	gained by adversary during the dictionary attacks so a better analysis
 	for low entropy encryption is achieved.
 	
@@ -664,8 +657,8 @@ security;
 	\subsection{Defender Model}
 		The defender model is a simple model that
 		is not based on formal information theory.
-		The adversary is called attacker in this model
-		and can launch some attacks. After
+		In this model, the adversary is called attacker 
+		who can launch attacks. After
 		each attack, some useful information is gained.
 		Once enough information is achieved by attacker, 
 		the security is compromised.
@@ -689,12 +682,12 @@ security;
 		\end{align}
 		where $c = 1/m$ is a constant depend on $m$,
 		the number of possibilities to be enumerated. 
-		In most situations, $m$ is often more
-		than $2^{128}$ so such an attacker needs too many 
+		In most situations, $m$ is very large (e.g. greater than $2^{128}$)
+		 so such an attacker needs too many 
 		attacks to compromise the security. Therefore, the system with
 		a large $m$ is secured if the attacker is computationally-bounded.
 		
-		However, in some situations, $m$ is very small so
+		However, for low entropy PII, $m$ is very small so
 		a defender is introduced against that attacker. 
 		The defender's action is also described as a function $f_D$
 		so the equation(\ref{AONLY}) becomes:
@@ -717,7 +710,7 @@ security;
 		It can be easily conducted that:
 		\begin{equation*}
 			\lim_{n \rightarrow \infty} I_n = \lim_{n \rightarrow \infty} \sum_{0 \leq i < n} \frac{c}{d^i}
-				= \frac{d \cdot c}{d-1}
+				= \frac{d \cdot c}{d-1} ~(d > 1)
 		\end{equation*}
 		
 		This means that for a small $d$ such as $2$, even $c$ is as large as
