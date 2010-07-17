@@ -8,7 +8,7 @@ SEG = 14;
 d = c(0:(SEG-1))/SEG*(d_r-d_l)+d_l;
 D = 32;
 Hb = function(D, d, m)
-	return (Pndb(D, d, m)*Pmdb(D, d)*d*(1-d*m^2/(2^D-m+1)));
+	return (Pndb(D, d, m)*Pmdb(D, d)*d*(1-d*m*2^d/(2^D-2^d+1)));
 Hlm = function(lm)
 	return (Hb(D, d, 2^lm));
 
@@ -23,8 +23,8 @@ legendStr = c(paste("max(H | m = 2^11) =", as.character(max(y1))),
 		  paste("max(H | m = 2^14) =", as.character(max(y4)))
 )
 
-xlabStr = "number of lucky updates: d";
-ylabStr = "conditional entropy: H(X | Y_d)"	
+xlabStr = "number of lucky updates: r";
+ylabStr = "lower bound for conditional entropy: H(X | Y_r)"	
 	
 plot(d, y1, type="b", xlab = xlabStr, ylab = ylabStr, pch=1, cex.lab=1.2);
 lines(d, y2, type="b", pch=24);
