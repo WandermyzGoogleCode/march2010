@@ -7,6 +7,6 @@
  * S60客户端
   * [https://svn.lives3.net:8443/svn/LivesCube/trunk/S60Client]
  * C#模拟客户端
-  * [https://svn.lives3.net:8443/svn/LivesCube/trunk/VirtualMobileClient]
+  * [https://svn.lives3.net:8443/svn/LivesCube/trunk/VirtualMobile]
  * 文档(doc)
   * [https://svn.lives3.net:8443/svn/LivesCube/trunk/doc]
