@@ -1,0 +1,12 @@
+#summary 移动后的SVN列表
+
+ * 服务器端PHP：
+  * [https://svn.lives3.net:8443/svn/LivesCube/trunk/PHPServer]
+ * 服务器端硬件（C程序）
+  * 
+ * S60客户端
+  * [https://svn.lives3.net:8443/svn/LivesCube/trunk/S60Client]
+ * C#模拟客户端
+  * 
+ * 文档(doc)
+  * [https://svn.lives3.net:8443/svn/LivesCube/trunk/doc]
