@@ -1,0 +1,6 @@
+#summary 测试用页面
+
+ * [http://svn.lives3.net/private/echo.php]
+  * 将所有收到的GET和POST数据用print_r格式返回
+ * [http://svn.lives3.net/private/base64.php]
+  * 将POST数据中的“data”字段做base64解码，返回解码后的字串
