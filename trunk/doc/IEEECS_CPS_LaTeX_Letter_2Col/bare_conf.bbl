@@ -28,31 +28,8 @@ G.~A. Korn and T.~M. Korn, \emph{Mathematical Handbook for Scientists and
 
 \bibitem{info_measure}
 C.~Arndt, \emph{Information Measures: Information and its description in
-  Science and Engineering)}.\hskip 1em plus 0.5em minus 0.4em\relax Berlin:
+  Science and Engineering}.\hskip 1em plus 0.5em minus 0.4em\relax Berlin:
   Springer, 2001.
-
-\bibitem{entropy}
-C.~E. Shannon, ``Mathematical handbook for scientists and engineers:
-  Definitions, theorems, and formulas for reference and review,''
-  \emph{SIGMOBILE Mob. Comput. Commun. Rev.}, vol.~5, no.~1, pp. 3--55, 2001.
-
-\bibitem{Russel02howto}
-A.~Russel, S.~Key, E.~Russell, and H.~Wang, ``How to fool an unbounded
-  adversary with a short key,'' 2002.
-
-\bibitem{Canetti97towardsrealizing}
-R.~Canetti, ``Towards realizing random oracles: Hash functions that hide all
-  partial information.''\hskip 1em plus 0.5em minus 0.4em\relax
-  Springer-Verlag, 1997, pp. 455--469.
-
-\bibitem{Canetti_perfectlyone-way}
-R.~Canetti, D.~Micciancio, and O.~Reingold, ``Perfectly one-way probabilistic
-  hash functions.''
-
-\bibitem{entropic_wang}
-Y.~Dodis, ``Entropic security and the encryption of high entropy messages,'' in
-  \emph{In Theory of Cryptography Conference (TCC) ¡¯05}.\hskip 1em plus 0.5em
-  minus 0.4em\relax Springer-Verlag, 2005, pp. 556--577.
 
 \bibitem{lzf1}
 A.~Rabkin, ``Personal knowledge questions for fallback authentication: security
@@ -98,5 +75,28 @@ B.~Krishnamurthy and C.~E. Wills, ``Characterizing privacy in online social
 \bibitem{leakage}
 B.~{Krishnamurthy} and C.~E. Wills, ``On the leakage of personally identifiable
   information via online social networks.''
+
+\bibitem{entropy}
+C.~E. Shannon, ``Mathematical handbook for scientists and engineers:
+  Definitions, theorems, and formulas for reference and review,''
+  \emph{SIGMOBILE Mob. Comput. Commun. Rev.}, vol.~5, no.~1, pp. 3--55, 2001.
+
+\bibitem{Russel02howto}
+A.~Russel, S.~Key, E.~Russell, and H.~Wang, ``How to fool an unbounded
+  adversary with a short key,'' 2002.
+
+\bibitem{Canetti97towardsrealizing}
+R.~Canetti, ``Towards realizing random oracles: Hash functions that hide all
+  partial information.''\hskip 1em plus 0.5em minus 0.4em\relax
+  Springer-Verlag, 1997, pp. 455--469.
+
+\bibitem{Canetti_perfectlyone-way}
+R.~Canetti, D.~Micciancio, and O.~Reingold, ``Perfectly one-way probabilistic
+  hash functions.''
+
+\bibitem{entropic_wang}
+Y.~Dodis, ``Entropic security and the encryption of high entropy messages,'' in
+  \emph{In Theory of Cryptography Conference (TCC) ¡¯05}.\hskip 1em plus 0.5em
+  minus 0.4em\relax Springer-Verlag, 2005, pp. 556--577.
 
 \end{thebibliography}
