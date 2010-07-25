@@ -461,9 +461,9 @@ security;
 % no \IEEEPARstart
     Personally identifiable information (PII) often has
     a very low entropy (e.g. cellphone numbers) for human memorization.
-    In online social network (OSN), PII is the information
-    to identify a particular user, such as the usernames like cellphone numbers,
-    email addresses.
+    In online social network (OSN), PII(e.g. cellphone numbers,
+    email addresses) is often used as the information
+    to identify a particular user as the usernames.
     As OSN become more and more popular,
     protecting PII leakage from both social network operators (SNO)
     and other users is more important than ever.
@@ -509,18 +509,24 @@ security;
     all information achieved by adversary during attacks
     could be a better measurement of the security.
 
-    Therefore, a lower bound for conditional entropy can possibly ensure
-    the security, even for low entropy PII.
-    Based on a defender model, a defender mechanism is designed and implemented
+	Therefore, to ensure the security,
+	this paper proposes a novel mechanism to guarantee the
+	lower bound of conditional entropy for even computationally-unbounded
+	adversaries. This mechanism is called defender mechanism
+	since it's based on a defender model which introduces
+	a defender to balance the attacker(adversary). 
+	A defender mechanism has already been implemented
     in an OSN system which uses cellphone numbers
     to identify users and establish social networks.
+	In that mechanism, the defender simply refreshes
+	the encryption in an external blackbox periodically.
     The analysis of the mechanism shows that a lower bound
     of conditional entropy can be guaranteed efficiently: suppose that the original entropy
     is $E$, a lower bound of conditional entropy $\Omega(E)$ can be guaranteed
     by performing one defend operation after $2^{\Omega(E)}$
     possible attacks.
     Experiments confirm that
-    our lower bound is valid. Finally, based on min-entropy,
+    our lower bound is valid. Based on min-entropy, a corollary shows that
     the expected chance to guess the right plain text is only $2^{-\Omega(E)}$ for
     a computationally-unbounded adversary.
 
@@ -562,10 +568,7 @@ security;
 
 \section{Related Work}  \label{sec_rw}
     \subsection{Privacy Problems in Online Social Network}
-    Following related works are focused on two privacy problems
-    which we want to solve in a different way for low entropy PII.
-
-    Firstly, security of online PII becomes an important concern \cite{lzf1, lzf2} because
+    Security of online PII becomes an important concern \cite{lzf1, lzf2} because
     of the growing popularity of OSNs, such as Facebook and
     the growing tendency for users to share their information
     on OSNs.
@@ -577,18 +580,23 @@ security;
 
     Buchegger et al.\cite{lzf3, lzf4} proposes the use of distributed social networks
     to control access and
-    remove security dependence on both the SNO(Social Network Operators) and other users.
-    The same purpose could be achieved by traditional centralized server/client model
-    to preserve the simplicity and performance, such as \cite{lzf5} proposes.
+    remove security dependence on the SNO(Social Network Operators) and other users.
+    The same could be achieved by traditional centralized server/client model
+    to preserve the simplicity and performance, such as the one proposed in \cite{lzf5}.
+    This kind of security which is independent on SNO is also the one 
+    this paper wants to achieve.
 %   In \cite{lzf5} a new architecture is proposed for the same purpose,
 %   while preserving the simplicity and performance of traditional centralized server/client model.
-    In this paper, a novel mechanism based on centralized
-    server/clients is proposed to make a social network with low entropy PII
-    (e.g. cellphone numbers) secure and trusted independent of both SNO and other users.
+    The difference is that, this paper focuses on making a social network using low entropy PII
+    (e.g. cellphone numbers) for identifying and indexing secure and trusted. 
+    Meanwhile, the rich functionality and efficiency of identifying and indexing 
+    should also be kept as well as security.
 
-    Secondly, traditional websites tend to encrypt only password of users in their database,
-    but store plain text of PII. However, as more and more new OSNs emerge every day,
-    PII also worth being encrypted as well as password, otherwise
+	It's necessary to ensure the security of low entropy PII. However,
+    traditional websites tend to encrypt only password of users in the whole server side,
+    but store recoverable plain text of PII, especially usernames. 
+    As more and more new OSNs emerge every day,
+    if the security of PII could not be guaranteed,
     one OSN could be easily threatened by another OSN's PII and password leakage. \cite{guide}
     explains the importance of protecting the confidentiality of PII
     and impacts of PII leakage in the
@@ -631,7 +639,7 @@ security;
     will recover the original plain text easily.
 
     The key to this failure is the conditional entropy. Mutual information
-    $I(X, Y)$ is widely used in those previous researches. By definition,
+    $I(X, Y)$ is widely used in the researches mentioned above. By definition,
     \begin{equation}
         I(X, Y) = H(X) - H(X|Y)
     \end{equation}
@@ -655,11 +663,13 @@ security;
 
 \section{Defender Model and Mechanism}\label{sec_def}
     \subsection{Defender Model}
-        The defender model is a simple model that
-        is not based on formal information theory.
-        In this model, the adversary is called attacker
-        who can launch attacks. After
-        each attack, some useful information is gained.
+        The defender model is a simple model
+        to intuitively describe the process about how the adversary
+        (called attacker in this model) attacks step by step
+        and how the defender is against the attacker correspondingly.
+		
+		If only attacker exists,
+		after each attack, some useful information is gained by the attacker.
         Once enough information is achieved by attacker,
         the security is compromised.
 
@@ -676,12 +686,12 @@ security;
 
         For attacker who enumerates all possibilities such
         as dictionary attacker, the
-        function $f_A$ is quite simple:
+        function $f_A$ is:
         \begin{align}
             I_r = f_A(I_{r-1}) = I_{r-1}+c\label{AONLYE}
         \end{align}
         where $c = 1/n$ is a constant depend on $n$,
-        the number of possibilities to be enumerated.
+        the number of possible instances to be enumerated.
         In high entropy situations, $n$ is very large (e.g. greater than $2^{128}$)
          so such an attacker needs too many
         attacks to compromise the security. Therefore, the system with
@@ -689,10 +699,10 @@ security;
 
         However, for low entropy PII, $n$ is very small so
         a defender is introduced against that attacker.
-        The defender's action is also described as a function $f_D$
+        The defender's action is described as a function $f_D$
         so the equation(\ref{AONLY}) becomes:
         \begin{align}
-            I_n = f_A(f_D(I_{r-1}))
+            I_r = f_A(f_D(I_{r-1}))
         \end{align}
         which means that defender will reduce the information
         gained by attacker before a new attack can be made.
@@ -710,15 +720,27 @@ security;
         It can be easily conducted that:
         \begin{equation*}
             \lim_{r \rightarrow \infty} I_r = \lim_{r \rightarrow \infty} \sum_{0 \leq i < r} \frac{c}{d^i}
-                = \frac{d \cdot c}{d-1} ~(d > 1)
+                = \frac{d \cdot c}{d-1}~, ~(d > 1)
         \end{equation*}
 
-        This means that for a small $d$ such as $2$, even $c$ is as large as
-        $0.1$ and the attacker is computationally-unbounded, security will
+        This means that for a $d$ such as $2$, even $c$ is as large as
+        $0.1$ (so without defender only $10$ attacks will compromise
+        the security) and the attacker is computationally-unbounded
+        (as the $r \rightarrow \infty$ says), security will
         never be compromised.
+        
+        This model gives an abstract illustration about how to frustrate
+        dictionary attacks for low entry PII.
+        In the following sections, $f_A$ will be replaced by a formal definition
+       	about dictionary attacks in a special system.
+        In that system, a special designed hardware (i.e. a blackbox) 
+        will be used to achieve $f_D$.
+        And the information $I$ will be formally
+        measured by conditional entropy $H(X|Y)$: the greater $H(X|Y)$
+        is, the smaller $I$ is.
 
     \subsection{Defender Mechanism}\label{sec_ds}
-        Based on defender model, the defender mechanism is implemented
+        Based on defender model, a defender mechanism is implemented
         in a specific OSN
         which generates encrypted indexes
         from given PII. That PII are cellphone numbers
@@ -807,9 +829,9 @@ security;
         demonstrate the relation between conditional entropy and
         the security.
 
-        \begin{mydef}[Entropy]\label{def_entropy}
+        \begin{mydef}[Entropy\cite{entropy}]\label{def_entropy}
             The entropy of a discrete random variable $X$ with
-            possible values $\{x_1, x_2, \ldots, x_n\}$ is
+            possible values $\{x_1, x_2, \ldots, x_n\}$, denoted as  $H(X)$, is
             \begin{equation}
                 H(X) = -\sum_{i=1}^n p(x_i)\log p(x_i)
             \end{equation}
@@ -817,13 +839,14 @@ security;
         \end{mydef}
 
         Correspondingly, in defender mechanism, define
-        \begin{mydef}[Random Variable $X$]\label{def2}
+        \begin{mydef}[Attacker's Guess $X$]\label{def2}
             $\mathcal{X} = \{x_1, \ldots, x_n\}$ is the set of all possible
-            primary images that index $z_i$ can be calculated.
+            primary images.
             For convenience, define $n = 2^E$.
             The function $\varepsilon: \mathcal X \rightarrow Z$ is to generate index $z = \varepsilon(x)$
-            in a very large index space $Z$ for
-            a given primary image $x$.
+            in a very large index space $Z$. For example, padding many deterministic bits to $x$ and use
+            a very long key to deterministic encrypt it. Considering all possible paddings
+            and keys, $Z$ is a very large space to adversaries.
             Suppose $z^*$ is the index that attacker wants to
             get its primary image $x^* \in \mathcal{X}$ satisfying $\varepsilon(x^*) = z^*$.
             The discrete random variable $X$ is the
@@ -838,11 +861,12 @@ security;
         In ideal situation, the attacker has no related information, so $X$ should
         be uniformly distributed:
         \begin{align*}
-            H(X) &= -\sum_{i=1}^{2^E} 2^{-E} \log 2^{-E}
+            H(X) &= -\sum_{i=1}^{n} \frac{1}{n} \log \frac{1}{n}
+            	= -\sum_{i=1}^{2^E} 2^{-E} \log 2^{-E}
                 = E
         \end{align*}
 
-        \begin{mydef}[Conditional Entropy]\label{def_con_entropy}
+        \begin{mydef}[Conditional Entropy\cite{math_book, info_measure}]\label{def_con_entropy}
             For a discrete random variable $X$ with
             possible values set $\mathcal X$ and another random
             variable $Y$ with possible values
@@ -855,11 +879,11 @@ security;
         \end{mydef}
 
         In our context, $Y$ represents the related information
-        achieved by attacker. For example, when attacker has enumerated only one
+        achieved by attacker. In the special case that attacker has enumerated only one
         $x$ to get $\varepsilon(x)$, $Y^{(1)}$ can be defined as:
         \begin{align*}
             &\mathcal Y^{(1)} = \varepsilon(\mathcal X) = \{y \: | \: \exists x \in \mathcal X, \varepsilon(x) = y\}\\
-            &\forall y \in \mathcal Y^{(1)}, \; p(Y^{(1)} = y) = \frac{1}{n}\\
+            &\forall y \in \mathcal Y^{(1)}, \; p(Y^{(1)} = y) = \frac{1}{|\mathcal Y^{(1)}|} = \frac{1}{n}\\
             &p(x|y) = \begin{cases}
                 \frac{1}{n-1}, &y \neq z^*\\
                 0, &y = z^* \text{ and } \varepsilon(x) \neq z^*\\
@@ -873,7 +897,7 @@ security;
             \mathcal Y^{(m)} = \{ y = \{y_1, y_2, \ldots, y_m\} \: | \: y_i \in \mathcal Y^{(1)}\}
         \end{equation*}
         \begin{equation*}
-            \forall y \in \mathcal Y^{(m)}, \; p(Y^{(m)} = y) = \frac{1}{\binom{n}{m}}
+            \forall y \in \mathcal Y^{(m)}, \; p(Y^{(m)} = y) = \frac{1}{|\mathcal Y^{(m)}|} = \frac{1}{\binom{n}{m}}
         \end{equation*}
         \begin{equation*}
             p(x|y) = \begin{cases}
@@ -886,8 +910,8 @@ security;
         Therefore, $H(X | Y^{(m)})$ can be calculated as:
         \begin{align*}
             H(X | Y^{(m)}) %&= \sum_{y \in \mathcal Y^{(m)}} p(y) H(x | Y^{(m)} = y)\\
-                &= \sum_{h^* \in y} p(y) H(x | Y^{(m)} = y) + \\
-                    & \;\;\;\; \sum_{h^* \notin y} p(y) H(x | Y^{(m)} = y)\\
+                &= \sum_{z^* \in y} p(y) H(x | Y^{(m)} = y) + \\
+                    & \;\;\;\; \sum_{z^* \notin y} p(y) H(x | Y^{(m)} = y)\\
                 &= 0+\frac{\binom{n-1}{m}}{\binom{n}{m}} \log(n-m)\\
                 &= \frac{n-m}{n} \log(n-m)
         \end{align*}
@@ -898,16 +922,15 @@ security;
         entropy which notifies the security decreases about linearly when $m$ is small
         compared with $n$.
 
-        So the key
-        of conditional entropy $H(X|Y)$ is the definition of the condition $Y$.
         To make a simple proof, we can simplify the
         condition $Y$ and preserve the information it contains
         at the same time. Before defining $Y$, a
         formal definition of how defender mechanism behaviours is given. Clear
         definition of $X$ can be found in definition \ref{def2} in the above.
 
-        The defender mechanism will allow attacker to do at most $m$ possible
-        attack operations before one defend operation. More specifically, between
+        The defender mechanism will allow at most $m$ possible
+        attacks (i.e. calculate $m$ pairs of $\left(x, z = \varepsilon(x)\right)$) 
+        before carrying out one defend operation. More specifically, between
         two operations of updating the indexes,
         at most $m$ indexes are calculated from primary images(i.e. cellphone numbers).
         It's formally defined as:
@@ -924,9 +947,18 @@ security;
             in $i$th recent update,
             $n$ primary images $\mathcal X$ are partitioned into $n/2$ pairs randomly:
             \begin{align*}
-            	P_{-i, j} = \{x_1, x_2\} ~ (0 \leq j < n/2)
+            	P_{-i, j} = \{x_1, x_2\} ~, ~ (0 \leq j < n/2)
             \end{align*}
-            and the attacker can track $\varepsilon_{-(i+1)}(P_{-i, j})$ and
+            The $g_i\left(\varepsilon_{-(i+1)}(P_{-i, j} = \{x_1, x_2\})\right)$ for one pair:
+            \begin{align*}
+            	g_i\left(\varepsilon_{-(i+1)}(P_{-i, j})\right) = \{ g_i\left(\varepsilon_{-(i+1)}(x_1)\right),
+            		g_i\left(\varepsilon_{-(i+1)}(x_2)\right) \}
+            \end{align*}
+            is 
+            calculated in the hardware at a time. All indexes are updated by using
+            $g_i$ to all $n/2$ pairs $P_{-i, j}$.
+            Since the hardware is a blackbox, the attacker can only track 
+            $\varepsilon_{-(i+1)}(P_{-i, j})$ and
             \begin{align*}
             	\varepsilon_{-i}(P_{-i, j}) = g_{-i}\left( \varepsilon_{-(i+1)}(P_{-i, j}) \right)
             \end{align*}
@@ -942,21 +974,29 @@ security;
 		The candidate set $C_{-i}$ can be described as the set of indexes
         calculated by $\varepsilon_{-i}$ that are possible to be
         updated to $z^*$ through $g_0, g_{-1}, \ldots, g_{-(i-1)}$. The collision set $K_{-i}$ is the
-        subset of $C_{-i}$ that is enumerated by the attacker. In detail:
+        subset of $C_{-i}$ that is enumerated by the attacker.
         \begin{mydef}[Candidate and Collision Set]
             Candidate sets are $C_0, C_{-1}, C_{-2}, \ldots$ recursively defined as
             \begin{align*}
                 C_0 &= \{z^*\}\\
                 C_{-(i+1)} &= \{z | \exists P_{-i, j},~
                     g_{-i}(z) \in \varepsilon_{-i}(P_{-i, j}) \text{ and } \\
-                    & \;\;\;\;\;\;\; \varepsilon_{-i}(P_{-i, j}) \cap C_{i} \neq \emptyset \}
+                    & \;\;\;\;\;\;\; \varepsilon_{-i}(P_{-i, j}) \cap C_{-i} \neq \emptyset \}
             \end{align*}
             Here $z^*$ is the index that attacker wants to know its primary image
             $x^*$ such that $\varepsilon_0(x^*) = z^*$. And collision sets are $K_0, K_{-1}, K_{-2}, \ldots$ where
             \begin{equation*}
-                K_{-i} = \{z | \varepsilon_{-i}(x) = z \text{ is enumerated by attacker and } z \in C_{-i} \}
+                K_{-i} = \{z | \varepsilon_{-i}(x) = z \text{ is calculated and } z \in C_{-i} \}
             \end{equation*}
         \end{mydef}
+        
+        Note that the greater $|C_{-i}|$ is and the smaller $|K_{-i}|$ is,
+        the more uncertain $x^*$ is for attacker given this certain
+        condition. In our measurement
+        of conditional entropy $H(X|Y)$, $Y$ is also a random variable,
+        which means the condition itself is uncertain. $H(X|Y)$ is
+        an average of entropy with certain condition $H(X|Y = y)$ 
+        over the distribution of $p(Y = y)$.
 
         Now define condition $Y_r$ that contains all information
         attacker achieved during infinite attacks. Here subscript $r$
@@ -968,7 +1008,8 @@ security;
             and $|K_{-i}| = 0~(0 \leq i < r)$.
             Otherwise $Y_r = \beta$.
             Here $r$ is a parameter to denote the number
-            of updates that defender mechanism is lucky.
+            of updates that defender mechanism is lucky,
+            i.e. the best condition for defender is gotten.
         \end{mydef}
 
         By the definition of conditional entropy,
@@ -976,9 +1017,21 @@ security;
             H(X|Y_r) &= p(Y_r = \alpha) H(X | \alpha) + p(Y_r = \beta) H(X | \beta)\\
                 &\geq p(Y_r = \alpha) H(X | \alpha) + 0
         \end{align*}
+        
+        Here, the second part is just counted as $0$ since it's non-negative.
+        In other words, to get the lower bound of the conditional entropy $H(X | Y_r)$,
+        an average of entropy $H(X | Y_r = y)$ over all possible conditions $y \in \mathcal Y$, 
+        all $H(X | Y_r = y)$ is counted as minimum value $0$, except for the best condition
+        $Y_r = \alpha$.
 
     \subsection{Proof of a Lower Bound}
-        To prove a simple lower bound, three lemmas are proposed.
+    	Now let's prove a lower bound of $H(X | Y_r)$.
+    	Note that $Y_r$ contains all information that attacker can achieve,
+    	so a lower bound of $H(X | Y_r)$ should also be a lower
+    	bound of any $H(X | Y)$ where $Y$ is a condition denotes any
+    	information achieved by attacker under defender mechanism.
+    	
+        To prove the lower bound, three lemmas are proposed.
         The first one shows a lower bound of $H(X | Y_r = \alpha)$
         and the other two for a lower bound of $p(Y_r = \alpha)$.
         The lower bound of $H(X | Y_r)$ is achieved by putting
@@ -986,14 +1039,14 @@ security;
 
         \begin{mylemma}\label{lem1}
         \begin{align*}
-            H(X|Y_r = \alpha) \geq r \cdot (1-\frac{r m \cdot 2^r}{2^E-2^r+1})
+            H(X|Y_r = \alpha) \geq r \cdot (1-\frac{r m \cdot 2^r}{2^E-2^r+1}) ~,~(2^r < 2^E - r m)
         \end{align*}
         \end{mylemma}
 
         \begin{IEEEproof}
             When $Y_r = \alpha$, the attacker
             is unlucky in last $r$ updates
-            and defender mechanism is lucky
+            and defender is lucky
             to expand $C_{-r}$ quickly.
             In this case, the best that attacker
             could still know are all relations
@@ -1003,7 +1056,7 @@ security;
             any $A, B$, which simply means that knowing something
             more can never be a bad thing. Let $A = (X | Y_r = \alpha)$
             and $B$ be whether there is any $\varepsilon_{-r}(x) \in C_{-r}$ whose $x$
-            has been enumerated using $\varepsilon_0, \varepsilon_{-1}, \ldots, \varepsilon_{-(d-1)}$
+            has been enumerated using $\varepsilon_0, \varepsilon_{-1}, \ldots, \varepsilon_{-(r-1)}$
             by the attacker or not.
             Then
             \begin{align*}
@@ -1257,8 +1310,8 @@ security;
         \end{figure}
 
         It can be seen that the simple lower bound proved is valid and not too
-        far away from the experimental result. By the more tight $p_1 \cdot p_2 \cdot p_3$
-        conducted by the experiment, the lower bound is greater than $10$
+        far away from the experimental result. By $p_1 \cdot p_2 \cdot p_3$
+        conducted by the experiment, the lower bound of $H(X|Y)$ is greater than $10$
         when $m = 2^{14} = 16384$.
 
 %        To check that the simple lower bound is far from the experimental
@@ -1416,7 +1469,7 @@ security;
 \section{Conclusion}
     To ensure the security of deterministic encryption
     for low entropy PII such as cellphone numbers,
-    this paper briefly presents a novel defender model as well
+    this paper presents a novel defender model as well
     as a defender mechanism implemented for a specific
     OSN which uses cellphone numbers to generate encrypted indexes.
     The defender mechanism also applies to PII other than
