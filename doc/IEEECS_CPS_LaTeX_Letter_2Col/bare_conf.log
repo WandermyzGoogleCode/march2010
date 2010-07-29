@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Arch Linux) (format=latex 2010.3.14)  25 JUL 2010 17:11
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Arch Linux) (format=latex 2010.3.14)  29 JUL 2010 18:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -357,70 +357,47 @@ LaTeX Info: Redefining \pageref on input line 356.
 
 \AtBeginShipoutBox=\box30
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 415.
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 415.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 416.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 416.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 416.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 416.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 416.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 416.
 
 
 (/usr/share/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/it' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 415.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 504.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 504.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 416.
  [1
 
 
 ] [2] [3]
-Underfull \hbox (badness 6592) in paragraph at lines 870--875
-[]\OT1/ptm/m/n/10 For a dis-
- []
-
-
-Underfull \hbox (badness 2050) in paragraph at lines 964--970
-\OML/cmm/m/it/10 g[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 "[]\OT1/cmr/m/n/10 (\OML/
-cmm/m/it/10 x[]\OT1/cmr/m/n/10 )) = \OML/cmm/m/it/10 "[]\OT1/cmr/m/n/10 (\OML/c
-mm/m/it/10 x[]\OT1/cmr/m/n/10 )$ \OT1/ptm/m/n/10 or $\OML/cmm/m/it/10 g[]\OT1/c
-mr/m/n/10 (\OML/cmm/m/it/10 "[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x[]\OT1/cmr/m/
-n/10 )) =
- []
-
-[4]
-Underfull \hbox (badness 10000) in paragraph at lines 979--980
+Underfull \hbox (badness 10000) in paragraph at lines 983--984
 []\OT1/ptm/m/n/10 Candidate
  []
 
-[5]
-Underfull \hbox (badness 2277) in paragraph at lines 1182--1191
-[]\OT1/ptm/m/n/10 Note that $\OML/cmm/m/it/10 Y[]$ \OT1/ptm/m/n/10 here con-tai
-ns all in-for-ma-tion that a
- []
-
-[6]
+[4] [5]
 File: lb_m.eps Graphic file (type eps)
- <lb_m.eps>
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 1242.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 1242.
+ <lb_m.eps> [6]
 File: p14.eps Graphic file (type eps)
  <p14.eps>
 File: hp14.eps Graphic file (type eps)
  <hp14.eps>
-Underfull \vbox (badness 1924) has occurred while \output is active []
-
- [7]
-Underfull \hbox (badness 1622) in paragraph at lines 1478--1492
+Underfull \hbox (badness 1622) in paragraph at lines 1480--1495
 []\OT1/ptm/m/n/10 This pa-per mainly fo-cuses on anal-y-sis of this de-
  []
 
-(./bare_conf.bbl
+[7] (./bare_conf.bbl
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <9> on input line 68.
+(Font)              <9> on input line 36.
 
-Overfull \hbox (10.2072pt too wide) in paragraph at lines 65--70
+Overfull \hbox (10.2072pt too wide) in paragraph at lines 41--46
 [][][][] 
  []
 
@@ -438,21 +415,21 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1541.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1551.
 [8]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1541.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1551.
  (./bare_conf.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1541.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1551.
 Package rerunfilecheck Info: File `bare_conf.out' has not changed.
-(rerunfilecheck)             Checksum: A64B5DE1BA35FA56D0A4BD431C09B23F;930.
+(rerunfilecheck)             Checksum: 24DEA3C753E5D706012D61A0127D3FBF;760.
  ) 
 Here is how much of TeX's memory you used:
- 5478 strings out of 493848
- 82582 string characters out of 3154002
- 170726 words of memory out of 3000000
- 8684 multiletter control sequences out of 15000+200000
+ 5477 strings out of 493848
+ 82562 string characters out of 3154002
+ 171535 words of memory out of 3000000
+ 8683 multiletter control sequences out of 15000+200000
  28610 words of font info for 65 fonts, out of 3000000 for 9000
  717 hyphenation exceptions out of 8191
- 32i,16n,37p,244b,381s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 34i,16n,37p,244b,380s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on bare_conf.dvi (8 pages, 79408 bytes).
+Output written on bare_conf.dvi (8 pages, 78268 bytes).
