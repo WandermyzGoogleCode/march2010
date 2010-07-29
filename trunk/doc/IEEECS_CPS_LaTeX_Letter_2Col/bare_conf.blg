@@ -12,43 +12,43 @@ Warning--empty booktitle in Canetti97towardsrealizing
 Done.
 You've used 15 entries,
             4039 wiz_defined-function locations,
-            1287 strings with 17349 characters,
-and the built_in function-call counts, 9379 in all, are:
-= -- 687
-> -- 202
-< -- 64
-+ -- 106
-- -- 35
-* -- 417
-:= -- 1387
-add.period$ -- 36
+            1285 strings with 17177 characters,
+and the built_in function-call counts, 8859 in all, are:
+= -- 646
+> -- 182
+< -- 59
++ -- 97
+- -- 31
+* -- 388
+:= -- 1319
+add.period$ -- 35
 call.type$ -- 15
 change.case$ -- 13
-chr.to.int$ -- 156
+chr.to.int$ -- 144
 cite$ -- 16
-duplicate$ -- 716
-empty$ -- 891
-format.name$ -- 45
-if$ -- 2154
+duplicate$ -- 682
+empty$ -- 846
+format.name$ -- 40
+if$ -- 2025
 int.to.chr$ -- 0
 int.to.str$ -- 15
-missing$ -- 134
-newline$ -- 70
-num.names$ -- 15
-pop$ -- 357
+missing$ -- 128
+newline$ -- 72
+num.names$ -- 14
+pop$ -- 349
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 715
+skip$ -- 678
 stack$ -- 0
-substring$ -- 375
-swap$ -- 512
-text.length$ -- 12
+substring$ -- 347
+swap$ -- 479
+text.length$ -- 11
 text.prefix$ -- 0
 top$ -- 5
 type$ -- 15
 warning$ -- 1
-while$ -- 47
+while$ -- 42
 width$ -- 17
-write$ -- 146
+write$ -- 145
 (There was 1 warning)
