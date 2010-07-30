@@ -366,7 +366,7 @@
 % use a multiple column layout for up to two different
 % affiliations
 
-\author{\IEEEauthorblockN{Yuqian Li\IEEEauthorrefmark{1}, Yang Liu\IEEEauthorrefmark{1}, 
+\author{\IEEEauthorblockN{Yuqian Li\IEEEauthorrefmark{1}, Yang Liu\IEEEauthorrefmark{1},
 Zhifang Liu\IEEEauthorrefmark{1}, Jiwei Huang\IEEEauthorrefmark{1}, Zhen Chen\IEEEauthorrefmark{2}}
 \IEEEauthorblockA{Department of Computer Science and Technology\\
 Tsinghua University\\
@@ -436,7 +436,7 @@ Beijing 10084, China\\
     against a computationally-unbounded adversary is guaranteed.
     The essential meaning of the lower bound is also
     given based on min-entropy.
-    
+
     By the proof, this mechanism can provide very reliable
     security for PII in online social networks (OSN) and keep efficiency
     and functionality at the same time.
@@ -464,51 +464,51 @@ security.
 
 \section{Introduction}
 % no \IEEEPARstart
-	Security of online personally identifiable information(PII) becomes 
-	an important concern \cite{lzf1, lzf2} because
+    Security of online personally identifiable information(PII) becomes
+    an important concern \cite{lzf1, lzf2} because
     of the growing popularity of OSN such as Facebook\cite{facebook} and
     the growing tendency for users to share their information
-    on OSN. 
+    on OSN.
     \cite{guide} explains the importance of protecting the confidentiality of PII
     and impacts of PII leakage in the
     context of information security. It also includes a list of confidentiality
-    safeguards ranging from operational activities to technical methods. 
-    
+    safeguards ranging from operational activities to technical methods.
+
     Among those safeguards, some researches focus on how to minimize the use and
-    collection of PII for third-party services. 
+    collection of PII for third-party services.
     For example, \cite{charact} points out two defects
     in privacy policies of popular OSN and provides a method to find the minimum
     of private information needed for a particular set of interactions. In addition,
     \cite{leakage} carries out a detailed analysis on possible ways of PII
-    leakage via OSN.     
-    In those researches, the first-party (the party that directly serves the user, e.g. Facebook) 
+    leakage via OSN.
+    In those researches, the first-party (the party that directly serves the user, e.g. Facebook)
     server is considered to be safe to retrieve all PII data in OSN.
-    
-    However many users no longer trust in the first-party server
-    as more and more users become aware of the fact that security 
+
+    Many users, however, no longer trust the first-party server
+    as more and more users become aware of the fact that security
     based on well performed management and shielded
     servers is not reliable since human mistakes, behavior of operators and server
     vulnerabilities are unpredictable.
 
-	To remove security dependence on the first-party, especially SNO(Social Network Operators),
-	Buchegger et al.\cite{lzf3, lzf4} proposes the use of distributed social networks
+    To remove security dependence on the first-party, especially SNO(Social Network Operators),
+    Buchegger et al.\cite{lzf3, lzf4} proposes the use of distributed social networks
     to control access.
-    Though it achieves the security independent on SNO, the traditional centralized server/client
+    Though it achieves security independent of SNO, the traditional centralized server/client
     mode has so much advantage in simplicity and performance. Therefore,
     most popular OSN now still uses centralized mode and only controls PII access from
     normal users and third-party services.
-    
-    Our work is to achieve the same security independent on SNO and meanwhile preserve
-    the simplicity and performance of centralized mode. Moreover, two additional factors
+
+    Our work is to achieve the same level of security independent of SNO while preserving
+    the simplicity and performance of the centralized mode. Moreover, two additional factors
     are also considered. Firstly, PII always has very low entropy for human memorization.
     Secondly, PII(e.g. cellphone numbers, email addresses) is always used as usernames
     for fast identifying and indexing in OSN.
     So our work has to guarantee the security of low entropy PII as
-    well as rich functionality and efficiency of identifying and indexing based on PII.
+    well as functionality and efficiency of identifying and indexing based on PII.
 
-	Encryption of PII can be used for security but
-	the encryption must be deterministic for fast identification and indexing.
-	However, deterministic encryption of low entropy PII is
+    Encryption of PII can be used for security but
+    the encryption must be deterministic for fast identification and indexing.
+    Deterministic encryption of low entropy PII, however, is
     vulnerable to dictionary attacks since the encryption system can hardly tell
     the difference between a normal human behaviour and a carefully
     designed automatic brute force dictionary attack. A dictionary
@@ -516,18 +516,18 @@ security.
     possible values of PII's plain text (this is only feasible for low entropy PII).
     Once the dictionary attack has enumerated all possible values
     and established a table which maps all cipher texts
-    to corresponding plain texts, the conditional entropy \cite{math_book, info_measure}
+    to their corresponding plain texts, the conditional entropy \cite{math_book, info_measure}
     which measures uncertainty of the plain text under the condition of giving
     its corresponding cipher text and that table, is $0$.
 
-	To ensure the security,
-	this paper proposes a novel mechanism to guarantee a
-	lower bound of conditional entropy for even computationally-unbounded
-	adversaries. This mechanism is called defender mechanism
-	since it's based on a defender model which introduces
-	a defender to balance the attacker(adversary). 
-	In that mechanism, the defender simply refreshes
-	the encryption in an external blackbox periodically.
+    To ensure the security,
+    this paper proposes a novel mechanism to guarantee a
+    lower bound of conditional entropy for even computationally-unbounded
+    adversaries. This mechanism is called defender mechanism
+    since it's based on a defender model which introduces
+    a defender to balance the adversary.
+    In that mechanism, the defender simply refreshes
+    the encryption in an external blackbox periodically.
     The analysis of the mechanism shows that a lower bound
     of conditional entropy can be guaranteed efficiently: suppose that the original entropy
     is $E$, a lower bound of conditional entropy $\Omega(E)$ can be guaranteed
@@ -549,8 +549,8 @@ security.
 
     The rest of this paper is organized as follows.
     Related work about entropic security
-	is reviewed in section \ref{sec_rw}.
-	Section \ref{sec_def} introduces the defender model and mechanism.
+    is reviewed in section \ref{sec_rw}.
+    Section \ref{sec_def} introduces the defender model and mechanism.
     Section \ref{sec_proof} provides a proof as well as experiments.
     At last, we conclude the paper in section \ref{sec_cl}.
 
@@ -591,18 +591,18 @@ security.
 %    remove security dependence on the SNO(Social Network Operators) and other users.
 %    The same could be achieved by traditional centralized server/client model
 %    to preserve the simplicity and performance, such as the one proposed in \cite{lzf5}.
-%    This kind of security which is independent on SNO is also the one 
+%    This kind of security which is independent on SNO is also the one
 %    this paper wants to achieve.
 %   In \cite{lzf5} a new architecture is proposed for the same purpose,
 %   while preserving the simplicity and performance of traditional centralized server/client model.
 %    The difference is that, this paper focuses on making a social network using low entropy PII
-%    (e.g. cellphone numbers) for identifying and indexing secure and trusted. 
-%    Meanwhile, the rich functionality and efficiency of identifying and indexing 
+%    (e.g. cellphone numbers) for identifying and indexing secure and trusted.
+%    Meanwhile, the rich functionality and efficiency of identifying and indexing
 %    should also be kept as well as security.
 %
-%	It's necessary to ensure the security of low entropy PII. However,
+%   It's necessary to ensure the security of low entropy PII. However,
 %    traditional websites tend to encrypt only password of users in the whole server side,
-%    but store recoverable plain text of PII, especially usernames. 
+%    but store recoverable plain text of PII, especially usernames.
 %    As more and more new OSNs emerge every day,
 %    if the security of PII could not be guaranteed,
 %    one OSN could be easily threatened by another OSN's PII and password leakage. \cite{guide}
@@ -671,17 +671,17 @@ security.
 
 \section{Defender Model and Mechanism}\label{sec_def}
     \subsection{Defender Model}
-    	To frustrate dictionary attack, we propose a 
-		defender model which introduces
-		a defender to balance the adversary who launches the attack.
-    
+        To frustrate dictionary attack, we propose a
+        defender model which introduces
+        a defender to balance the adversary who launches the attack.
+
         The defender model is a simple model
         to intuitively describe the process about how the adversary
         (called attacker in this model) attacks step by step
         and how the defender is against the attacker correspondingly.
-		
-		If only attacker exists,
-		after each attack, some useful information is gained by the attacker.
+
+        If only attacker exists,
+        after each attack, some useful information is gained by the attacker.
         Once enough information is achieved by attacker,
         the security is compromised.
 
@@ -740,12 +740,12 @@ security.
         the security) and the attacker is computationally-unbounded
         (as $r \rightarrow \infty$ says), security will
         never be compromised.
-        
+
         This model gives an abstract illustration about how to frustrate
         dictionary attacks for low entry PII.
         In the following sections, $f_A$ will be replaced by a formal definition
-       	about dictionary attacks in a special system.
-        In that system, a specially designed hardware (i.e. a blackbox) 
+        about dictionary attacks in a special system.
+        In that system, a specially designed hardware (i.e. a blackbox)
         will be used to achieve $f_D$.
         And the information $I$ will be formally
         measured by conditional entropy $H(X|Y)$: the greater $H(X|Y)$
@@ -755,7 +755,7 @@ security.
         Based on defender model, a defender mechanism is implemented
         in a specific OSN
         which generates encrypted indexes
-        from given PII. That PII are cellphone numbers
+        from given PII. That PII is cellphone number
         in that specific OSN and the defender mechanism is to prevent attackers
         from knowing the corresponding cellphone number from its index.
         The defender mechanism also applies to other PII and cellphone numbers are introduced
@@ -820,7 +820,7 @@ security.
         next section.
 
 \section{Analysis of Conditional Entropy}\label{sec_proof}
-    This section gives out a proof 
+    This section gives out a proof
     and a demonstration
     of the defender mechanism's security under a computationally-unbounded attacker
     in information theory.
@@ -856,17 +856,17 @@ security.
             The discrete random variable $X$ is the
             primary image guessed by the attacker against $x^*$.
         \end{mydef}
- 
- 		In our context, primary images refer to PII.
- 		In our specific OSN, PII are cellphone numbers
-		whose set $\mathcal X$ has a very small
+
+        In our context, primary images refer to PII.
+        In our specific OSN, PII are cellphone numbers
+        whose set $\mathcal X$ has a very small
         size about $10^{10} \approx 2^{32}$.
 
         In ideal situation, the attacker has no related information, so $X$ should
         be uniformly distributed:
         \begin{align*}
             H(X) &= -\sum_{i=1}^{n} \frac{1}{n} \log \frac{1}{n}
-            	= -\sum_{i=1}^{2^E} 2^{-E} \log 2^{-E}
+                = -\sum_{i=1}^{2^E} 2^{-E} \log 2^{-E}
                 = E
         \end{align*}
 
@@ -933,7 +933,7 @@ security.
         definition of $X$ can be found in definition \ref{def2} in the above.
 
         The defender mechanism will allow at most $m$ possible
-        attacks (i.e. calculate $m$ pairs of $\left(x, z = \varepsilon(x)\right)$) 
+        attacks (i.e. calculate $m$ pairs of $\left(x, z = \varepsilon(x)\right)$)
         before carrying out one defend operation. More specifically, between
         two operations of updating the indexes,
         at most $m$ indexes are calculated from primary images(i.e. cellphone numbers).
@@ -942,7 +942,7 @@ security.
             There are functions $\varepsilon_0, \varepsilon_{-1}, \varepsilon_{-2}, \ldots$ where
             $\varepsilon_0$ denotes the most recent function $\varepsilon: \mathcal{X} \rightarrow Z$
             to generate an index $\varepsilon(x) = z \in Z$ from primary image $x$.
-            Besides, $\varepsilon_{-1}$ denotes the last one used before update, $\varepsilon_{-2}$ 
+            Besides, $\varepsilon_{-1}$ denotes the last one used before update, $\varepsilon_{-2}$
             for the last but one and so on.
             For each $\varepsilon_{-i}$, at most $m$ indexes $\varepsilon_{-i}(x)$ can be calculated.
             There are also functions $g_0, g_{-1}, g_{-2}, \ldots$ where
@@ -951,20 +951,20 @@ security.
             in $i$th recent update,
             $n$ primary images in $\mathcal X$ are partitioned into $n/2$ pairs randomly:
             \begin{align*}
-            	P_{-i, j} = \{x_1, x_2\} ~, ~ (0 \leq j < n/2)
+                P_{-i, j} = \{x_1, x_2\} ~, ~ (0 \leq j < n/2)
             \end{align*}
             The $g_i\left(\varepsilon_{-(i+1)}(P_{-i, j} = \{x_1, x_2\})\right)$ for one pair:
             \begin{align*}
-            	g_i\left(\varepsilon_{-(i+1)}(P_{-i, j})\right) = \{ g_i\left(\varepsilon_{-(i+1)}(x_1)\right),
-            		g_i\left(\varepsilon_{-(i+1)}(x_2)\right) \}
+                g_i\left(\varepsilon_{-(i+1)}(P_{-i, j})\right) = \{ g_i\left(\varepsilon_{-(i+1)}(x_1)\right),
+                    g_i\left(\varepsilon_{-(i+1)}(x_2)\right) \}
             \end{align*}
-            is 
+            is
             calculated in the hardware at a time. All indexes are updated by using
             $g_i$ to all $n/2$ pairs $P_{-i, j}$.
-            Since the hardware is a blackbox, the attacker can only track 
+            Since the hardware is a blackbox, the attacker can only track
             $\varepsilon_{-(i+1)}(P_{-i, j})$ and
             \begin{align*}
-            	\varepsilon_{-i}(P_{-i, j}) = g_{-i}\left( \varepsilon_{-(i+1)}(P_{-i, j}) \right) = \{z_1, z_2\}
+                \varepsilon_{-i}(P_{-i, j}) = g_{-i}\left( \varepsilon_{-(i+1)}(P_{-i, j}) \right) = \{z_1, z_2\}
             \end{align*}
             for each $P_{-i, j}$.
             But the attacker don't know whether $g_{-i}(\varepsilon_{-(i+1)}(x_1)) = z_1$ or
@@ -975,7 +975,7 @@ security.
 
         To better describe the interaction among attacks
         and defends, candidate sets and collision sets are defined.
-		The candidate set $C_{-i}$ can be described as the set of indexes
+        The candidate set $C_{-i}$ can be described as the set of indexes
         calculated by $\varepsilon_{-i}$ that are possible to be
         updated to $z^*$ through $g_0, g_{-1}, \ldots, g_{-(i-1)}$. The collision set $K_{-i}$ is the
         subset of $C_{-i}$ that is enumerated by the attacker.
@@ -993,13 +993,13 @@ security.
                 K_{-i} = \{z | \varepsilon_{-i}(x) = z \text{ is calculated and } z \in C_{-i} \}
             \end{equation*}
         \end{mydef}
-        
+
         Note that the greater $|C_{-i}|$ is and the smaller $|K_{-i}|$ is,
         the more uncertain $x^*$ is for attacker given this certain
         condition. In our measurement
         of conditional entropy $H(X|Y)$, $Y$ is also a random variable,
         which means the condition itself is uncertain. $H(X|Y)$ is
-        an average of entropy with certain condition $H(X|Y = y)$ 
+        an average of entropy with certain condition $H(X|Y = y)$
         over the distribution of $p(Y = y)$.
 
         Now define condition $Y_r$ that contains all information
@@ -1017,14 +1017,14 @@ security.
         \end{mydef}
 
     \subsection{Proof of a Lower Bound}
-    	Now we will prove a lower bound of $H(X | Y_r)$.
-    	Note that $Y_r$ contains all information that attacker can achieve,
-    	so a lower bound of $H(X | Y_r)$ should also be a lower
-    	bound of any $H(X | Y)$ where $Y$ is a condition denotes any
-    	information achieved by attacker under defender mechanism.
-    	In short, the lower bound of $H(X|Y)$ should be a maximum over
-    	all lower bound of $H(X | Y_r)$:
-		\begin{mytheorem}\label{thm1}
+        Now we will prove a lower bound of $H(X | Y_r)$.
+        Note that $Y_r$ contains all information that attacker can achieve,
+        so a lower bound of $H(X | Y_r)$ should also be a lower
+        bound of any $H(X | Y)$ where $Y$ is a condition denotes any
+        information achieved by attacker under defender mechanism.
+        In short, the lower bound of $H(X|Y)$ should be a maximum over
+        all lower bound of $H(X | Y_r)$:
+        \begin{mytheorem}\label{thm1}
             Under defender mechanism,
             the primary image's conditional entropy has a lower bound of
             \begin{align*}
@@ -1032,8 +1032,8 @@ security.
             \end{align*}
             given all the information
             that a computationally-unbounded attacker can
-            have in an infinite long time. 
-            
+            have in an infinite long time.
+
             Here $L(E, m, r)$ is the lower bound of $H(X | Y_r)$
             where $m$ is
             the maximum number of indexes that are allowed to be calculated
@@ -1041,16 +1041,16 @@ security.
             logarithm of the size of primary image set.
         \end{mytheorem}
 
-    	
+
         To prove the lower bound of $H(X | Y_r)$, use the definition of conditional entropy,
         \begin{align*}
             H(X|Y_r) &= p(Y_r = \alpha) H(X | \alpha) + p(Y_r = \beta) H(X | \beta)\\
                 &\geq p(Y_r = \alpha) H(X | \alpha) + 0
         \end{align*}
-        
+
         Here, the second part is just counted as $0$ since it's non-negative.
         In other words, to get the lower bound of the conditional entropy $H(X | Y_r)$,
-        an average of entropy $H(X | Y_r = y)$ over all possible conditions $y \in \mathcal Y$, 
+        an average of entropy $H(X | Y_r = y)$ over all possible conditions $y \in \mathcal Y$,
         any $H(X | Y_r = y)$ is counted as minimum value $0$ except for the best condition
         $Y_r = \alpha$.
 
@@ -1110,7 +1110,7 @@ security.
                     &= r \cdot (1-\frac{r m \cdot 2^r}{2^E-2^r+1})
             \end{align*}
         \end{IEEEproof}
-        
+
         To prove a lower bound of $p(Y_r = \alpha)$, note that
         $(Y_r = \alpha)$ is equivalent to $\left(|C_{-r}| = 2^r \text{ and } |K_{-i}| = 0   \; (0 \leq i < r)\right)$.
         Therefore
@@ -1120,11 +1120,11 @@ security.
         \end{align*}
         For convenience, define
         \begin{align*}
-        	p_2 &= p(|C_{-r}| = 2^r)\\
-        	p_3 &= p(|K_i| = 0  \; (0 \leq i < r) \; \backslash \; |C_{-r}| = 2^r)
+            p_2 &= p(|C_{-r}| = 2^r)\\
+            p_3 &= p(|K_i| = 0  \; (0 \leq i < r) \; \backslash \; |C_{-r}| = 2^r)
         \end{align*}
-		And for the convenience of the following subsection, define $p(B = failse) = p_1$.
-		
+        And for the convenience of the following subsection, define $p(B = failse) = p_1$.
+
         The following two lemmas are for $p_2$ and $p_3$
         respectively.
 
@@ -1267,8 +1267,8 @@ security.
 
     \subsection{Experimental Evaluation and Essential Meaning}
         In the this subsection, experiments
-	    are conducted to evaluate the result and an essential meaning based on min-entropy 
-    	of our lower bound is given.
+        are conducted to evaluate the result and an essential meaning based on min-entropy
+        of our lower bound is given.
 
         In our proof above, $p_1$,
         $p_2$ and $p_3$ are
@@ -1336,7 +1336,7 @@ security.
 %        it shows that when $D = 32$ and $m = 2^{14} = 16384$, the lower bound
 %        is still at least $10$.
 
-	Now, we will figure out some essential meaning of our proof.
+    Now, we will figure out some essential meaning of our proof.
     All the analysis above is based on Shannon entropy.
     Min-entropy $H_\infty(X)$ define the entropy in a new way:
     \begin{align*}
@@ -1360,7 +1360,7 @@ security.
     Since $H_\infty(X | Y) = E\left(H_\infty(X | Y = y)\right)$,
     conditional min-entropy means the expected highest
     possibility that one adversary can guess the right answer.
-    
+
     Therefore, here is the essential meaning of our proof:
     the proof of our lower bound shows that
     the expected highest possibility that a computationally-unbounded
@@ -1474,7 +1474,7 @@ security.
     for low entropy PII,
     this paper presents a novel defender model as well
     as a defender mechanism which has already been implemented
-	for a specific
+    for a specific
     OSN which uses cellphone numbers to generate encrypted indexes.
 
     This paper mainly focuses on analysis of this defender mechanism.
@@ -1489,24 +1489,24 @@ security.
     Based on min-entropy, our proof shows that
     such an adversary only has an expected chance
     less than $2^{-\Omega(E)}$ to guess the right plain text.
-    However, the tight lower bound 
+    However, the tight lower bound
     is believed to be much higher than we proved.
     In short, it's theoretically secured and should be more practically secured.
-    
-	The defender mechanism also applies to other low entropy
-	PII and will help many other similar OSN to secure PII such
-	as usernames. Meanwhile it can keep the rich functionality and efficiency
-	of using that PII. By giving the theoretical proof
-	in this paper, this mechanism should be much more reliable than
-	shielded servers and well performed management which often have unpredictable
-	vulnerabilities and mistakes.
+
+    The defender mechanism also applies to other low entropy
+    PII and will help other similar OSN to secure PII such
+    as usernames. Meanwhile it can keep the functionality and efficiency
+    of using that PII. By giving the theoretical proof
+    in this paper, this mechanism should be much more reliable than
+    shielded servers and well performed management which often have unpredictable
+    vulnerabilities and mistakes.
 
 % conference papers do not normally have an appendix
 
 
 % use section* for acknowledgement
 \section*{Acknowledgment}
-This work is supported by Natural Science Foundation of China No. 90718040, National High-Tech Program No.2007AA01Z468, 
+This work is supported by Natural Science Foundation of China No. 90718040, National High-Tech Program No.2007AA01Z468,
 and Hosun Tech.
 The authors would also like to thank all those professors, teaching assistants and students
 who helped improving our project and reviewing this paper. Especially thanks to professor
