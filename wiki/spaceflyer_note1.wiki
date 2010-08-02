@@ -4,6 +4,10 @@
  # 注意USERENTRY的PADDING！防止平台相关问题。
  # 在UpdateEntry中加入时间戳
 
+= SOLVED PROBLEMS =
+ * CONE 36是emulator的BUG
+ * USER 47是由于tbufctochar时tbufc长度为0造成的
+
 = Appearance =
  * 用TITLE显示用户的名字，以体现当前有没有设定用户
  * 用大ICON来表现目前的操作情况（比如正在获取信息什么的）。当然小的文字说明还是要的，这个只是给个更好的体验。
