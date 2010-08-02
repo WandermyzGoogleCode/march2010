@@ -7,6 +7,7 @@
 = SOLVED PROBLEMS =
  * CONE 36是emulator的BUG
  * USER 47是由于tbufctochar时tbufc长度为0造成的
+ * Signal Exception 0 received: A data abort exception has occurred是由于堆栈溢出造成的。原来S60的堆栈就8K，随便开个几千长度的字符串缓存就溢了。
 
 = Appearance =
  * 用TITLE显示用户的名字，以体现当前有没有设定用户
