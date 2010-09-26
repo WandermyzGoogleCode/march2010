@@ -20,3 +20,6 @@
  * How to receive message and send message without take my phone out of my pocket?
  * Vibration & tap
  * Any other way? 
+
+=Others=
+ * Listening too bad. Speaking ok.
