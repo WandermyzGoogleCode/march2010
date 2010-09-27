@@ -1,9 +1,10 @@
-#summary Note of talk with a professor from UCSD (You can ignore this page)
+#summary Note of talk with 2 professors from UCSD & UMD (You can ignore this page)
 #labels Type-Lab
 
+=First one=
  * Jim Hollan, UCSD, HCI
  
-=About Tree & Context-Awareness=
+==About Tree & Context-Awareness==
  * Information tree with custom permission is potentially useful.
   * Separated information sharing
   * Not so popular yet
@@ -16,10 +17,18 @@
   * Automatically setting may not credible enough
   * How to simplify manual status setting
  
-=An idea of vibration=
+==An idea of vibration==
  * How to receive message and send message without take my phone out of my pocket?
  * Vibration & tap
  * Any other way? 
 
-=Others=
+==Others==
  * Listening too bad. Speaking ok.
+
+=Second One=
+ * Ben Bederson, UMD, HCI
+ * About tree structure: Microsoft Kin Phone
+ * About context-awareness:
+  * Karlsom
+  * Horwuitz
+ * Change "folder" to "tag"! One person could have more than one tags.
