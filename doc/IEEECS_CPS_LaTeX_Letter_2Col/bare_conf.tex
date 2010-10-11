@@ -426,11 +426,14 @@ Beijing 10084, China\\
 
     This paper presents a novel mechanism
     to frustrate dictionary attacks
-    by refreshing the encryption in an external blackbox.
+    by refreshing the encryption in an external "blackbox".
+    The "blackbox" has a private key inside and even the person who
+    designed and manufactured it could not track or reveal its
+    input and output without knowing the private key.
     The major part of this paper is about the analysis
     of this novel mechanism.
-    The use of conditional entropy in this paper both measures the increased
-    difficulty for attack and proves the value and feasibility
+    The use of conditional entropy in this paper both measures the power
+    to defend the attack and proves the value and feasibility
     of this novel mechanism.
     A lower bound for conditional entropy
     against a computationally-unbounded adversary is guaranteed.
@@ -526,8 +529,6 @@ security.
     adversaries. This mechanism is called defender mechanism
     since it's based on a defender model which introduces
     a defender to balance the adversary.
-    In that mechanism, the defender simply refreshes
-    the encryption in an external blackbox periodically.
     The analysis of the mechanism shows that a lower bound
     of conditional entropy can be guaranteed efficiently: suppose that the original entropy
     is $E$, a lower bound of conditional entropy $\Omega(E)$ can be guaranteed
@@ -742,7 +743,7 @@ security.
         never be compromised.
 
         This model gives an abstract illustration about how to frustrate
-        dictionary attacks for low entry PII.
+        dictionary attacks for low entroy PII.
         In the following sections, $f_A$ will be replaced by a formal definition
         about dictionary attacks in a special system.
         In that system, a specially designed hardware (i.e. a blackbox)
@@ -776,7 +777,7 @@ security.
         secured module and get new indexes and encrypted data
         entries from that module.
         The module is implemented in a special hardware (something
-        like TPM, i.e. Thusted Platform Module) that nobody
+        like TPM, i.e. Trusted Platform Module) that nobody
         could see what's going on inside the hardware without damaging it in real world.
 
         The best update strategy
@@ -1495,11 +1496,16 @@ security.
 
     The defender mechanism also applies to other low entropy
     PII and will help other similar OSN to secure PII such
-    as usernames. Meanwhile it can keep the functionality and efficiency
-    of using that PII. By giving the theoretical proof
-    in this paper, this mechanism should be much more reliable than
+    as usernames. 
+    By giving the theoretical proof
+    in this paper, this mechanism should be much more reliable than SNO-dependent security based on
     shielded servers and well performed management which often have unpredictable
     vulnerabilities and mistakes.
+    Currently, we almost find no existed research or real system
+    trying to provide SNO-independent security for the low entropy PII such as usernames. 
+    But those low entropy PII are very important privacy to the users.
+    Thus we hope that our work would introduce a novel and effective mechanism to
+    solve that problem.
 
 % conference papers do not normally have an appendix
 
