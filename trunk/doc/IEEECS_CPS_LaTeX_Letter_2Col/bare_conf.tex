@@ -761,24 +761,44 @@ security.
         from knowing the corresponding cellphone number from its index.
         The defender mechanism also applies to other PII and cellphone numbers are introduced
         in this paper only for a concrete analysis and better understanding.
-        In the specific OSN, indexes and corresponding encrypted user data entries are stored
-        in server's database.
+        
+        In this specific OSN, indexes and corresponding encrypted user data entries are stored
+        in server's database as a row. Besides, in the whole system of this OSN, only three places may
+        retrieve the plaintext of one user's data and PII: user's mobile phone, user's friend's mobile phone and an external
+        "blackbox" on server side which we will describe very soon. 
+        Besides these places, asymmetrically encryption, symmetrically encryption
+        and their combination, digital envelope, are used to ensure the security over network
+        and inside database. Since the non-deterministic encryptions (e.g. padding a lot random salt) 
+        can ensure a high security even if the message's entropy is quite low, the only possible weakness
+        of this system is the PII, which requires deterministic encryption. To specify all the details of
+        this system, such as how those non-deterministic encryptions are done, which key is used for each encryption,
+        or how we can decrypt those data from network or database, we have to write a whole new paper. Therefore, 
+        in this paper we could only focus on how to secure the PII, 
+        which is the most novel and challenging part of this system.
 
-        The defender mechanism is going to fulfil the defender
-        function $f_D(I_{r-1}) = I_{r-1}/2$ by updating indexes.
+		To secure the PII,
+        the defender mechanism in this system is going to fulfil the defender
+        function $f_D(I_{r-1}) = I_{r-1}/2$ by updating indexes generated from PII.
         But If the attacker
         could track each new index from its old index, there's no loss of information
         for attacker so it has to make sure that the procedure to update the indexes
         is untrackable.
-        This paper suggests a scenario that attackers(e.g. SNO) already
+        The defender mechanism introduces an external "blackbox" to make it untrackable:
+		The "blackbox" is implemented in a special hardware (something
+        like TPM, i.e. Trusted Platform Module) whose interfaces are
+        specially designed so nobody could uncover the private key or any other
+        intermediate data in the hardware without physical accessing to this hardware.
+        Even if one person knows exactly how this hardware is designed, that person won't
+        be able to reveal the encrypted input and output of this hardware without knowing
+        its private key. And that person
+        can only consider the behaviour of this "blackbox" to be totally random since
+        the private key is totally random from that persons's aspect.
+        
+        The defender mechanism need this hardware to be external and specially designed because
+        this paper suggests a scenario that attackers(e.g. SNO) already
         escalated their privilege to root access for
-        both server and database. Therefore, the system has to send
-        indexes and data entries to another
-        secured module and get new indexes and encrypted data
-        entries from that module.
-        The module is implemented in a special hardware (something
-        like TPM, i.e. Trusted Platform Module) that nobody
-        could see what's going on inside the hardware without damaging it in real world.
+        both server and database. Therefore, if the system do those update operations
+        in memory, the attackers may track every bit of the memory to reveal the secret.
 
         The best update strategy
         is to send all indexes and data entries to that hardware and then
