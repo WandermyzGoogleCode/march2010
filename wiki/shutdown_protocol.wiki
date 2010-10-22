@@ -1,4 +1,5 @@
 #summary 当机协议
+#labels Type-Protocol
 
 对所有发送到手机端的请求，格式如下：
 
