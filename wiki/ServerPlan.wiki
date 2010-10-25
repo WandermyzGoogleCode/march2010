@@ -1,14 +1,42 @@
 #summary 服务器端和网站的计划
 #labels Type-Note,Phase-Implementation
 
-= Introduction =
+=刘洋的计划=
+ * 重写用户系统
+  * 权限：开放用户、群组管理员、系统管理员。class Permission
+  * 可以给每个用户指定一个或多个权限
+  * 要修改的代码主要有：
+   * 开放用户的注册、编辑、删除
+   * 私密群组管理
+   * etc.
+ * 修改Tag系统
+  * 从配置文件到数据库记录
+ * 增加Version协议
+ * 整理API
+  * 用户系统API
+   * 添加和删除用户
+   * 编辑用户
+    * Common
+     * 密码
+     * 姓名
+    * 开放用户
+     * 状态文本
+     * 商户信息
+     * 所属群组
+    * 系统管理员和群组管理员
+     * Email (Optional)
+     * Organization (Optional)
+  * 开放群组系统API
+   * 设置群组是否可下载、下载密码
+   * 设置推荐群组
+   * 编辑群组名（要修改所有属于此群组的用户的记录）
+   * 删除群组（要修改所有属于此群组的用户的记录）
+  * 私密群组系统API（主要修改李照楠的代码）
+   * 添加、删除群组
+   * 编辑群组成员
+  
+=For 陈新雄=
+ * (TODO)
 
-Add your content here.
-
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+=For 李照楠=
+ * (TODO)
