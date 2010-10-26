@@ -41,13 +41,13 @@
 =For 李照楠=
  * 优化网站外观
   * www.lives3.net
-   * 考虑flex方案或其他替代方案
+   * 考虑flex方案或其他替代方案 (...)
   * info.lives3.net
-   * 适当调小search_result页面header的高度
-   * header中添加搜索框
-   * 中间部分提高页面layout的灵活性，伸缩性
-   * 给所有"可点击的链接"增加hover效果
-   * 整理CSS代码
-   * 尝试优化滚动条外观等
+   * 适当调小search_result页面header的高度 (2010-10-31)
+   * header中添加搜索框 (2010-10-31)
+   * 中间部分提高页面layout的灵活性，伸缩性 (2010-10-31)
+   * 给所有"可点击的链接"增加hover效果 (2010-10-31)
+   * 整理CSS代码 (2010-10-31)
+   * 尝试优化滚动条外观等 (...)
   * www.lives.net/blog
-   * 调整字体字号，页面layout等
+   * 调整字体字号，页面layout等 (...)
