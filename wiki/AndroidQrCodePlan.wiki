@@ -2,7 +2,7 @@
 #labels Type-Note,Phase-Implementation
 
 =For 刘之方=
- * ！11月
+ * Deadline：11月10日。
  * 搞清楚二维码操作的API或library
   * (Done) 已可用，通过调用zxing库实现（发布时记得在合适位置声明对zxing库的引用）。
   * (Todo) 精简引用的zxing库的代码，去除与我们无关的部分。
@@ -21,6 +21,7 @@
  * 实现（最迟11月8日，尽早完成）
   * 二维码读取、生成、与本机通讯录/拨号程序/短信程序的连接。
   * 与lives3的结合。
+  * 调试。
 
 
 =For 刘洋=
