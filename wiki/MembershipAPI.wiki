@@ -1,4 +1,5 @@
 #summary 用户系统和群组系统API
+#labels Phase-Server
 
 ----
 新系统还没有deploy。此页面在新系统deploy之后才生效
@@ -31,6 +32,4 @@
 =群组系统API
  * 群组系统API由GroupManager类的静态函数定义，具体用法请见函数注释。
  * 群组系统API包括操作开放群组和操作私密群组。私密群组API*还没有实现*。
-
-
 
