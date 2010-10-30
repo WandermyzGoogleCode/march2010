@@ -1,5 +1,4 @@
 #summary 用户系统和群组系统API
-#labels Deprecated
 
 ----
 新系统还没有deploy。此页面在新系统deploy之后才生效
