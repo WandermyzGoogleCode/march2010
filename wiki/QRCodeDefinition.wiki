@@ -35,3 +35,28 @@ ColumnData1,ColumnData2,...\n
 李四\[班长\],13900000000,这是一列为未来留的数据（没用）
 王\,五,13999999999,这人偏要在名字里加逗号
 }}}
+
+=接口建议=
+ * 一个最General的接口可以考虑设计成这样（仅供参考）
+{{{
+interface DataRow
+{
+    String getField(String columnName);
+    void setField(String columnName, String value);
+}
+interface DataTable
+{
+    String getName();
+    void setName(String name);
+    DataRow getDataRow(int index);
+    void insertDataRow(int index);
+    void removeDataRow(int index);
+    Iterable<DataRow> getAllRows();
+}
+interface DataSet
+{
+    DataTable getDataTable(String dataTableName);
+    void insertDataTable(DataTable table);
+    void removeDataTable(DataTable table);
+}
+}}}
