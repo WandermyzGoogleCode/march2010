@@ -1,4 +1,5 @@
 #summary 改进计划
+#labels Type-Note,Phase-Client
 
 = Android & WebService =
  * 二维码群组(离线）
