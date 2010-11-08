@@ -8,7 +8,7 @@
  * 立即同步
  * 图标
  
-=Known Issue=
+=Known Issues=
  * 卸载重装，自己的条目中出现两个Lives Cube Profile
  * 同步后电话号码丢失
  * 同步后群组成员丢失
