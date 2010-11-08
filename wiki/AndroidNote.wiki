@@ -1,0 +1,14 @@
+#summary Android Deadline Rush计划
+#labels Type-Note,Phase-Client
+
+=TODO List （刘洋）=
+ * 从二维码添加单个联系人（刘之方接口：群组名给null）
+ * 生成联系人和群组的二维码
+ * 调整Viewer
+ * 立即同步
+ * 图标
+ 
+=Known Issue=
+ * 卸载重装，自己的条目中出现两个Lives Cube Profile
+ * 同步后电话号码丢失
+ * 同步后群组成员丢失
