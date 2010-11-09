@@ -14,3 +14,4 @@
  * 卸载重装，自己的条目中出现两个Lives Cube Profile
  * 同步后电话号码丢失
  * 同步后群组成员丢失
+ * 同步时上传Connection
