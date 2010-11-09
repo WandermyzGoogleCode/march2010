@@ -2,12 +2,14 @@
 #labels Type-Note,Phase-Client
 
 =TODO List （刘洋）=
+ * !! txt文档 (lyq起草功能说明)
  * !! 调整Viewer （lyq)
  * !! 搜索 (lzf调查)
  * !! 更新状态按钮 (lzf)
  * !! Log In (wander)
  * !! About (wander)
  * !  多线程bug (wander&lzf&lyq)
+ *    登录loading画面 (wander&lzf&lyq)
  * x  生成联系人和群组的二维码
  * x  短信推送 (lyq)
  * x  选群组 (lzf)
