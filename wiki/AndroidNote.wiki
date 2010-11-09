@@ -2,14 +2,14 @@
 #labels Type-Note,Phase-Client
 
 =TODO List （刘洋）=
- * Refresh
- * 从二维码添加单个联系人（刘之方接口：群组名给null）
+ * //Refresh
+ * //从二维码添加单个联系人（刘之方接口：群组名给null）
  * 生成联系人和群组的二维码
  * 调整Viewer
  * 自定义状态
  * 短信推送
  * 立即同步
- * 图标
+ * //图标
  * 选群组
  * Log In
  * About
