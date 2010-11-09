@@ -9,6 +9,9 @@
  * 短信推送
  * 立即同步
  * 图标
+ * 选群组
+ * Log In
+ * About
  
 =Known Issues=
  * 卸载重装，自己的条目中出现两个Lives Cube Profile
