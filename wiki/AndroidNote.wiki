@@ -13,6 +13,7 @@
  * 选群组
  * Log In
  * About
+ * 删除群组
  
 =Known Issues=
  * 卸载重装，自己的条目中出现两个Lives Cube Profile
