@@ -6,7 +6,7 @@
  * !! 调整Viewer （lyq)
  * !! 搜索 (lzf调查)
  * !! 更新状态按钮 (lzf)
- * !! Log In (wander)
+ * //!! Log In (wander)
  * !! About (wander)
  * !  多线程bug (wander&lzf&lyq)
  *    登录loading画面 (wander&lzf&lyq)
