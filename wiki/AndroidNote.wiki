@@ -3,7 +3,6 @@
 
 =TODO List （刘洋）=
  * !! txt文档 (lyq起草功能说明)
- * !! 调整Viewer （lyq)
  * !! 搜索 (lzf调查)
  * !! 更新状态按钮 (lzf)
  * //!! Log In (wander)
@@ -11,12 +10,13 @@
  * !  多线程bug (wander&lzf&lyq)
  *    登录loading画面 (wander&lzf&lyq)
  * x  生成联系人和群组的二维码
- * x  短信推送 (lyq)
  * x  选群组 (lzf)
  * xx 自定义状态 
  * xx 立即同步
  * xx 删除群组
  * 后台刷新？广播？监听sync事件？
+ * //  短信推送 (lyq)
+ * // 调整Viewer （lyq)
  * // Refresh
  * // 从二维码添加单个联系人（刘之方接口：群组名给null）
  * // 图标 
