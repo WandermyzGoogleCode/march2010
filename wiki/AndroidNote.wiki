@@ -8,7 +8,6 @@
  * !! 限制一个账号
  * //!! Log In (wander)
  * //!! About (wander)
- * !  多线程bug (wander&lzf&lyq)
  *    登录loading画面 (wander&lzf&lyq)
  * x  生成联系人和群组的二维码
  * x  选群组 (lzf)
@@ -16,7 +15,8 @@
  * xx 立即同步
  * xx 删除群组
  * 后台刷新？广播？监听sync事件？
- * //  短信推送 (lyq)
+ * // 多线程bug (wander&lzf&lyq)
+ * // 短信推送 (lyq)
  * // 调整Viewer （lyq)
  * // Refresh
  * // 从二维码添加单个联系人（刘之方接口：群组名给null）
