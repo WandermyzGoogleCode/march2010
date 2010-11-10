@@ -8,7 +8,7 @@
  * //!! 限制一个账号
  * //!! Log In (wander)
  * //!! About (wander)
- *    登录loading画面 (wander&lzf&lyq)
+ * // 登录loading画面 (wander&lzf&lyq)
  * x  生成联系人和群组的二维码
  * x  选群组 (lzf)
  * xx 自定义状态 
