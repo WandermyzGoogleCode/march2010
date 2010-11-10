@@ -4,8 +4,8 @@
 =TODO List （刘洋）=
  * !! txt文档 (lyq起草功能说明)
  * !! 搜索 (lzf调查)
- * !! 更新状态按钮 (lzf)
- * !! 限制一个账号
+ * //!! 更新状态按钮 (lzf)
+ * //!! 限制一个账号
  * //!! Log In (wander)
  * //!! About (wander)
  *    登录loading画面 (wander&lzf&lyq)
