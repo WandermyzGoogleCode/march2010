@@ -6,7 +6,7 @@
  * !! 搜索 (lzf调查)
  * !! 更新状态按钮 (lzf)
  * //!! Log In (wander)
- * !! About (wander)
+ * //!! About (wander)
  * !  多线程bug (wander&lzf&lyq)
  *    登录loading画面 (wander&lzf&lyq)
  * x  生成联系人和群组的二维码
