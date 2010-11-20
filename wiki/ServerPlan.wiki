@@ -60,18 +60,18 @@
 =For 李照楠=
  * 优化网站外观
   * www.lives3.net
-   * 用css定位代替切片 (done)
+   * ~~用css定位代替切片 (done)~~
 
   * info.lives3.net
-   * 统计客户端下载次数 (done)
-   * 整理CSS代码 (done)
-   * 中间部分提高页面layout的灵活性，伸缩性 (done)
-   * 调整info主页中，数字的样式 (done)
+   * ~~统计客户端下载次数 (done)~~
+   * ~~整理CSS代码 (done)~~
+   * ~~中间部分提高页面layout的灵活性，伸缩性 (done)~~
+   * ~~调整info主页中，数字的样式 (done)~~
 
-   * 私密群组管理员注册页面 (2010-11-10)
-
-   * 适当调小search_result页面header的高度 (delay)
-   * header中添加搜索框 (delay)
+   * ！私密群组管理员注册页面
+   * ！！解决11-20之前所有web方面的issue。
+   * ！适当调小search_result页面header的高度 
+   * ！header中添加搜索框 
    * 给所有"可点击的链接"增加hover效果 (delay)
    * 搜索结果页面添加pagination (delay)
    * 尝试优化滚动条外观等 (delay)
