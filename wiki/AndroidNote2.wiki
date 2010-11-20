@@ -1,13 +1,19 @@
 #summary Android客户端第二次Debug计划
+#labels Type-Note,Phase-Client,Phase-Server
 
-= Introduction =
+=BOSS=
+ * 私密用户的状态无法更新
 
-Add your content here.
+=Android客户端Bug=
+ * 各种同步问题（具体？）
+ * 二维码添加群组2.1
 
+=Android客户端功能=
+ * 口令下载私密群组
+ * 自定义状态
+ * 生成群组二维码
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+=网页端=
+ * 指向群组管理的连接
+ * 成员编辑页面重新排版
+ * 无法编辑群组信息（INSERT错误）
