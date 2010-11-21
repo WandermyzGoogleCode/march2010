@@ -16,7 +16,8 @@
  * 模拟器黑屏 (???)
  * Content-type 检测 (lc)
 =Android客户端功能=
- * 带threshold的同步，自动调节频率的同步
+ * ~~带threshold的同步，自动调节频率的同步~~
+  * 待进一步测试
  * ！添加“手动强制更新所有”功能(wander)
  * 添加联系人后立即上传Connection List(wander)
  * ！！没有姓名的手机号置顶(lzf)
