@@ -19,7 +19,6 @@
  * 带threshold的同步，自动调节频率的同步
  * ！添加“手动强制更新所有”功能(wander)
  * 添加联系人后立即上传Connection List(wander)
- * ！！重写Contact Mananger-世界观问题(lzf)
  * ！！没有姓名的手机号置顶(lzf)
  * ~~！！支持当机协议~~
   * 让链接可以点
