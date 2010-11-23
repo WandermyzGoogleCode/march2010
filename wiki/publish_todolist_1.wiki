@@ -1,0 +1,7 @@
+#summary 推广团队TODO LIST之一
+#labels Type-MeetingNotes,Phase-Publish
+
+=协作平台相关= 
+ * 注册gmail帐号 [http://mail.google.com 注册链接]，注册好后把地址发给陈新雄（amiucxx@gmail.com）
+ * 准备SVN帐号（刘洋）（会用邮件通知地址和帐号密码）
+ * 安装Tortoise SVN （TODO：上传到某个FTP，给链接）
