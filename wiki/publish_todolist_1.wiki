@@ -4,7 +4,7 @@
 =协作平台相关= 
  * 注册gmail帐号 [http://mail.google.com 注册链接]，注册好后把地址发给陈新雄（amiucxx@gmail.com）
  * 准备SVN帐号（刘洋）（会用邮件通知地址和帐号密码）
- * 安装Tortoise SVN [166.111.69.131/private/TortoiseSVN.msi 下载地址]
+ * 安装Tortoise SVN [http://166.111.69.131/private/TortoiseSVN.msi 下载地址]
  
 =补充：挑战杯开会内容=
  * 寒假差不多做完
