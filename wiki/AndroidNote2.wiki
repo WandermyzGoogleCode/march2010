@@ -22,6 +22,7 @@
   * 待进一步测试
  * ~~添加联系人后立即上传Connection List(wander)~~
   * 待测试
+  * 添加群组后立即上传connection list
  * ！！没有姓名的手机号置顶(lzf)
  * ~~！支持vCard(lzf)~~
   * 有bug，改！
