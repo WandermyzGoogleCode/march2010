@@ -1,0 +1,5 @@
+#summary 包名和类名整理记录
+#labels Type-Note,Phase-Client
+
+ * com.lives3.android -> com.lives3.maingui
+  * 入口AndroidClient -> MainActivity
