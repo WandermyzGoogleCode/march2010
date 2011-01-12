@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  event_id: 1
+  group_id: 1
+  admin_id: 1
+  extra_info: MyText
+  timestamp: 1
+
+two:
+  event_id: 1
+  group_id: 1
+  admin_id: 1
+  extra_info: MyText
+  timestamp: 1
