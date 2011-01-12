@@ -1,0 +1,270 @@
+  [1m[36mSQL (0.7ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.2ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+Migrating to CreateUsers (20110110163131)
+Migrating to CreateInvitorRelations (20110111112810)
+  [1m[35mSQL (0.2ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.3ms)[0m  [1mCREATE TABLE "invitor_relations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "invitation_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20110111112810')
+Migrating to CreateInviteeRelations (20110111112829)
+  [1m[36mSQL (0.5ms)[0m  [1mCREATE TABLE "invitee_relations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "invitation_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20110111112829')
+Migrating to CreateInvitations (20110111112952)
+  [1m[36mSQL (0.5ms)[0m  [1mCREATE TABLE "invitations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "event_id" integer, "extra_info" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20110111112952')
+Migrating to AddTimestampToInvitation (20110111114803)
+  [1m[36mSQL (0.5ms)[0m  [1mALTER TABLE "invitations" ADD "timestamp" integer[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20110111114803')
+Migrating to CreateRecommendations (20110111115448)
+  [1m[36mSQL (0.3ms)[0m  [1mCREATE TABLE "recommendations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "event_id" integer, "group_id" integer, "admin_id" integer, "extra_info" text, "timestamp" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20110111115448')
+Migrating to CreateMemberships (20110111120139)
+  [1m[36mSQL (0.5ms)[0m  [1mCREATE TABLE "memberships" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "group_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20110111120139')
+Migrating to CreateAdminships (20110111120156)
+  [1m[36mSQL (0.5ms)[0m  [1mCREATE TABLE "adminships" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "group_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20110111120156')
+Migrating to CreateGroups (20110111120235)
+  [1m[36mSQL (0.5ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.2ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+Migrating to CreateUsers (20110110163131)
+Migrating to CreateInvitorRelations (20110111112810)
+Migrating to CreateInviteeRelations (20110111112829)
+Migrating to CreateInvitations (20110111112952)
+Migrating to AddTimestampToInvitation (20110111114803)
+Migrating to CreateRecommendations (20110111115448)
+Migrating to CreateMemberships (20110111120139)
+Migrating to CreateAdminships (20110111120156)
+Migrating to CreateGroups (20110111120235)
+  [1m[35mSQL (0.1ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.3ms)[0m  [1mCREATE TABLE "groups" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "identifier" varchar(255), "extra_info" text, "creator_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20110111120235')
+Migrating to CreateAcceptances (20110111121356)
+  [1m[36mSQL (0.5ms)[0m  [1mCREATE TABLE "acceptances" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "event_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20110111121356')
+Migrating to CreateRejects (20110111121407)
+  [1m[36mSQL (0.3ms)[0m  [1mCREATE TABLE "rejects" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "event_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20110111121407')
+Migrating to CreateEvents (20110111121457)
+  [1m[36mSQL (0.3ms)[0m  [1mCREATE TABLE "events" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "begin" integer, "end" integer, "where" varchar(255), "extra_info" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20110111121457')
+Migrating to FixColumnName (20110111122014)
+  [1m[36mSQL (0.3ms)[0m  [1mCREATE TEMPORARY TABLE "altered_events" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "begin" integer, "end" integer, "location" varchar(255), "extra_info" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("events")
+  [1m[36mSQL (0.2ms)[0m  [1mDROP TABLE "events"[0m
+  [1m[35mSQL (0.2ms)[0m  CREATE TABLE "events" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "begin" integer, "end" integer, "location" varchar(255), "extra_info" text, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("altered_events")[0m
+  [1m[35mSQL (0.1ms)[0m  DROP TABLE "altered_events"
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20110111122014')[0m
+Migrating to AddCreatorIdToEvent (20110111122412)
+  [1m[35mSQL (0.5ms)[0m  ALTER TABLE "events" ADD "creator_id" integer
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20110111122412')[0m
+  [1m[35mSQL (0.6ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.5ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mSQL (0.5ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("acceptances")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("adminships")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("events")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("groups")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("invitations")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("invitee_relations")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("invitor_relations")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("memberships")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("recommendations")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("rejects")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("users")[0m
+  [1m[36mSQL (0.6ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.2ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mSQL (0.1ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (134.5ms)[0m  CREATE TABLE "acceptances" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "event_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (104.6ms)[0m  CREATE TABLE "adminships" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "group_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (133.2ms)[0m  CREATE TABLE "events" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "begin" integer, "end" integer, "location" varchar(255), "extra_info" text, "created_at" datetime, "updated_at" datetime, "creator_id" integer) 
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (85.9ms)[0m  CREATE TABLE "groups" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "identifier" varchar(255), "extra_info" text, "creator_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (93.9ms)[0m  CREATE TABLE "invitations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "event_id" integer, "extra_info" text, "created_at" datetime, "updated_at" datetime, "timestamp" integer) 
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (76.8ms)[0m  CREATE TABLE "invitee_relations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "invitation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (78.1ms)[0m  CREATE TABLE "invitor_relations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "invitation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (81.3ms)[0m  CREATE TABLE "memberships" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "group_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.5ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (107.1ms)[0m  CREATE TABLE "recommendations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "event_id" integer, "group_id" integer, "admin_id" integer, "extra_info" text, "timestamp" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.5ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (75.0ms)[0m  CREATE TABLE "rejects" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "event_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (72.1ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "email" varchar(255), "password" varchar(255), "mobile" varchar(255), "extra" text, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.5ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (97.8ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) 
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("schema_migrations")[0m
+  [1m[35mSQL (83.6ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mSQL (0.5ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36mSQL (64.7ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20110111122412')[0m
+  [1m[35mSQL (66.4ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20110111112810')
+  [1m[36mSQL (57.9ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20110111121407')[0m
+  [1m[35mSQL (74.8ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20110111122014')
+  [1m[36mSQL (58.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20110111114803')[0m
+  [1m[35mSQL (58.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20110111115448')
+  [1m[36mSQL (58.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20110111121457')[0m
+  [1m[35mSQL (66.4ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20110111112952')
+  [1m[36mSQL (74.7ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20110111121356')[0m
+  [1m[35mSQL (74.6ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20110111120139')
+  [1m[36mSQL (66.4ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20110110163131')[0m
+  [1m[35mSQL (66.4ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20110111120156')
+  [1m[36mSQL (66.4ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20110111112829')[0m
+  [1m[35mSQL (74.8ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20110111120235')
+  [1m[36mSQL (0.6ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.2ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mSQL (0.1ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (153.1ms)[0m  CREATE TABLE "acceptances" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "event_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (105.2ms)[0m  CREATE TABLE "adminships" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "group_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (107.2ms)[0m  CREATE TABLE "events" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "begin" integer, "end" integer, "location" varchar(255), "extra_info" text, "created_at" datetime, "updated_at" datetime, "creator_id" integer) 
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (108.9ms)[0m  CREATE TABLE "groups" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "identifier" varchar(255), "extra_info" text, "creator_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (128.4ms)[0m  CREATE TABLE "invitations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "event_id" integer, "extra_info" text, "created_at" datetime, "updated_at" datetime, "timestamp" integer) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (108.1ms)[0m  CREATE TABLE "invitee_relations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "invitation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (89.0ms)[0m  CREATE TABLE "invitor_relations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "invitation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (89.3ms)[0m  CREATE TABLE "memberships" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "group_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (98.9ms)[0m  CREATE TABLE "recommendations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "event_id" integer, "group_id" integer, "admin_id" integer, "extra_info" text, "timestamp" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.5ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (86.8ms)[0m  CREATE TABLE "rejects" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "event_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (72.2ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "email" varchar(255), "password" varchar(255), "mobile" varchar(255), "extra" text, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.5ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (103.2ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) 
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("schema_migrations")[0m
+  [1m[35mSQL (78.2ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mSQL (0.5ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36mSQL (72.9ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20110111122412')[0m
+  [1m[35mSQL (78.6ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20110111112810')
+  [1m[36mSQL (74.7ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20110111121407')[0m
+  [1m[35mSQL (74.7ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20110111122014')
+  [1m[36mSQL (79.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20110111114803')[0m
+  [1m[35mSQL (70.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20110111115448')
+  [1m[36mSQL (66.4ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20110111121457')[0m
+  [1m[35mSQL (70.8ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20110111112952')
+  [1m[36mSQL (70.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20110111121356')[0m
+  [1m[35mSQL (70.9ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20110111120139')
+  [1m[36mSQL (66.5ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20110110163131')[0m
+  [1m[35mSQL (358.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20110111120156')
+  [1m[36mSQL (78.6ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20110111112829')[0m
+  [1m[35mSQL (112.5ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20110111120235')
