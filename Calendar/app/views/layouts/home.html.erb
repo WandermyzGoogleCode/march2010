@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lives Calendar</title>
+  <%= stylesheet_link_tag "main" %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+  <div class="header">
+    <a class="title" href="/admin/index">Lives Calendar</a>
+    <p>User : <%= @user %> | <a href="/user/logout">Sign out</a></p>
+  </div>
+  <div class="container">
+    <%= yield %>
+  </div>
+
+  <div class="footer"><p>Lives Calendar DEMO by @bravura 2011</p></div>
+</body>
+</html>
