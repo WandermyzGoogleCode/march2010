@@ -1,2 +1,37 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<div id="<%=@page %>">
+  <div id="boardcast">这里考虑用Ajax滚动显示广播...类似twitter首页的bar</div>
+  <ul>
+    <li><a href="/event/create">+ 新建活动</a></li>
+    <li><a href="/admin/index">+ 群组管理</a></li>
+    <li><a href="#">+ 日历同步</a></li>
+    <li><a href="#">+ 个人信息</a></li>
+  </ul>
+  <table>
+    <tr>
+      <td width="20%"><div id="leftAd"><p>广告1</p><div></td>
+      <td width="60%">
+        <div id="core">
+          <p id="welcome">Hi, <%= @user %>, 欢迎使用来酷簿日历，现在是 <%= Time.now.strftime("%Y年 %m月 %d日 %H点%M分.") %></p>
+          <div id="myCalendar" class="section">
+            <a class="title">我的日程</a>
+            <table class="eventTable">
+            </table>
+          </div>
+          <hr/>
+          <div id="invitation" class="section">
+            <a class="title">受邀请的活动</a>
+            <table class="eventTable">
+            </table>
+          </div>
+          <hr/>
+          <div id="recomm" class="section">
+            <a class="title">推荐的活动</a>
+            <table class="eventTable">
+            </table>
+          </div> 
+        </div>
+      </td>
+      <td width="20%"><div id="rightAd"><p>广告2</p></div></td>
+    <tr>
+  </table>
+</div>

@@ -21,7 +21,7 @@ class UserController < ApplicationController
       if userRecord.password == password
         session[:user] = username
         logger.info 'session[:user]'+session[:user]
-        redirect_to :controller => :admin, :action => :index
+        redirect_to :controller => :home, :action => :index
       else
         flash[:message] = 'Password Wrong'
         redirect_to :action => :login_index

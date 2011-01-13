@@ -1,16 +1,16 @@
 <div id="<%= @page %>">
 <fieldset>
-  <legend>Login</legend>
+  <legend>登录</legend>
   <form action="/user/login">
 	<table>
-	<tr><th>User Name:</th><td><input type="text" name="user" maxlength="20"/></td></tr>
-	<tr><th>Password:</th><td><input type="password" name="password" maxlength="20"/></td></tr>
-	<th></th><td><input type="submit" value="Login" /></td>
+	<tr><th width="25%">学号:</th><td><input type="text" name="user" maxlength="20"/></td></tr>
+	<tr><th>密码:</th><td><input type="password" name="password" maxlength="20"/></td></tr>
+	<th></th><td><input type="submit" value="登录" /></td>
 	</table>
   </form>
   <% if flash[:message] %>
 	<p class="message"><%=flash[:message]%></p>
   <% end %>
-  <div><a href="/user/register">Register</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/user/passwd">Forget your password?</a></div>
+  <div><a href="/user/register">快速注册</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/user/passwd">忘记密码?</a></div>
 </fieldset>
 </div>
