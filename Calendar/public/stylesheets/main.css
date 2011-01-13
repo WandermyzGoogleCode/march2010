@@ -1,14 +1,14 @@
-a, p{ color: #444; font-family: sans-serif;}
+a, p{ color: #444; font-family: sans-serif; font-size: 14px;}
 
-th{text-align: left; color: #444}
+th{text-align: left; color: #444;}
 body{ margin: 0 auto}
 
 .header {height: 50px; border-bottom:solid 1px #ddd; background-color: #eee}
-.header .title{ float:left; margin-top: 15px; margin-left: 30px; color: #444; 
+.header .title{ float:left; margin-top: 15px; margin-left: 100px; color: #444; 
                 font-size: 25px; font-weight: bold; text-decoration: none;}
-.header p{ margin-top: 20px; margin-right: 30px; float: right;}
+.header p{ margin-top: 20px; margin-right: 100px; float: right;}
 
-.container { margin: 0 30px 0 30px; min-height: 550px;}
+.container { margin: 0 auto; min-height: 550px; width: 950px; border-left: solid 1px #eee; border-right: solid 1px #eee; padding-left: 20px; padding-right: 20px;}
 
 .footer { margin: 0 auto; height: 100%; border-top:solid 1px #ddd; background-color: #eee}
 .footer p{color: #666; font-size: 11px; text-align: center;}
@@ -20,6 +20,18 @@ body{ margin: 0 auto}
 
 #register {margin: 10px auto; width: 400px;}
 #register form{margin: 20px 20px 20px 20px;}
+
+#home-index #boardcast{margin: 0px -20px 0px -20px; height: 20px; background-color: #eee; color: #999; font-size: 12px; text-align: center; padding-top: 5px;}
+
+#home-index ul{ width: 500px; height: 20px; margin: 20px auto; list-style-type: none;}
+#home-index li{ float: left; width: 100px; padding-left: 20px;}
+#home-index table{width: 100%}
+#home-index tr{vertical-align: top;}
+#home-index #leftAd, #home-index #rightAd{ border: solid 1px #999; height: 400px; vertical-align: middle; text-align: center;}
+#home-index #core{margin: 0px 20px 0px 20px; min-height: 500px;}
+#home-index #welcome{position:relative; left: 0px; top: 0px; margin: 0;}
+#home-index .section{ height: 200px; margin-top: 20px; }
+#home-index .title{font-weight: bold; }
 
 #admin {height: 800px;}
 #admin #layout{margin-top: 20px; padding-left: 10px; padding-right: 10px; width: 100%; height: 380px}
