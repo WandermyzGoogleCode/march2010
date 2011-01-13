@@ -1,11 +1,15 @@
-<h1>User#register</h1>
-<form action="/user/register_do">
+<div id="<%= @page %>">
+<fieldset>
+  <legend>Register</legend>
+  <form action="/user/register_do">
 	<table>
-	<tr><th><a>昵称</a></th><td><input type="text" name="name"/></td></tr>
-	<tr><th><a>密码</a></th><td><input type="password" name="passwd"/></td></tr>
-	<tr><th><a>重复密码</a></th><td><input type="password" name="passwd_repeat"/></td></tr>
-	<tr><th><a>邮箱</a></th><td><input type="text" name="email"/></td></tr>
-	<tr><th><a>其他信息</a></th><td><input type="text" name="extra"/></td></tr>
+	<tr><th><a>User name</a></th><td><input type="text" name="name"/></td></tr>
+	<tr><th><a>Password</a></th><td><input type="password" name="passwd"/></td></tr>
+	<tr><th><a>Password repeat</a></th><td><input type="password" name="passwd_repeat"/></td></tr>
+	<tr><th><a>Email</a></th><td><input type="text" name="email"/></td></tr>
+	<tr><th><a>Extra Info</a></th><td><input type="text" name="extra"/></td></tr>
 	<tr><th></th><td><input type="submit" value="注册"/></td></tr>
 	</table>
-</form>
+  </form>
+</fieldset>
+</div>

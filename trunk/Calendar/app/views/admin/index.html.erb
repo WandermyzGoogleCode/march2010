@@ -1,0 +1,32 @@
+<div id="<%= @page%>">
+  <p>Welcome <%= @user %>, This is the administrator page.</p>
+  <div id="myevents">
+    <div class="panel">
+      <a href="/event/create">Create Event</a>
+    </div>
+    <fieldset>
+      <legend>My Created Events</legend>
+    </fieldset>
+  </div>
+  <table id="layout">
+    <tr>
+      <td width="50%">
+        <div id="mygroups">
+          <div class="panel">
+            <a href="/group/create">Create Group</a>
+          </div>
+          <fieldset>
+           <legend>My Created Group</legend>
+         </fieldset>
+        </div>
+      </td>
+      <td>
+        <div id="myadmins">
+          <fieldset>
+            <legend>My Admin Group</legend>
+         </fieldset>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

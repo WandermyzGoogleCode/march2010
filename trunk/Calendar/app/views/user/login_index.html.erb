@@ -1,0 +1,16 @@
+<div id="<%= @page %>">
+<fieldset>
+  <legend>Login</legend>
+  <form action="/user/login">
+	<table>
+	<tr><th>User Name:</th><td><input type="text" name="user" maxlength="20"/></td></tr>
+	<tr><th>Password:</th><td><input type="password" name="password" maxlength="20"/></td></tr>
+	<th></th><td><input type="submit" value="Login" /></td>
+	</table>
+  </form>
+  <% if flash[:message] %>
+	<p class="message"><%=flash[:message]%></p>
+  <% end %>
+  <div><a href="/user/register">Register</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/user/passwd">Forget your password?</a></div>
+</fieldset>
+</div>

@@ -1,4 +1,22 @@
 Calendar::Application.routes.draw do
+  get "admin/index"
+
+  get "group/login_index"
+
+  get "group/create"
+
+  get "group/edit"
+
+  get "group/remove"
+
+  get "event/index"
+
+  get "event/create"
+
+  get "event/edit"
+
+  get "event/remove"
+
   get "home/index"
 
   get "user/index"
@@ -63,7 +81,7 @@ Calendar::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   # root :to => "welcome#index"
-  root :to => "user#index"
+  root :to => "user#login_index"
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
