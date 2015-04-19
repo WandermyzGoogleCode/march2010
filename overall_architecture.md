@@ -1,0 +1,1 @@
+![http://march2010.googlecode.com/files/architecture.png](http://march2010.googlecode.com/files/architecture.png)
